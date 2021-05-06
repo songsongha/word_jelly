@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import Card from './components/Card/Card';
-import GameSetup from './components/GameSetup/GameSetup';
+import Lobby from './components/Lobby/Lobby';
 import Navigation from './components/Navigation/Navigation';
+import GamePlay from './components/GamePlay/GamePlay';
 
 const initialState = {
-  route: 'inGame'
+  route: 'lobby'
 }
 
 class App extends Component {
@@ -14,33 +14,22 @@ constructor(){
   this.state = initialState;
   }
 
+
   render(){
     const {route} = this.state;
-    if (route === 'home') {
-    return(
-      <div className = 'tc'>
-        <Navigation />
-        <GameSetup/>
-      </div> );
-    } else if (route === 'inGame') {
-      return(
-        <div className = 'tc'> 
-        <Navigation />
-          <div>
-              <Card/>
-              <Card/>
-              <Card/>
-              <Card/>
-              <Card/>
-              <br/>
-              <br/>
-          </div>
-          <div>
-            <Card/>
-          </div>
-        </div> 
-      );
+    let display;
+    if (route === 'lobby') {
+      display = <Lobby />
+    } else if (route === 'play') {
+      display = <GamePlay />
     }
+
+    return(
+      <div>
+        <Navigation/>
+        {display}
+      </div>
+      );
   }
 }
 
