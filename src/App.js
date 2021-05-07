@@ -4,7 +4,7 @@ import Navigation from './components/Navigation/Navigation';
 import GamePlay from './components/GamePlay/GamePlay';
 
 const initialState = {
-  route: 'lobby'
+  route: 'play'
 }
 
 class App extends Component {
