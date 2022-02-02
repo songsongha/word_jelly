@@ -2,26 +2,19 @@ import React, { Component } from 'react';
 import Lobby from './components/Lobby/Lobby';
 import Navigation from './components/Navigation/Navigation';
 import GamePlay from './components/GamePlay/GamePlay';
-
-const initialState = {
-  route: 'play'
-}
-
-class App extends Component {
-
-constructor(){
-  super();
-  this.state = initialState;
-  }
+import GameSetUp from './components/GameSetUp/GameSetUp';
 
 
-  render(){
-    const {route} = this.state;
+const App = () => {
+
+const [route, setRoute] = React.useState('lobby')
     let display;
     if (route === 'lobby') {
-      display = <Lobby />
+      display = <Lobby setRoute={setRoute}/>
     } else if (route === 'play') {
       display = <GamePlay />
+    } else if (route === 'setup') {
+       display = <GameSetUp setRoute={setRoute}/>
     }
 
     return(
@@ -29,8 +22,7 @@ constructor(){
         <Navigation/>
         {display}
       </div>
-      );
+      )
   }
-}
 
 export default App;
