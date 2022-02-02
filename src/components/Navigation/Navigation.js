@@ -8,9 +8,9 @@ const Navigation = () => {
 			<nav style={{display: 'flex', justifyContent: 'flex-end'}}>
 				<a href="https://www.ultraboardgames.com/letter-jam/game-rules.php" target="_blank" rel="noreferrer" className='f3 link dim black underline pa3 pointer'>Rules</a>
 			</nav>
-			<div className = 'tc'>
+			<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
 				<h1 className= 'title f1'> Word Jelly</h1>
-				<img src={logo} alt="Logo" />
+				<img src={logo} alt='Logo' width='150'/>
 			</div>
 		</div>
 	);
