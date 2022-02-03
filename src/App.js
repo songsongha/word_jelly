@@ -3,6 +3,7 @@ import Lobby from './components/Lobby/Lobby';
 import Navigation from './components/Navigation/Navigation';
 import GamePlay from './components/GamePlay/GamePlay';
 import GameSetUp from './components/GameSetUp/GameSetUp';
+import NewGame from './components/NewGame/NewGame';
 
 
 const App = () => {
@@ -15,7 +16,9 @@ const [route, setRoute] = React.useState('lobby')
       display = <GamePlay />
     } else if (route === 'setup') {
        display = <GameSetUp setRoute={setRoute}/>
-    }
+    } else if (route === 'newGame') {
+      display = <NewGame setRoute={setRoute}/>
+   }
 
     return(
       <div>

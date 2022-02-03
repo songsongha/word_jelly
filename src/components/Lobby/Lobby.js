@@ -102,7 +102,7 @@ const Lobby = ({setRoute}) => {
 
 	return ( 
 		<div className='tc'>
-			<button id = 'btnCreate'>New Game</button>
+			<button id = 'btnCreate'onClick={() => setRoute('newGame')}>New Game</button>
 			<button id = 'btnJoin' onClick={() => setRoute('setup')}>Join Game</button>
 			<input type = 'text' id = 'txtGameId'/>
 		</div>
