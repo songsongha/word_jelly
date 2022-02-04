@@ -4,6 +4,14 @@ import CardFaceDown from '../Cards/CardFaceDown';
 import ClueToken from '../ClueToken/ClueToken';
 
 const GamePlay = () => {
+	const GiveClue = () =>{
+		console.log('draw card')
+	  }
+	  
+	  const NextCard = () =>{
+		console.log('play card')
+	  }
+	  
 	return ( 
 		<div className = 'tc pa4'>
 			<div> 
