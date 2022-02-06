@@ -8,14 +8,14 @@ const GiveClue = () =>{
   
   // game logic move to different file
  export const WordJellyGame = {
-    setup: ctx => ({ words: [], letters: [], playerName: [] }),
+    setup: () => ({ words: [], letters: [], playerName: [] }),
     turn: { moveLimit: 1 },
   
     phases: {
       draw: {
         moves: { GiveClue},
       },
-  
+      
       play: {
         moves: { NextCard },
       },

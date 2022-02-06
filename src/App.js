@@ -14,7 +14,7 @@ const [route, setRoute] = useState('lobby')
 const [numPlayers, setNumPlayer]= useState('')
 const [wordLength, setWordLength]= useState('')
 const [word, setWord]= useState('')
-const [playerName, setPlayerName]= useState('')
+const [player, setPlayer] = useState({})
   
   const WordJellyClient = Client({
     game: WordJellyGame,
@@ -27,10 +27,10 @@ const [playerName, setPlayerName]= useState('')
     if (route === 'lobby') {
       display = <Lobby setRoute={setRoute}/>
     } else if (route === 'play') {
-      display = <WordJellyClient />
+      display = <WordJellyClient playerID={player.playerID}  />
       // display = <GamePlay />
     } else if (route === 'setup') {
-       display = <GameSetUp setRoute={setRoute} wordLength={wordLength} setWord = {setWord} setPlayerName={setPlayerName}/>
+       display = <GameSetUp setRoute={setRoute} wordLength={wordLength} setWord = {setWord} setPlayer={setPlayer}/>
     } else if (route === 'newGame') {
       display = <NewGame setRoute={setRoute} setNumPlayer={setNumPlayer} setWordLength={setWordLength}/>
    }
