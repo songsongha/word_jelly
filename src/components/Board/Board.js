@@ -3,19 +3,33 @@ import CardFaceUp from '../Cards/CardFaceUp';
 import CardFaceDown from '../Cards/CardFaceDown';
 import ClueToken from '../ClueToken/ClueToken';
 
-const GamePlay = () => {
-	const GiveClue = () =>{
-		console.log('draw card')
-	  }
-	  
-	  const NextCard = () =>{
-		console.log('play card')
-	  }
-	  
+const Board = ({ ctx, G, moves, playerId, isActive }) => {
+
+    const submitForm = () => {
+        const player = {
+            name: document.getElementById('txtName').value,
+            playerId: document.getElementById('txtNum').value
+        }  
+        console.log({player})
+        setPlayer(player)
+        setWord(document.getElementById('txtWord').value)
+        setRoute('play')
+      }
+
+	return ( 
+		<div className='tc'>
+            Player Num: <input type = 'text' id = 'txtNum' />
+			Name: <input type = 'text' id = 'txtName'/>
+            Word: <input type = 'text' id = 'txtWord'/>
+            <button id = 'btnSubmit'onClick={submitForm}>Submit</button>
+		</div>
+		)
+}
+
 	return ( 
 		<div className = 'tc pa4'>
 			<div> 
-	          	<CardFaceUp/>
+	          	<CardFaceUp letter={G.letter}/>
 	          	<CardFaceUp/>
 	          	<CardFaceUp/>
 	          	<CardFaceUp/>
@@ -45,4 +59,4 @@ const GamePlay = () => {
         </div> 
 		)
 }
-export default GamePlay
+export default Board

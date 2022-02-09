@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 
 const GameSetUp = ({setRoute, wordLength, setWord, setPlayer}) => {
     const guid=()=> {
@@ -10,7 +9,7 @@ const GameSetUp = ({setRoute, wordLength, setWord, setPlayer}) => {
     const submitForm = () => {
         const player = {
             name: document.getElementById('txtName').value,
-            playerId: guid()
+            playerId: document.getElementById('txtNum').value
         }  
         console.log({player})
         setPlayer(player)
@@ -20,6 +19,7 @@ const GameSetUp = ({setRoute, wordLength, setWord, setPlayer}) => {
 
 	return ( 
 		<div className='tc'>
+            Player Num: <input type = 'text' id = 'txtNum' />
 			Name: <input type = 'text' id = 'txtName'/>
             Word: <input type = 'text' id = 'txtWord'/>
             <button id = 'btnSubmit'onClick={submitForm}>Submit</button>
