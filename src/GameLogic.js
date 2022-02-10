@@ -13,12 +13,12 @@ const NextCard = () => {
     console.log('next card')
 }
 
-export const createGame = (numberOfPlayers) => {
-    return {
+export const WordJellyGame = {
       name: 'word-jelly',
       setup: () => {
         const players = [];
-        for (let p = 0; p < numberOfPlayers; p++) {
+        //just doing 6 player version for now
+        for (let p = 0; p < 6; p++) {
           players.push({
             id: p.toString(),
             name: "Player " + (p+1),
@@ -26,7 +26,6 @@ export const createGame = (numberOfPlayers) => {
             usedClue: false
           });
         }
-        //other variables in the object?
         return ({
           players
         });
@@ -44,6 +43,5 @@ export const createGame = (numberOfPlayers) => {
         },
       },
     }
-}
 
 

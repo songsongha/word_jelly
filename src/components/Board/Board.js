@@ -6,16 +6,17 @@ import ClueToken from '../ClueToken/ClueToken';
 const Board = ({ ctx, G, moves, playerId, isActive }) => {
 
     const submitForm = () => {
-        const player = {
-            name: document.getElementById('txtName').value,
-            playerId: document.getElementById('txtNum').value
-        }  
-        console.log({player})
-        setPlayer(player)
-        setWord(document.getElementById('txtWord').value)
-        setRoute('play')
+		console.log('submit form')
+        // const player = {
+        //     name: document.getElementById('txtName').value,
+        //     playerId: document.getElementById('txtNum').value
+        // }  
+        // console.log({player})
+        // setPlayer(player)
+        // setWord(document.getElementById('txtWord').value)
+        // setRoute('play')
       }
-
+if (ctx.phase === 'inputWords') {
 	return ( 
 		<div className='tc'>
             Player Num: <input type = 'text' id = 'txtNum' />
@@ -24,7 +25,7 @@ const Board = ({ ctx, G, moves, playerId, isActive }) => {
             <button id = 'btnSubmit'onClick={submitForm}>Submit</button>
 		</div>
 		)
-}
+} else {
 
 	return ( 
 		<div className = 'tc pa4'>
@@ -58,5 +59,6 @@ const Board = ({ ctx, G, moves, playerId, isActive }) => {
 
         </div> 
 		)
+	}
 }
 export default Board

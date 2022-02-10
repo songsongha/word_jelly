@@ -3,7 +3,7 @@ import Lobby from './components/Lobby/Lobby';
 import Navigation from './components/Navigation/Navigation';
 import GameSetUp from './components/GameSetUp/GameSetUp';
 import NewGame from './components/NewGame/NewGame';
-import { createGame } from './GameLogic';
+import {WordJellyGame} from './GameLogic';
 import { Client } from "boardgame.io/react";
 import { SocketIO } from "boardgame.io/multiplayer";
 import Board from './components/Board/Board'
@@ -26,11 +26,11 @@ const [player, setPlayer] = useState({})
       // display = <Board />
     } else if (route === 'setup') {
       const WordJellyClient = Client({
-            game: createGame(numPlayers),
+            game: WordJellyGame,
             numPlayers: numPlayers,
             board: Board,
             //   debug: false
-            // multiplayer: SocketIO({ server: "localhost:8000" })
+            multiplayer: SocketIO({ server: "localhost:8000" })
         })
       display = <WordJellyClient />
 
