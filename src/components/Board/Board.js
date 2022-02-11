@@ -3,10 +3,12 @@ import CardFaceUp from '../Cards/CardFaceUp';
 import CardFaceDown from '../Cards/CardFaceDown';
 import ClueToken from '../ClueToken/ClueToken';
 
-const Board = ({ ctx, G, moves, playerId, isActive }) => {
-
+const Board = ({ ctx, G, moves, playerID, isActive }) => {
     const submitForm = () => {
-		console.log('submit form')
+		const name = document.getElementById('txtName').value
+		const word = document.getElementById('txtWord').value
+
+		moves.InputWords(G, name, word, playerID)
         // const player = {
         //     name: document.getElementById('txtName').value,
         //     playerId: document.getElementById('txtNum').value
@@ -19,7 +21,6 @@ const Board = ({ ctx, G, moves, playerId, isActive }) => {
 if (ctx.phase === 'inputWords') {
 	return ( 
 		<div className='tc'>
-            Player Num: <input type = 'text' id = 'txtNum' />
 			Name: <input type = 'text' id = 'txtName'/>
             Word: <input type = 'text' id = 'txtWord'/>
             <button id = 'btnSubmit'onClick={submitForm}>Submit</button>

@@ -13,29 +13,23 @@ import Board from './components/Board/Board'
 const App = () => {
     
 const [route, setRoute] = useState('lobby')
-const [numPlayers, setNumPlayer]= useState('')
-const [wordLength, setWordLength]= useState('')
-const [word, setWord]= useState('')
-const [player, setPlayer] = useState({})
+const [playerId, setPlayerId] = useState({})
   
     let display;
     if (route === 'lobby') {
       display = <Lobby setRoute={setRoute}/>
     } else if (route === 'play') {
-      // display = createClient()/>
-      // display = <Board />
-    } else if (route === 'setup') {
       const WordJellyClient = Client({
             game: WordJellyGame,
-            numPlayers: numPlayers,
+            numPlayers: 6,
             board: Board,
             //   debug: false
             multiplayer: SocketIO({ server: "localhost:8000" })
         })
-      display = <WordJellyClient />
+      display = <WordJellyClient playerID={playerId} />
 
     } else if (route === 'newGame') {
-      display = <NewGame setRoute={setRoute} setNumPlayer={setNumPlayer} setWordLength={setWordLength}/>
+      display = <NewGame setRoute={setRoute} setPlayerId={setPlayerId}/>
    }
 
     return(
