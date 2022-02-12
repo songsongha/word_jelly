@@ -1,16 +1,5 @@
 
 
-// game logic move to different file?
-const InputWords = (G, userName, word, playerID) => {
-
-    console.log('move: inputWords')
-    console.log('G', G)
-    console.log('G.Players', G.players)
-    console.log('G.Players[playerId]', G.players[playerID])
-    G.players[playerID].name = userName
-    G.words[Number(playerID)] = word
-}
-
 const GiveClue = () => {
     console.log('give clue')
 }
@@ -19,6 +8,7 @@ const NextCard = () => {
     console.log('next card')
 }
 const areAllWordsIn = (G) => {
+    console.log('Are all words in check')
     console.log('G.words', G.words)
     if (G.words.includes(undefined)){
         console.log('contains undefined')
@@ -48,7 +38,18 @@ export const WordJellyGame = {
       },
       phases: {
         inputWords: {
-            moves: {InputWords},
+            moves: {
+                inputWords: (G, ctx, playerID, name, word) => {
+
+                    console.log('move: InputWords')
+                    console.log('G', G)
+                    console.log('G.words', G.words)
+                    console.log('G.Players', G.players)
+                    console.log('G.Players[playerId]', G.players[playerID])
+                    G.players[playerID].name = name
+                    G.words[Number(playerID)] = word
+                }
+            },
             start: true,
             next: 'play',
             endIf: G => (areAllWordsIn(G))

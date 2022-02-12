@@ -8,7 +8,7 @@ const Board = ({ ctx, G, moves, playerID, isActive }) => {
 		const name = document.getElementById('txtName').value
 		const word = document.getElementById('txtWord').value
 
-		moves.InputWords(G, name, word, playerID)
+		moves.inputWords(playerID, name, word)
         // const player = {
         //     name: document.getElementById('txtName').value,
         //     playerId: document.getElementById('txtNum').value
