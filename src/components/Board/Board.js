@@ -35,7 +35,10 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	for (let player = 0; player < G.players.length; player++) {
 		if (player !== Number(playerID)){
 			cardRow.push(
-				<CardFaceUp letter={G.words[player][G.players[player].letterPosition]} />
+				<CardFaceUp 
+				key = {`card${player}`}
+				letter = {G.words[player][G.players[player].letterPosition]}
+				player = {G.players[player]} />
 			)
 		}
 	  }
