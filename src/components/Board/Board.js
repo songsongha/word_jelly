@@ -5,17 +5,9 @@ import ClueToken from '../ClueToken/ClueToken';
 // set up board so that once everyone selects a player then we move to the input words stage
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
-console.log({isActive})
-    const playerReady = () => {
-		
-		console.log('player Ready triggered')
-		// events.setPhase('inputWords')
-		events.setActivePlayers({ all: 'inputWords', minMoves: 1, maxMoves: 1})
-      }
 
 	const submitWord = () => {
 		
-		console.log('input word triggered')
 		const name = document.getElementById('txtName').value
 		const word = document.getElementById('txtWord').value 
 
@@ -37,14 +29,26 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 		</div>
 		)
 }else if (ctx.phase === 'play') {
+	let cardRow = []
+	
+	// show a letter from every player other than you
+	for (let player = 0; player < G.players.length; player++) {
+		if (player !== Number(playerID)){
+			cardRow.push(
+				<CardFaceUp letter={G.words[player][G.players[player].letterPosition]} />
+			)
+		}
+	  }
+	
 	return ( 
 		<div className = 'tc pa4'>
 			<div> 
-	          	<CardFaceUp letter={G.letter}/>
+				{cardRow}
+	          	{/* <CardFaceUp letter={G.letter}/>
 	          	<CardFaceUp/>
 	          	<CardFaceUp/>
 	          	<CardFaceUp/>
-	          	<CardFaceUp/>
+	          	<CardFaceUp/> */}
 	          	<br/>
 	        	<br/>
 	        </div>
@@ -72,7 +76,8 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	} else {
 		return (
 			<div className='tc'>
-				<button id = 'btnSubmit'onClick={playerReady}>Ready</button>
+				Issue with phase, see console
+				{console.log('phase',ctx.phase)}
 			</div>
 		)	
 	}

@@ -10,13 +10,9 @@ const NextCard = () => {
     console.log('next card')
 }
 const areAllWordsIn = (G) => {
-    console.log('Are all words in check')
-    console.log('G.words', G.words)
     if (!G.words.length === 0 || G.words.includes(undefined) || G.words.includes(null)){
-        console.log('contains undefined')
         return false
     } 
-    console.log('all words entered')
     return true
 }
 
@@ -29,6 +25,7 @@ export const WordJellyGame = {
           players.push({
             id: p.toString(),
             name: "Player " + (p),
+            letterPosition: 0,
             usedClue: false
           });
         }
@@ -75,48 +72,6 @@ export const WordJellyGame = {
                     }
                 },
     }
-    //   phases: {
-    //     inputWords: {
-    //         // moves: {
-    //         //     inputWords: (G, ctx, playerID, name, word) => {
-
-    //         //         console.log('move: InputWords')
-    //         //         console.log('G', G)
-    //         //         console.log('G.words', G.words)
-    //         //         console.log('G.Players', G.players)
-    //         //         console.log('G.Players[playerId]', G.players[playerID])
-    //         //         G.players[playerID].name = name
-    //         //         G.words[Number(playerID)] = word
-                    
-    //         //     }
-    //         // },
-    //         turn: {
-    //             stages: {
-    //                 inputWords: {
-    //                     moves: {
-    //                         inputWords: (G, ctx, playerID, name, word) => {
-    //                             console.log('move: InputWords')
-    //                             console.log('G', G)
-    //                             console.log('G.words', G.words)
-    //                             console.log('G.Players', G.players)
-    //                             console.log('G.Players[playerId]', G.players[playerID])
-    //                             G.players[playerID].name = name
-    //                             G.words[Number(playerID)] = word
-    //                         }
-    //                     }
-    //                 }
-    //             }
-    //         },
-    //         next: 'play',
-    //         endIf: G => (areAllWordsIn(G))
-    //     },  
-    //     play: {
-    //         moves: {
-    //             giveClue: () => GiveClue,
-    //             nextCard: () => NextCard 
-    //         }
-    //     },
-    //   },
-    }
+}
 
 
