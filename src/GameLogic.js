@@ -1,4 +1,6 @@
+import { Stage, TurnOrder } from 'boardgame.io/core'
 
+// TO DO: turn order, so all players can enter words
 
 const GiveClue = () => {
     console.log('give clue')
@@ -10,7 +12,7 @@ const NextCard = () => {
 const areAllWordsIn = (G) => {
     console.log('Are all words in check')
     console.log('G.words', G.words)
-    if (G.words.includes(undefined)){
+    if (!G.words.length === 0 || G.words.includes(undefined) || G.words.includes(null)){
         console.log('contains undefined')
         return false
     } 
@@ -37,30 +39,84 @@ export const WordJellyGame = {
         });
       },
       phases: {
-        inputWords: {
+        setUp: {
             moves: {
-                inputWords: (G, ctx, playerID, name, word) => {
+                submitWords: (G, ctx, playerID, name, word) => {
 
-                    console.log('move: InputWords')
-                    console.log('G', G)
-                    console.log('G.words', G.words)
-                    console.log('G.Players', G.players)
-                    console.log('G.Players[playerId]', G.players[playerID])
+                    // commit player info and words
                     G.players[playerID].name = name
                     G.words[Number(playerID)] = word
+                    ctx.events.endStage()
+
                 }
             },
+            onEnd: (G, ctx) => {
+                // on phase end
+                console.log('setUp phase ending')
+            },
+            turn: {
+                onBegin: (G, ctx) => {
+                    // give cards to everybody
+    
+                    ctx.events.setActivePlayers({
+                        all: Stage.NULL,
+                    })
+                },
+                order: TurnOrder.ONCE
+            },
+            endIf: G => (areAllWordsIn(G)),
             start: true,
-            next: 'play',
-            endIf: G => (areAllWordsIn(G))
-        },  
-        play: {
-            moves: {
-                giveClue: () => GiveClue,
-                nextCard: () => NextCard 
-            }
+            next: 'play'
         },
-      },
+        play: {
+                    moves: {
+                        giveClue: () => GiveClue,
+                        nextCard: () => NextCard 
+                    }
+                },
+    }
+    //   phases: {
+    //     inputWords: {
+    //         // moves: {
+    //         //     inputWords: (G, ctx, playerID, name, word) => {
+
+    //         //         console.log('move: InputWords')
+    //         //         console.log('G', G)
+    //         //         console.log('G.words', G.words)
+    //         //         console.log('G.Players', G.players)
+    //         //         console.log('G.Players[playerId]', G.players[playerID])
+    //         //         G.players[playerID].name = name
+    //         //         G.words[Number(playerID)] = word
+                    
+    //         //     }
+    //         // },
+    //         turn: {
+    //             stages: {
+    //                 inputWords: {
+    //                     moves: {
+    //                         inputWords: (G, ctx, playerID, name, word) => {
+    //                             console.log('move: InputWords')
+    //                             console.log('G', G)
+    //                             console.log('G.words', G.words)
+    //                             console.log('G.Players', G.players)
+    //                             console.log('G.Players[playerId]', G.players[playerID])
+    //                             G.players[playerID].name = name
+    //                             G.words[Number(playerID)] = word
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //         },
+    //         next: 'play',
+    //         endIf: G => (areAllWordsIn(G))
+    //     },  
+    //     play: {
+    //         moves: {
+    //             giveClue: () => GiveClue,
+    //             nextCard: () => NextCard 
+    //         }
+    //     },
+    //   },
     }
 
 

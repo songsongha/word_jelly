@@ -2,32 +2,35 @@ import React from 'react';
 import CardFaceUp from '../Cards/CardFaceUp';
 import CardFaceDown from '../Cards/CardFaceDown';
 import ClueToken from '../ClueToken/ClueToken';
+// set up board so that once everyone selects a player then we move to the input words stage
 
-const Board = ({ ctx, G, moves, playerID, isActive }) => {
-    const submitForm = () => {
-		const name = document.getElementById('txtName').value
-		const word = document.getElementById('txtWord').value
-
-		moves.inputWords(playerID, name, word)
-        // const player = {
-        //     name: document.getElementById('txtName').value,
-        //     playerId: document.getElementById('txtNum').value
-        // }  
-        // console.log({player})
-        // setPlayer(player)
-        // setWord(document.getElementById('txtWord').value)
-        // setRoute('play')
+const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
+console.log({isActive})
+    const playerReady = () => {
+		
+		console.log('player Ready triggered')
+		// events.setPhase('inputWords')
+		events.setActivePlayers({ all: 'inputWords', minMoves: 1, maxMoves: 1})
       }
-if (ctx.phase === 'inputWords') {
+
+	const submitWord = () => {
+		
+		console.log('input word triggered')
+		const name = document.getElementById('txtName').value
+		const word = document.getElementById('txtWord').value 
+
+		moves.submitWords(playerID, name, word)
+      }
+
+if (ctx.phase === 'setUp') {
 	return ( 
 		<div className='tc'>
 			Name: <input type = 'text' id = 'txtName'/>
             Word: <input type = 'text' id = 'txtWord'/>
-            <button id = 'btnSubmit'onClick={submitForm}>Submit</button>
+            <button id = 'btnSubmit'onClick={submitWord}>Submit</button>
 		</div>
 		)
-} else {
-
+} else if (ctx.phase === 'play') {
 	return ( 
 		<div className = 'tc pa4'>
 			<div> 
@@ -60,6 +63,12 @@ if (ctx.phase === 'inputWords') {
 
         </div> 
 		)
+	} else {
+		return (
+			<div className='tc'>
+				<button id = 'btnSubmit'onClick={playerReady}>Ready</button>
+			</div>
+		)	
 	}
 }
 export default Board

@@ -23,7 +23,7 @@ const [playerId, setPlayerId] = useState({})
             game: WordJellyGame,
             numPlayers: 6,
             board: Board,
-            //   debug: false
+            debug: true,
             multiplayer: SocketIO({ server: "localhost:8000" })
         })
       display = <WordJellyClient playerID={playerId} />
