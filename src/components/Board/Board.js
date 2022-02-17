@@ -22,7 +22,7 @@ console.log({isActive})
 		moves.submitWords(playerID, name, word)
       }
 
-if (ctx.phase === 'setUp') {
+if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	return ( 
 		<div className='tc'>
 			Name: <input type = 'text' id = 'txtName'/>
@@ -30,7 +30,13 @@ if (ctx.phase === 'setUp') {
             <button id = 'btnSubmit'onClick={submitWord}>Submit</button>
 		</div>
 		)
-} else if (ctx.phase === 'play') {
+} else if (ctx.phase === 'setUp' && G.words[Number(playerID)]){
+	return ( 
+		<div className='tc'>
+			Waiting for other players to enter words
+		</div>
+		)
+}else if (ctx.phase === 'play') {
 	return ( 
 		<div className = 'tc pa4'>
 			<div> 
