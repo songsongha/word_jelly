@@ -72,7 +72,7 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	        	<button>Give Clue</button>
 	        </div>
 	        <div>
-	        	<CardFaceDown/><br/>
+	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/><br/>
 	        	<button id = 'nextCard' onClick = {nextCard}>Next Card</button>
 	        </div>
 
