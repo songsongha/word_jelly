@@ -5,7 +5,9 @@ import ClueToken from '../ClueToken/ClueToken';
 // set up board so that once everyone selects a player then we move to the input words stage
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
-
+	const nextCard = () => {
+		moves.nextCard(playerID)
+	}
 	const submitWord = () => {
 		
 		const name = document.getElementById('txtName').value
@@ -71,7 +73,7 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	        </div>
 	        <div>
 	        	<CardFaceDown/><br/>
-	        	<button>Next Card</button>
+	        	<button id = 'nextCard' onClick = {nextCard}>Next Card</button>
 	        </div>
 
         </div> 

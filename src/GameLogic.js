@@ -2,18 +2,35 @@ import { Stage, TurnOrder } from 'boardgame.io/core'
 
 // TO DO: turn order, so all players can enter words
 
-const GiveClue = () => {
+const GiveClue = (ctx) => {
     console.log('give clue')
+    ctx.events.setActivePlayers({
+        others: 'wait',
+    })
+    // give clue information
+    // put everyone back to play phase
+    // ctx.events.setActivePlayers({
+    //     others: 'play',
+    // })
 }
   
-const NextCard = () => {
-    console.log('next card')
-}
+// const NextCard = ({G, playerID}) => {
+//     console.log('nextcard called')
+//     console.log(G.players[playerID].letterPosition)
+//     G.players[Number(playerID)].letterPosition++
+    
+// }
 const areAllWordsIn = (G) => {
     if (!G.words.length === 0 || G.words.includes(undefined) || G.words.includes(null)){
         return false
     } 
     return true
+}
+
+const isGameOver = (G) => {
+    // if all clues are gone or all players have decided that they know their words
+
+    return false
 }
 
 export const WordJellyGame = {
@@ -48,7 +65,7 @@ export const WordJellyGame = {
                 }
             },
             onEnd: (G, ctx) => {
-                // on phase end
+                // on phase end, shuffle words here?
                 console.log('setUp phase ending')
             },
             turn: {
@@ -61,16 +78,54 @@ export const WordJellyGame = {
                 },
                 order: TurnOrder.ONCE
             },
-            endIf: G => (areAllWordsIn(G)),
             start: true,
+            endIf: G => (areAllWordsIn(G)),
             next: 'play'
         },
         play: {
-                    moves: {
-                        giveClue: () => GiveClue,
-                        nextCard: () => NextCard 
-                    }
+            moves: {
+                giveClue: () => GiveClue,
+                nextCard: (G, ctx, playerID) => {
+                    console.log('nextcard called')
+                    console.log('G', G)
+                    console.log('playerID', playerID)
+                    console.log('G.players', G.players)
+                    console.log('G.players[playerID]', G.players[playerID])
+                    console.log('letterPosition', G.players[playerID].letterPosition)
+                    G.players[Number(playerID)].letterPosition++
+                    console.log('letterPosition after', G.players[playerID].letterPosition)
+                }
+            },
+            onEnd: (G, ctx) => {
+                // on phase end
+                console.log('play phase ending')
+            },
+            turn: {
+                onBegin: (G, ctx) => {
+                    // all players can choose to give a clue or cycle their cards
+                    ctx.events.setActivePlayers({
+                        all: Stage.NULL,
+                    })
                 },
+                order: TurnOrder.ONCE
+            },
+            endIf: G => (isGameOver(G)),
+            next: 'reveal'
+
+        },
+        wait: {
+            moves: {
+                // no moves can be made when waiting
+            },
+            onEnd: (G, ctx) => {
+                // on phase end, shuffle words here?
+                console.log('wait phase ending')
+            },
+            next: 'play'
+        },
+        reveal: {
+
+        }
     }
 }
 
