@@ -87,7 +87,12 @@ export const WordJellyGame = {
             moves: {
                 giveClue: (G, ctx) => {GiveClue(G, ctx)},
                 nextCard: (G, ctx, playerID) => {
-                    G.players[Number(playerID)].letterPosition++
+                    // if letter position is not the last letter increase position 
+                    if (G.players[playerID].letterPosition < G.words[playerID].length-1){
+                        G.players[playerID].letterPosition++
+                    } else {
+                        console.log('bonus letters?')
+                    }
                 }
             },
             onEnd: (G, ctx) => {
