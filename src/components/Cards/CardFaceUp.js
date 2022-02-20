@@ -3,7 +3,7 @@ import React from 'react';
 
 const CardFaceUp = ({letter, player}) => {
 	
-	let cardNo = player.letterPosition + 1 || 'N/A'
+	let cardNo = player.letterPosition + 1 || ''
 
  	if (!letter){
 		letter = 'A'
@@ -14,8 +14,8 @@ const CardFaceUp = ({letter, player}) => {
 		<div className= 'card tc bg-dark-gray white dib br3 pa3 ma2 grow bw2 shadow-5'>
 			<div>
 				<h1>{letter} </h1>
-				<p> {player && player.name ? player.name : 'Player' }</p>
-				<p> Card {cardNo}</p>
+				<p> {player && player.name ? player.name : '' }</p>
+				<p> {cardNo ? `Card ${cardNo}` : '' } </p>
 			</div>
 		</div>
 		)

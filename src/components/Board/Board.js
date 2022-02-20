@@ -8,6 +8,9 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const nextCard = () => {
 		moves.nextCard(playerID)
 	}
+	const giveClue = () => {
+		moves.giveClue()
+	}
 	const submitWord = () => {
 		
 		const name = document.getElementById('txtName').value
@@ -32,6 +35,9 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 		)
 }else if (ctx.phase === 'play') {
 	let cardRow = []
+	let wildCard = {
+		name: 'Wild'
+	}
 	
 	// show a letter from every player other than you
 	for (let player = 0; player < G.players.length; player++) {
@@ -49,6 +55,9 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 		<div className = 'tc pa4'>
 			<div> 
 				{cardRow}
+				<div>
+					<CardFaceUp letter='*' player ={wildCard}/>
+				</div>
 	          	{/* <CardFaceUp letter={G.letter}/>
 	          	<CardFaceUp/>
 	          	<CardFaceUp/>
@@ -69,7 +78,7 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	        	<ClueToken color = {'green'}/>
 	        	<ClueToken color = {'gray'}/>
 	        	<ClueToken color = {'gray'}/><br/>
-	        	<button>Give Clue</button>
+	        	<button id= 'giveClue' onClick = {giveClue}>Give Clue</button>
 	        </div>
 	        <div>
 	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/><br/>

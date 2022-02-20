@@ -2,8 +2,9 @@ import { Stage, TurnOrder } from 'boardgame.io/core'
 
 // TO DO: turn order, so all players can enter words
 
-const GiveClue = (ctx) => {
+const GiveClue = (G,ctx) => {
     console.log('give clue')
+    console.log({ctx})
     ctx.events.setActivePlayers({
         others: 'wait',
     })
@@ -84,16 +85,9 @@ export const WordJellyGame = {
         },
         play: {
             moves: {
-                giveClue: () => GiveClue,
+                giveClue: (G, ctx) => {GiveClue(G, ctx)},
                 nextCard: (G, ctx, playerID) => {
-                    console.log('nextcard called')
-                    console.log('G', G)
-                    console.log('playerID', playerID)
-                    console.log('G.players', G.players)
-                    console.log('G.players[playerID]', G.players[playerID])
-                    console.log('letterPosition', G.players[playerID].letterPosition)
                     G.players[Number(playerID)].letterPosition++
-                    console.log('letterPosition after', G.players[playerID].letterPosition)
                 }
             },
             onEnd: (G, ctx) => {
