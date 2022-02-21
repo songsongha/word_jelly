@@ -1,13 +1,14 @@
 import { Stage, TurnOrder } from 'boardgame.io/core'
 
-// TO DO: turn order, so all players can enter words
+const restrictActions = (G) => {
+    // write a function to prevent give clue and next card functions.
 
-const GiveClue = (G,ctx) => {
+}
+
+const GiveClue = (G, ctx, playerID) => {
     console.log('give clue')
     console.log({ctx})
-    ctx.events.setActivePlayers({
-        others: 'wait',
-    })
+    
     // give clue information
     // put everyone back to play phase
     // ctx.events.setActivePlayers({
@@ -15,12 +16,6 @@ const GiveClue = (G,ctx) => {
     // })
 }
   
-// const NextCard = ({G, playerID}) => {
-//     console.log('nextcard called')
-//     console.log(G.players[playerID].letterPosition)
-//     G.players[Number(playerID)].letterPosition++
-    
-// }
 const areAllWordsIn = (G) => {
     if (!G.words.length === 0 || G.words.includes(undefined) || G.words.includes(null)){
         return false
@@ -48,9 +43,14 @@ export const WordJellyGame = {
           });
         }
         const words = Array(6)
+        const isClueAvailable = Array(6).fill(true)
+        const isNextCardAvailable = true
+
         return ({
           players,
-          words
+          words,
+          isClueAvailable,
+          isNextCardAvailable
         });
       },
       phases: {
@@ -59,7 +59,8 @@ export const WordJellyGame = {
                 submitWords: (G, ctx, playerID, name, word) => {
 
                     // commit player info and words
-                    G.players[playerID].name = name
+                    if (name) G.players[playerID].name = name
+
                     G.words[Number(playerID)] = word
                     ctx.events.endStage()
 
@@ -106,7 +107,7 @@ export const WordJellyGame = {
                         all: Stage.NULL,
                     })
                 },
-                order: TurnOrder.ONCE
+                // order:  TurnOrder.CUSTOM(['0']),
             },
             endIf: G => (isGameOver(G)),
             next: 'reveal'
@@ -117,7 +118,6 @@ export const WordJellyGame = {
                 // no moves can be made when waiting
             },
             onEnd: (G, ctx) => {
-                // on phase end, shuffle words here?
                 console.log('wait phase ending')
             },
             next: 'play'

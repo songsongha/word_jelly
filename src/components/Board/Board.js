@@ -6,9 +6,12 @@ import ClueToken from '../ClueToken/ClueToken';
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const nextCard = () => {
+
 		moves.nextCard(playerID)
 	}
 	const giveClue = () => {
+		console.log('give clue called')
+		events.endTurn({ next: playerID })
 		moves.giveClue()
 	}
 	const submitWord = () => {
@@ -78,11 +81,11 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	        	<ClueToken color = {'green'}/>
 	        	<ClueToken color = {'gray'}/>
 	        	<ClueToken color = {'gray'}/><br/>
-	        	<button id= 'giveClue' onClick = {giveClue}>Give Clue</button>
+	        	{ G.isClueAvailable[playerID] && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
 	        </div>
 	        <div>
 	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/><br/>
-	        	<button id = 'nextCard' onClick = {nextCard}>Next Card</button>
+	        	{ G.isNextCardAvailable && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
 	        </div>
 
         </div> 
