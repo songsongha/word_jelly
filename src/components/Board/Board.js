@@ -5,14 +5,15 @@ import ClueToken from '../ClueToken/ClueToken';
 // set up board so that once everyone selects a player then we move to the input words stage
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
-	const nextCard = () => {
+	const nextCard = async () => {
 
 		moves.nextCard(playerID)
 	}
-	const giveClue = () => {
+	const giveClue = async () => {
 		console.log('give clue called')
+		console.log({playerID})
 		events.endTurn({ next: playerID })
-		moves.giveClue()
+		// await moves.giveClue(playerID)
 	}
 	const submitWord = () => {
 		
@@ -81,11 +82,11 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	        	<ClueToken color = {'green'}/>
 	        	<ClueToken color = {'gray'}/>
 	        	<ClueToken color = {'gray'}/><br/>
-	        	{ G.isClueAvailable[playerID] && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
+	        	{ G.players[playerID].isClueAvailable && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
 	        </div>
 	        <div>
 	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/><br/>
-	        	{ G.isNextCardAvailable && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
+	        	{ G.players[playerID].isNextCardAvailable && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
 	        </div>
 
         </div> 
