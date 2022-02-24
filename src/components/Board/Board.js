@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useState} from 'react';
 import CardFaceUp from '../Cards/CardFaceUp';
 import CardFaceDown from '../Cards/CardFaceDown';
 import ClueToken from '../ClueToken/ClueToken';
+import Modal from '../Modal/Modal'
 // set up board so that once everyone selects a player then we move to the input words stage
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
+	const [openModal, setOpenModal] = useState(false)
 	const nextCard = async () => {
 
 		moves.nextCard(playerID)
@@ -12,6 +14,7 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const giveClue = async () => {
 		console.log('give clue called')
 		console.log({playerID})
+		setOpenModal(true)
 		events.endTurn({ next: playerID })
 		// await moves.giveClue(playerID)
 	}
@@ -84,6 +87,7 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	        	<ClueToken color = {'gray'}/><br/>
 	        	{ G.players[playerID].isClueAvailable && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
 	        </div>
+			<Modal show={openModal} onClose={() => setOpenModal(false)}/>
 	        <div>
 	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/><br/>
 	        	{ G.players[playerID].isNextCardAvailable && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
