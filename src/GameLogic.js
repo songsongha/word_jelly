@@ -30,7 +30,9 @@ const giveClue =  (G, ctx, playerID) => {
 
 // }
 
-  
+const shuffle = (str) =>{
+    return [...str].sort(()=>Math.random()-.5).join('')
+}
 const areAllWordsIn = (G) => {
     if (!G.words.length === 0 || G.words.includes(undefined) || G.words.includes(null)){
         return false
@@ -56,7 +58,8 @@ export const WordJellyGame = {
             letterPosition: 0,
             usedClue: false,
             isClueAvailable: true,
-            isNextCardAvailable: true
+            isNextCardAvailable: true,
+            word: ''
           });
         }
         const words = Array(6)
@@ -74,7 +77,9 @@ export const WordJellyGame = {
                     // commit player info and words
                     if (name) G.players[playerID].name = name
 
-                    G.words[Number(playerID)] = word
+                    G.players[playerID].word = word
+                    G.words[Number(playerID)] = shuffle(word)
+
                     ctx.events.endStage()
 
                 }
