@@ -78,7 +78,13 @@ export const WordJellyGame = {
                     if (name) G.players[playerID].name = name
 
                     G.players[playerID].word = word
-                    G.words[Number(playerID)] = shuffle(word)
+                    
+                    // shuffle words and assign to person to the right
+                    if (Number(playerID) < G.players.length){
+                        G.words[Number(playerID) + 1] = shuffle(word)
+                    } else {
+                        G.words[0] = shuffle(word)
+                    }
 
                     ctx.events.endStage()
 
