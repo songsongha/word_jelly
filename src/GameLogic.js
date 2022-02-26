@@ -1,34 +1,19 @@
 import { Stage, TurnOrder } from 'boardgame.io/core'
 
 const restrictActions = (G, ctx, playerID) => {
-    console.log('restric actions called')
-    
-    // write a function to prevent give clue and next card functions.
     for (let player = 0; player < G.players.length; player++) {
-			G.players[player].isClueAvailable = false
+            G.players[player].isClueAvailable = false
             G.players[player].isNextCardAvailable = false
-		}
-	  }
-
-
-const giveClue =  (G, ctx, playerID) => {
-    console.log('give clue')
-    restrictActions(G, ctx, playerID)
-    console.log('doing some stuff')
-    // give clue information
-    // restore action status
+        }
 }
-// const setActionStatus = (G, ctx, playerID) => {
-//     // write a function to set action status to appropriate status.
-//     for (let player = 0; player < G.players.length; player++) {
-// 		if (player !== Number(playerID)){
-//             // true for now, need to add logic
-// 			G.isClueAvailable[playerID] = true
-//             G.isNextCardAvailable[playerID] = true
-// 		}
-// 	  }
-
-// }
+const restoreActionStatus = (G, ctx, playerID) => {
+    // write a function to set action status to appropriate status.
+    for (let player = 0; player < G.players.length; player++) {
+            // true for now, need to add logic
+			G.players[player].isClueAvailable = true
+            G.players[player].isNextCardAvailable = true
+		}
+}
 
 const shuffle = (str) =>{
     return [...str].sort(()=>Math.random()-.5).join('')
@@ -80,7 +65,7 @@ export const WordJellyGame = {
                     G.players[playerID].word = word
                     
                     // shuffle words and assign to person to the right
-                    if (Number(playerID) < G.players.length){
+                    if (Number(playerID) < G.players.length-1){
                         G.words[Number(playerID) + 1] = shuffle(word)
                     } else {
                         G.words[0] = shuffle(word)
@@ -109,16 +94,11 @@ export const WordJellyGame = {
         },
         play: {
             moves: {
-                // giveClue: (G, ctx, playerID) => {
-                //     console.log('give clue')
-                //     restrictActions(G, ctx, playerID)
-                //     console.log('doing some stuff')
-                //     // give clue information
-                //     // put everyone back to play phase
-                //     // ctx.events.setActivePlayers({
-                //     //     others: 'play',
-                //     // })
-                // },
+                giveClue: (G, ctx, playerID) => {
+                    console.log('give clue')
+
+                    restoreActionStatus(G, ctx, playerID)
+                },
                 nextCard: (G, ctx, playerID) => {
                     // if letter position is not the last letter increase position 
                     if (G.players[playerID].letterPosition < G.words[playerID].length-1){
@@ -139,7 +119,8 @@ export const WordJellyGame = {
                         all: Stage.NULL,
                     })
                     if (ctx.turn > 2){
-                        giveClue(G, ctx, playerID)
+                        console.log('turn greater than 2')
+                        restrictActions(G, ctx, playerID)
                     }
                 },
                 // order:  TurnOrder.CUSTOM(['0']),

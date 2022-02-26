@@ -7,16 +7,21 @@ import Modal from '../Modal/Modal'
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
-	const nextCard = async () => {
+	const nextCard = () => {
 
 		moves.nextCard(playerID)
 	}
-	const giveClue = async () => {
+
+	const giveClue = () => {
 		console.log('give clue called')
-		console.log({playerID})
-		setOpenModal(true)
 		events.endTurn({ next: playerID })
-		// await moves.giveClue(playerID)
+		setOpenModal(true)
+	}
+
+	const submitClue = (props) => {
+		console.log({props})
+		moves.giveClue(G, ctx, playerID)
+		setOpenModal(false)
 	}
 	const submitWord = () => {
 		
@@ -26,7 +31,7 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		moves.submitWords(playerID, name, word)
       }
 
-if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
+if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	return ( 
 		<div className='tc'>
 			Name: <input type = 'text' id = 'txtName'/>
@@ -34,7 +39,7 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
             <button id = 'btnSubmit'onClick={submitWord}>Submit</button>
 		</div>
 		)
-} else if (ctx.phase === 'setUp' && G.words[Number(playerID)]){
+} else if (ctx.phase === 'setUp' && G.players[playerID].word){
 	return ( 
 		<div className='tc'>
 			Waiting for other players to enter words
@@ -87,7 +92,7 @@ if (ctx.phase === 'setUp' && !G.words[Number(playerID)]){
 	        	<ClueToken color = {'gray'}/><br/>
 	        	{ G.players[playerID].isClueAvailable && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
 	        </div>
-			<Modal show={openModal} onClose={() => setOpenModal(false)}/>
+			<Modal show={openModal} onClose={submitClue} G={G} playerID={playerID}/>
 	        <div>
 	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/><br/>
 	        	{ G.players[playerID].isNextCardAvailable && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
