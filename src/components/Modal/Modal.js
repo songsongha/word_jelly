@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './modal.css'
 
-const Modal = ({show, onClose, G, playerID}) => {
+const Modal = ({show, onClose, G, playerID, moves}) => {
     const [formValues, setFormValues] = useState({})
 
     if (!show){
@@ -52,10 +52,11 @@ const Modal = ({show, onClose, G, playerID}) => {
     }  
     
     const handleSubmit = () => {
-        console.log({formValues})
+        moves.giveClue({...formValues})
         onClose()
     }
     const handleCancel = () => {
+        // need to find a way to restore action status
         setFormValues({})
         onClose()
     }
@@ -69,7 +70,7 @@ const Modal = ({show, onClose, G, playerID}) => {
                         {clueForm}
                 </main>
                 <footer className='modal-footer'>
-                    <button className='button' onClick={handleCancel}>Cancel</button>
+                    {/* <button className='button' onClick={handleCancel}>Cancel</button> */}
                     <button className='button' onClick={handleSubmit}>Submit</button>
                 </footer>
             </div>

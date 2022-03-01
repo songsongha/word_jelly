@@ -3,12 +3,12 @@ import CardFaceUp from '../Cards/CardFaceUp';
 import CardFaceDown from '../Cards/CardFaceDown';
 import ClueToken from '../ClueToken/ClueToken';
 import Modal from '../Modal/Modal'
+import CluePanel from '../CluePanel/CluePanel'
 // set up board so that once everyone selects a player then we move to the input words stage
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
 	const nextCard = () => {
-
 		moves.nextCard(playerID)
 	}
 
@@ -18,9 +18,8 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		setOpenModal(true)
 	}
 
-	const submitClue = (props) => {
-		console.log({props})
-		moves.giveClue(G, ctx, playerID)
+	const submitClue = () => {
+		// moves.giveClue(G, ctx, playerID, formValues)
 		setOpenModal(false)
 	}
 	const submitWord = () => {
@@ -70,15 +69,11 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 				<div>
 					<CardFaceUp letter='*' player ={wildCard}/>
 				</div>
-	          	{/* <CardFaceUp letter={G.letter}/>
-	          	<CardFaceUp/>
-	          	<CardFaceUp/>
-	          	<CardFaceUp/>
-	          	<CardFaceUp/> */}
 	          	<br/>
 	        	<br/>
 	        </div>
 	        <div className = 'pa5'>
+				<CluePanel clues={G.clues}/>
 	        	<ClueToken color ={'red'} number = {'1'} />
 	        	<ClueToken color ={'red'} number = {'2'} /><br/>
 	        	<ClueToken color ={'red'} number= {'3'}/>
@@ -92,7 +87,7 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	        	<ClueToken color = {'gray'}/><br/>
 	        	{ G.players[playerID].isClueAvailable && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
 	        </div>
-			<Modal show={openModal} onClose={submitClue} G={G} playerID={playerID}/>
+			<Modal show={openModal} onClose={submitClue} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
 	        <div>
 	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/><br/>
 	        	{ G.players[playerID].isNextCardAvailable && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }

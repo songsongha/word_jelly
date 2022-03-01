@@ -6,7 +6,7 @@ const restrictActions = (G, ctx, playerID) => {
             G.players[player].isNextCardAvailable = false
         }
 }
-const restoreActionStatus = (G, ctx, playerID) => {
+const restoreActionStatus = (G) => {
     // write a function to set action status to appropriate status.
     for (let player = 0; player < G.players.length; player++) {
             // true for now, need to add logic
@@ -48,10 +48,13 @@ export const WordJellyGame = {
           });
         }
         const words = Array(6)
+        const clues = []
 
         return ({
           players,
-          words
+          words,
+          clues
+
         });
       },
       phases: {
@@ -94,10 +97,22 @@ export const WordJellyGame = {
         },
         play: {
             moves: {
-                giveClue: (G, ctx, playerID) => {
+                giveClue: (G, ctx, formValues) => {
+                    restoreActionStatus(G)
                     console.log('give clue')
-
-                    restoreActionStatus(G, ctx, playerID)
+                    console.log('G', G, 'ctx', ctx)
+                    console.log({formValues})
+                    const players = Object.values(formValues)
+                    console.log({players})
+                    const clue = players.map(player => {
+                        return {
+                            letter: player !== '*' ? G.words[player][G.players[player].letterPosition] : '*',
+                            player: player !== '*' ? player : undefined
+                        }
+                    })
+                    console.log({clue})
+                    G.clues[G.clues.length] = clue
+                    
                 },
                 nextCard: (G, ctx, playerID) => {
                     // if letter position is not the last letter increase position 
