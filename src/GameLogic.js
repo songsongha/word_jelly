@@ -48,7 +48,7 @@ export const WordJellyGame = {
           });
         }
         const words = Array(6)
-        const clues = []
+        let clues = []
 
         return ({
           players,
@@ -104,14 +104,15 @@ export const WordJellyGame = {
                     console.log({formValues})
                     const players = Object.values(formValues)
                     console.log({players})
-                    const clue = players.map(player => {
+                    const clue = [...G.clues] 
+                    clue.push(players.map(player => {
                         return {
                             letter: player !== '*' ? G.words[player][G.players[player].letterPosition] : '*',
                             player: player !== '*' ? player : undefined
                         }
-                    })
+                    }))
                     console.log({clue})
-                    G.clues[G.clues.length] = clue
+                    return {...G, clues: {...clue} }
                     
                 },
                 nextCard: (G, ctx, playerID) => {

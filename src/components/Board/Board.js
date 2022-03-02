@@ -73,7 +73,7 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	        	<br/>
 	        </div>
 	        <div className = 'pa5'>
-				<CluePanel clues={G.clues}/>
+				<CluePanel clues={G.clues} playerID={playerID}/>
 	        	<ClueToken color ={'red'} number = {'1'} />
 	        	<ClueToken color ={'red'} number = {'2'} /><br/>
 	        	<ClueToken color ={'red'} number= {'3'}/>
