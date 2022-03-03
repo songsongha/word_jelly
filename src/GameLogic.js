@@ -104,15 +104,19 @@ export const WordJellyGame = {
                     console.log({formValues})
                     const players = Object.values(formValues)
                     console.log({players})
-                    const clue = [...G.clues] 
-                    clue.push(players.map(player => {
-                        return {
-                            letter: player !== '*' ? G.words[player][G.players[player].letterPosition] : '*',
-                            player: player !== '*' ? player : undefined
+                    const clues = [...G.clues] 
+                    const clue = []
+                    for(let i = 0; i < players.length; i++){
+                        if(players[i]){
+                            clue.push({
+                                    letter: players[i] !== '*' ? G.words[players[i]][G.players[players[i]].letterPosition] : '*',
+                                    player: players[i] !== '*' ? players[i] : undefined
+                                })
                         }
-                    }))
-                    console.log({clue})
-                    return {...G, clues: clue }
+                    }
+                    clues.push(clue)
+                    console.log({clues})
+                    return {...G, clues: clues }
                     
                 },
                 nextCard: (G, ctx, playerID) => {

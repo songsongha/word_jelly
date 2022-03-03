@@ -6,9 +6,12 @@ const CluePanel = ({G, playerID}) => {
     const cardPosition = G.players[playerID].letterPosition + 1
     
     if (clues) {
-        for (let i = 0; clues[i]; i++) {
+        console.log({clues})
+        for (let i = 0; i < clues.length; i++) {
+            console.log('clues[i]',clues[i])
+            console.log('clues[i].length',clues[i].length)
             // only display the clue if the player is involved in the clue
-            if (clues[i].find(obj => obj.player === playerID)){
+            if (clues[i] && clues[i].length && clues[i].find(obj => obj.player === playerID)){
                 for(let j = 0; j < clues[i].length; j++){
                     display.push(
                         clues[i][j].player !== playerID ? clues[i][j].letter.toUpperCase() + ' ' : '? '
