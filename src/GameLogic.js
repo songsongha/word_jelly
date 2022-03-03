@@ -112,7 +112,7 @@ export const WordJellyGame = {
                         }
                     }))
                     console.log({clue})
-                    return {...G, clues: {...clue} }
+                    return {...G, clues: clue }
                     
                 },
                 nextCard: (G, ctx, playerID) => {
@@ -136,7 +136,7 @@ export const WordJellyGame = {
                     })
                     if (ctx.turn > 2){
                         console.log('turn greater than 2')
-                        restrictActions(G, ctx, playerID)
+                        // restrictActions(G, ctx, playerID)
                     }
                 },
                 // order:  TurnOrder.CUSTOM(['0']),
