@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 import CardFaceUp from '../Cards/CardFaceUp';
 import CardFaceDown from '../Cards/CardFaceDown';
-import ClueToken from '../ClueToken/ClueToken';
 import Modal from '../Modal/Modal'
 import CluePanel from '../CluePanel/CluePanel'
 import TokenTracker from '../TokenTracker/TokenTracker';
-// set up board so that once everyone selects a player then we move to the input words stage
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
@@ -19,10 +17,6 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		setOpenModal(true)
 	}
 
-	const submitClue = () => {
-		// moves.giveClue(G, ctx, playerID, formValues)
-		setOpenModal(false)
-	}
 	const submitWord = () => {
 		
 		const name = document.getElementById('txtName').value
@@ -30,6 +24,16 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 
 		moves.submitWords(playerID, name, word)
       }
+	
+	const isClueAvailable = () => {
+		if (G.tokensAvailable.leaves > 0 || 
+			G.players[playerID].tokensTaken === 0 || 
+			(G.tokensAvailable.red === 0 && G.tokensAvailable.restricted > 0)) {
+				return true
+			}
+		
+		return false
+	}
 
 if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	return ( 
@@ -76,23 +80,12 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	        <div className = 'pa5'>
 				<CluePanel G={G} playerID={playerID}/>
 				<TokenTracker G={G}/>
-	        	{/* <ClueToken color ={'red'} number = {'1'} />
-	        	<ClueToken color ={'red'} number = {'2'} /><br/>
-	        	<ClueToken color ={'red'} number= {'3'}/>
-	        	<ClueToken color = {'green'}/>
-	        	<ClueToken color = {'red'} number= {'4'}/><br/>
-	        	<ClueToken color = {'red'} number= {'5'}/>
-	        	<ClueToken color = {'red'} number= {'6'}/><br/><br/>
-	        	<ClueToken color = {'green'}/>
-	        	<ClueToken color = {'green'}/>
-	        	<ClueToken color = {'gray'}/>
-	        	<ClueToken color = {'gray'}/><br/> */}
-	        	{ G.players[playerID].isClueAvailable && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
+	        	{ isClueAvailable && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
 	        </div>
-			<Modal show={openModal} onClose={submitClue} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
+			<Modal show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
 	        <div>
 	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/><br/>
-	        	{ G.players[playerID].isNextCardAvailable && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
+	        	{ G.players[playerID].isNextCardAvailable && !G.isClueInProgress && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
 	        </div>
 
         </div> 

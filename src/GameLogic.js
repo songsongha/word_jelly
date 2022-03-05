@@ -1,19 +1,9 @@
 import { Stage, TurnOrder } from 'boardgame.io/core'
 
-const restrictActions = (G, ctx, playerID) => {
-    for (let player = 0; player < G.players.length; player++) {
-            G.players[player].isClueAvailable = false
-            G.players[player].isNextCardAvailable = false
-        }
+const restrictActions = (G) => {
+    G.isClueInProgress = true
 }
-const restoreActionStatus = (G) => {
-    // write a function to set action status to appropriate status.
-    for (let player = 0; player < G.players.length; player++) {
-            // true for now, need to add logic
-			G.players[player].isClueAvailable = true
-            G.players[player].isNextCardAvailable = true
-		}
-}
+
 
 const shuffle = (str) =>{
     return [...str].sort(()=>Math.random()-.5).join('')
@@ -41,7 +31,7 @@ export const WordJellyGame = {
             id: p.toString(),
             name: "Player " + (p),
             letterPosition: 0,
-            usedClue: false,
+            tokensTaken: 0,
             isClueAvailable: true,
             isNextCardAvailable: true,
             word: ''
@@ -49,17 +39,19 @@ export const WordJellyGame = {
         }
         const words = Array(6)
         let clues = []
-        const tokens = {
+        const tokensAvailable = {
             red: 6,
             leaves: 4,
             restricted: 1
         }
+        let isClueInProgress = false
 
         return ({
           players,
           words,
           clues,
-          tokens
+          tokensAvailable,
+          isClueInProgress
 
         });
       },
@@ -104,7 +96,6 @@ export const WordJellyGame = {
         play: {
             moves: {
                 giveClue: (G, ctx, formValues) => {
-                    restoreActionStatus(G)
                     console.log('give clue')
                     console.log('G', G, 'ctx', ctx)
                     console.log({formValues})
@@ -122,7 +113,7 @@ export const WordJellyGame = {
                     }
                     clues.push(clue)
 
-                    return {...G, clues: clues }
+                    return {...G, clues: clues, isClueInProgress: false }
                     
                 },
                 nextCard: (G, ctx, playerID) => {
@@ -146,23 +137,13 @@ export const WordJellyGame = {
                     })
                     if (ctx.turn > 2){
                         console.log('turn greater than 2')
-                        // restrictActions(G, ctx, playerID)
+                        restrictActions(G)
                     }
                 },
-                // order:  TurnOrder.CUSTOM(['0']),
             },
             endIf: G => (isGameOver(G)),
             next: 'reveal'
 
-        },
-        wait: {
-            moves: {
-                // no moves can be made when waiting
-            },
-            onEnd: (G, ctx) => {
-                console.log('wait phase ending')
-            },
-            next: 'play'
         },
         reveal: {
 
