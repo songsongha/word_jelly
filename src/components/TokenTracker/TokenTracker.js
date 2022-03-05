@@ -6,6 +6,7 @@ const TokenTracker = ({G}) => {
     const redLayout = [0,1,2,4,5,6]
     const leavesLayout = [7,8,9,10]
     const restrictedLayout = [3]
+
     // number of clues available is dependent on number of players playing; 11 is available in 6 player version
     for (let i = 0; i < 11; i++){
         let color = 'gray'
@@ -16,7 +17,7 @@ const TokenTracker = ({G}) => {
             color = 'green'
         } 
         display.push(
-            <ClueToken color ={color}/>
+            <ClueToken key={i} color ={color}/>
         )
         // probably should find a better way to format using CSS
         if(i === 1 || i === 4 || i === 6 || i === 10){
