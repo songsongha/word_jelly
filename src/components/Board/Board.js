@@ -4,6 +4,7 @@ import CardFaceDown from '../Cards/CardFaceDown';
 import ClueToken from '../ClueToken/ClueToken';
 import Modal from '../Modal/Modal'
 import CluePanel from '../CluePanel/CluePanel'
+import TokenTracker from '../TokenTracker/TokenTracker';
 // set up board so that once everyone selects a player then we move to the input words stage
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
@@ -74,7 +75,8 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	        </div>
 	        <div className = 'pa5'>
 				<CluePanel G={G} playerID={playerID}/>
-	        	<ClueToken color ={'red'} number = {'1'} />
+				<TokenTracker G={G}/>
+	        	{/* <ClueToken color ={'red'} number = {'1'} />
 	        	<ClueToken color ={'red'} number = {'2'} /><br/>
 	        	<ClueToken color ={'red'} number= {'3'}/>
 	        	<ClueToken color = {'green'}/>
@@ -84,7 +86,7 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	        	<ClueToken color = {'green'}/>
 	        	<ClueToken color = {'green'}/>
 	        	<ClueToken color = {'gray'}/>
-	        	<ClueToken color = {'gray'}/><br/>
+	        	<ClueToken color = {'gray'}/><br/> */}
 	        	{ G.players[playerID].isClueAvailable && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
 	        </div>
 			<Modal show={openModal} onClose={submitClue} G={G} playerID={playerID} ctx={ctx} moves={moves}/>

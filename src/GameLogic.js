@@ -49,11 +49,17 @@ export const WordJellyGame = {
         }
         const words = Array(6)
         let clues = []
+        const tokens = {
+            red: 6,
+            leaves: 4,
+            restricted: 1
+        }
 
         return ({
           players,
           words,
-          clues
+          clues,
+          tokens
 
         });
       },
@@ -115,7 +121,7 @@ export const WordJellyGame = {
                         }
                     }
                     clues.push(clue)
-                    console.log({clues})
+
                     return {...G, clues: clues }
                     
                 },
