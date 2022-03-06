@@ -4,6 +4,7 @@ import CardFaceDown from '../Cards/CardFaceDown';
 import Modal from '../Modal/Modal'
 import CluePanel from '../CluePanel/CluePanel'
 import TokenTracker from '../TokenTracker/TokenTracker';
+import TokensTaken from '../TokenTracker/TokensTaken';
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
@@ -80,11 +81,13 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	        <div className = 'pa5'>
 				<CluePanel G={G} playerID={playerID}/>
 				<TokenTracker G={G}/>
-	        	{ isClueAvailable && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
+	        	{ isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
 	        </div>
 			<Modal show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
 	        <div>
-	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/><br/>
+	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/>
+				<TokensTaken G={G} playerID={playerID}/>
+				<br/>
 	        	{ G.players[playerID].isNextCardAvailable && !G.isClueInProgress && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
 	        </div>
 
