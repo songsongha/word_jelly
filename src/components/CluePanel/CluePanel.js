@@ -9,13 +9,16 @@ const CluePanel = ({G, playerID}) => {
         for (let i = 0; i < clues.length; i++) {
             // only display the clue if the player is involved in the clue
             if (clues[i] && clues[i].length && clues[i].find(obj => obj.player === playerID)){
+                let rowText = ''
                 for(let j = 0; j < clues[i].length; j++){
-                    display.push(
-                        clues[i][j].player !== playerID ? clues[i][j].letter.toUpperCase() + ' ' : '? '
-                    )
+                    rowText += clues[i][j].player !== playerID ? clues[i][j].letter.toUpperCase() + ' ' : '? '
                 }
-                display.push(' (Card ' + cardPosition + ')')
-                display.push(<br/>)
+                rowText += ' (Card ' + cardPosition + ')'
+                display.push(
+                    <div key ={i}>
+                        {rowText}
+                    </div>
+                )
             }
         }
     }
