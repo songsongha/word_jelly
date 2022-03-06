@@ -52,7 +52,11 @@ const Modal = ({show, onClose, G, playerID, moves}) => {
     }  
     
     const handleSubmit = () => {
-        moves.giveClue({...formValues})
+        const submission = {
+            formValues: {...formValues},
+            playerID
+        }
+        moves.giveClue(submission)
         onClose()
     }
     const handleCancel = () => {

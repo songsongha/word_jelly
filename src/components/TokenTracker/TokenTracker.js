@@ -10,10 +10,10 @@ const TokenTracker = ({G}) => {
     // number of clues available is dependent on number of players playing; 11 is available in 6 player version
     for (let i = 0; i < 11; i++){
         let color = 'gray'
-        if (redLayout.includes(i) && redLayout.length <= G.tokensAvailable.red){
+        if (redLayout.includes(i) && redLayout.findIndex(e => e === i ) < G.tokensAvailable.red){
             color = 'red'
-        } else if ((leavesLayout.includes(i) && leavesLayout.length <= G.tokensAvailable.leaves) ||
-         (restrictedLayout.includes(i) && restrictedLayout.length <= G.tokensAvailable.restricted)){
+        } else if ((leavesLayout.includes(i) && leavesLayout.findIndex(e => e === i ) < G.tokensAvailable.leaves) ||
+         (restrictedLayout.includes(i) && restrictedLayout.findIndex(e => e === i ) < G.tokensAvailable.restricted)){
             color = 'green'
         } 
         display.push(

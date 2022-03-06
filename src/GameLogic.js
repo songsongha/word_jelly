@@ -31,7 +31,6 @@ export const WordJellyGame = {
             id: p.toString(),
             name: "Player " + (p),
             letterPosition: 0,
-            tokensTaken: 0,
             isClueAvailable: true,
             isNextCardAvailable: true,
             word: ''
@@ -44,6 +43,8 @@ export const WordJellyGame = {
             leaves: 4,
             restricted: 1
         }
+        const tokensTaken = Array(6).fill(Number(0))
+        console.log({tokensTaken})
         let isClueInProgress = false
 
         return ({
@@ -51,6 +52,7 @@ export const WordJellyGame = {
           words,
           clues,
           tokensAvailable,
+          tokensTaken,
           isClueInProgress
 
         });
@@ -95,12 +97,13 @@ export const WordJellyGame = {
         },
         play: {
             moves: {
-                giveClue: (G, ctx, formValues) => {
+                giveClue: (G, ctx, submission) => {
                     console.log('give clue')
-                    console.log('G', G, 'ctx', ctx)
-                    console.log({formValues})
-                    const players = Object.values(formValues)
-                    console.log({players})
+
+                    const playerID = submission.playerID
+
+                    // update the clue panel for everyone
+                    const players = Object.values(submission.formValues)
                     const clues = [...G.clues] 
                     const clue = []
                     for(let i = 0; i < players.length; i++){
@@ -112,8 +115,25 @@ export const WordJellyGame = {
                         }
                     }
                     clues.push(clue)
+                    
+                    // decrease tokensAvailable
+                    const tokensAvailable = {...G.tokensAvailable}
+                    console.log({tokensAvailable})
+                    if (G.tokensTaken[playerID] === 0){
+                        console.log('player has not given a clue yet')
+                        tokensAvailable.red--
+                    } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves > 0){
+                        console.log('player has given at least one clue')
+                        tokensAvailable.leaves--
+                    } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves === 0){
+                        console.log('restricted tokes are available')
+                        tokensAvailable.restricted--
+                    }
+                    // adjust count for person giving clue
+                    const tokensTaken = [...G.tokensTaken]
+                    tokensTaken[playerID]++
 
-                    return {...G, clues: clues, isClueInProgress: false }
+                    return {...G, clues: clues, isClueInProgress: false, tokensAvailable: tokensAvailable, tokensTaken: tokensTaken}
                     
                 },
                 nextCard: (G, ctx, playerID) => {
