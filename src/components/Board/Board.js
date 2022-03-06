@@ -36,6 +36,7 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		return false
 	}
 
+
 if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	return ( 
 		<div className='tc'>
@@ -88,7 +89,7 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/>
 				<TokensTaken G={G} playerID={playerID}/>
 				<br/>
-	        	{ G.players[playerID].isNextCardAvailable && !G.isClueInProgress && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
+	        	{ G.isNextCardAvailable[playerID] && !G.isClueInProgress && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
 	        </div>
 
         </div> 

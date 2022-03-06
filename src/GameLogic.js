@@ -31,8 +31,6 @@ export const WordJellyGame = {
             id: p.toString(),
             name: "Player " + (p),
             letterPosition: 0,
-            isClueAvailable: true,
-            isNextCardAvailable: true,
             word: ''
           });
         }
@@ -44,8 +42,10 @@ export const WordJellyGame = {
             restricted: 1
         }
         const tokensTaken = Array(6).fill(Number(0))
+        const isNextCardAvailable = Array(6).fill(false)
 
         let isClueInProgress = false
+    
 
         return ({
           players,
@@ -53,7 +53,8 @@ export const WordJellyGame = {
           clues,
           tokensAvailable,
           tokensTaken,
-          isClueInProgress
+          isClueInProgress,
+          isNextCardAvailable
 
         });
       },
@@ -102,8 +103,9 @@ export const WordJellyGame = {
 
                     const playerID = submission.playerID
 
-                    // update the clue panel for everyone
+                    // update the clue panel for everyone and make next card available
                     const players = Object.values(submission.formValues)
+                    const isNextCardAvailable = [...G.isNextCardAvailable]
                     const clues = [...G.clues] 
                     const clue = []
                     for(let i = 0; i < players.length; i++){
@@ -112,6 +114,9 @@ export const WordJellyGame = {
                                     letter: players[i] !== '*' ? G.words[players[i]][G.players[players[i]].letterPosition] : '*',
                                     player: players[i] !== '*' ? players[i] : undefined
                                 })
+                            if (players[i] !== '*'){
+                                isNextCardAvailable[players[i]] = true
+                            }    
                         }
                     }
                     clues.push(clue)
@@ -130,13 +135,20 @@ export const WordJellyGame = {
                     const tokensTaken = [...G.tokensTaken]
                     tokensTaken[playerID]++
 
-                    return {...G, clues: clues, isClueInProgress: false, tokensAvailable: tokensAvailable, tokensTaken: tokensTaken}
+                    return {...G, 
+                        clues: clues, 
+                        isClueInProgress: false, 
+                        tokensAvailable: tokensAvailable, 
+                        tokensTaken: tokensTaken, 
+                        isNextCardAvailable: isNextCardAvailable
+                    }
                     
                 },
                 nextCard: (G, ctx, playerID) => {
                     // if letter position is not the last letter increase position 
                     if (G.players[playerID].letterPosition < G.words[playerID].length-1){
                         G.players[playerID].letterPosition++
+                        G.isNextCardAvailable[playerID] = false
                     } else {
                         console.log('bonus letters?')
                     }
