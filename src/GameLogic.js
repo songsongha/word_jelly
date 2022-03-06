@@ -44,7 +44,7 @@ export const WordJellyGame = {
             restricted: 1
         }
         const tokensTaken = Array(6).fill(Number(0))
-        console.log({tokensTaken})
+
         let isClueInProgress = false
 
         return ({
@@ -118,15 +118,12 @@ export const WordJellyGame = {
                     
                     // decrease tokensAvailable
                     const tokensAvailable = {...G.tokensAvailable}
-                    console.log({tokensAvailable})
+
                     if (G.tokensTaken[playerID] === 0){
-                        console.log('player has not given a clue yet')
                         tokensAvailable.red--
                     } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves > 0){
-                        console.log('player has given at least one clue')
                         tokensAvailable.leaves--
                     } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves === 0){
-                        console.log('restricted tokes are available')
                         tokensAvailable.restricted--
                     }
                     // adjust count for person giving clue
