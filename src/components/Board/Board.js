@@ -86,10 +86,13 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	        </div>
 			<Modal show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
 	        <div>
-	        	<CardFaceDown letterPosition={G.players[playerID].letterPosition}/>
+	        	<CardFaceDown G={G} playerID={playerID}/>
 				<TokensTaken G={G} playerID={playerID}/>
 				<br/>
-	        	{ G.isNextCardAvailable[playerID] && !G.isClueInProgress && <button id = 'nextCard' onClick = {nextCard}>Next Card</button> }
+	        	{ G.isNextCardAvailable[playerID] && !G.isClueInProgress && 
+					<button id = 'nextCard' onClick = {nextCard}>
+						{G.players[playerID].letterPosition === G.words[playerID].length-1 ? 'I know my word':'Next Card'}
+					</button> }
 	        </div>
 
         </div> 

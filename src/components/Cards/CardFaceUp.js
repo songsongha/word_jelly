@@ -2,8 +2,13 @@ import React from 'react';
 
 
 const CardFaceUp = ({letter, player}) => {
-	
-	let cardNo = player.letterPosition + 1 || ''
+console.log({player})
+	let cardNo =  ''
+	if (player){
+		cardNo = `Card ${player.letterPosition + 1}`
+	} else if (player && (player === 'bonus' || player.letterPosition > player.word.length)){
+		cardNo = 'Bonus'
+	}
 
  	if (!letter){
 		letter = 'A'
@@ -15,7 +20,7 @@ const CardFaceUp = ({letter, player}) => {
 			<div>
 				<h1>{letter} </h1>
 				<p> {player && player.name ? player.name : '' }</p>
-				<p> {cardNo ? `Card ${cardNo}` : '' } </p>
+				<p> {cardNo} </p>
 			</div>
 		</div>
 		)
