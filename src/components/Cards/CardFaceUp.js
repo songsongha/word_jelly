@@ -4,7 +4,7 @@ import React from 'react';
 const CardFaceUp = ({letter, player}) => {
 console.log({player})
 	let cardNo =  ''
-	if (player){
+	if (player && typeof(player)==='object'){
 		cardNo = `Card ${player.letterPosition + 1}`
 	} else if (player && (player === 'bonus' || player.letterPosition > player.word.length)){
 		cardNo = 'Bonus'

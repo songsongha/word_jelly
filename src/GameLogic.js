@@ -49,7 +49,7 @@ export const WordJellyGame = {
         const tokensTaken = Array(6).fill(Number(0))
         const isNextCardAvailable = Array(6).fill(false)
         const bonusLetters = Array(6)
-        const permanentLetters = []
+        let permanentLetters = []
 
         let isClueInProgress = false
     
@@ -159,7 +159,15 @@ export const WordJellyGame = {
                     }
                     
                 },
-                nextCard: (G, ctx, playerID) => {
+                nextCard: (G, ctx, playerID,isBonusCorrect) => {
+                    console.log('playerID', playerID, 'isBonusCorrect', isBonusCorrect)
+                    if (isBonusCorrect){
+                        const bonusLetter = G.bonusLetters.slice(playerID, playerID+1)
+                        const permanentLetters = [...G.permanentLetters]
+                        permanentLetters.push(bonusLetter[0])
+                        console.log('permanent letter after push', permanentLetters)
+                        G.permanentLetters = permanentLetters
+                    }
                     if (G.players[playerID].letterPosition >= G.words[playerID].length-1){
                         // if player is out of cards generate bonus a letter
                         G.bonusLetters[playerID] = randomLetter()

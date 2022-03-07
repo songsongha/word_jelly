@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './modal.css'
 
-const Modal = ({show, onClose, G, playerID, moves}) => {
+const GiveClue = ({show, onClose, G, playerID, moves}) => {
     const [formValues, setFormValues] = useState({})
 
     if (!show){
@@ -82,4 +82,4 @@ const Modal = ({show, onClose, G, playerID, moves}) => {
         </div>
     )
 }
-export default Modal
+export default GiveClue

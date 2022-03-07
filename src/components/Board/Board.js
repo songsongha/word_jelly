@@ -1,14 +1,15 @@
 import React, {useState} from 'react';
 import CardFaceUp from '../Cards/CardFaceUp';
 import CardFaceDown from '../Cards/CardFaceDown';
-import Modal from '../Modal/Modal'
+import GiveClue from '../Modal/GiveClue'
 import CluePanel from '../CluePanel/CluePanel'
 import TokenTracker from '../TokenTracker/TokenTracker';
 import TokensTaken from '../TokenTracker/TokensTaken';
+import GuessBonus from '../Modal/GuessBonus';
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
-
+	const [openGuessBonus, setOpenGuessBonus] = useState(false)
 	const nextCard = () => {
 		moves.nextCard(playerID)
 	}
@@ -17,7 +18,7 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		if (G.players[playerID].letterPosition === G.words[playerID].length-1){
 			moves.nextCard(playerID)
 		} else {
-			console.log('open a guess bonus letter modal')
+			setOpenGuessBonus(true)
 		}
 	}
 
@@ -82,13 +83,14 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	
 	// show permanent letters if applicable
 	const permanentLetterRow = []
-	if (G.permanentLetter && G.permanentLetter.length){
-		for (let letterIndex = 0; letterIndex < G.permanentLetter.length; letterIndex++){
-			if (G.permanentLetter && G.permanentLetter.length){
+	if (G.permanentLetters && G.permanentLetters.length){
+		console.log('permanent letter exists and has a length')
+		for (let letterIndex = 0; letterIndex < G.permanentLetters.length; letterIndex++){
+			if (G.permanentLetters && G.permanentLetters.length){
 				permanentLetterRow.push(
 					<CardFaceUp 
 					key = {`pLetter${letterIndex}`}
-					letter = {G.permanentLetter[letterIndex]}
+					letter = {G.permanentLetters[letterIndex]}
 					player = 'bonus' />
 				)
 			}
@@ -110,7 +112,8 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 				<TokenTracker G={G}/>
 	        	{ isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
 	        </div>
-			<Modal show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
+			<GiveClue show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
+			<GuessBonus show={openGuessBonus} onClose={()=> setOpenGuessBonus(false)} G={G} playerID={playerID} moves={moves} />
 	        <div>
 	        	<CardFaceDown G={G} playerID={playerID}/>
 				<TokensTaken G={G} playerID={playerID}/>
