@@ -8,8 +8,17 @@ import TokensTaken from '../TokenTracker/TokensTaken';
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
+
 	const nextCard = () => {
 		moves.nextCard(playerID)
+	}
+
+	const bonusLetter = () => {
+		if (G.players[playerID].letterPosition === G.words[playerID].length-1){
+			moves.nextCard(playerID)
+		} else {
+			console.log('open a guess bonus letter modal')
+		}
 	}
 
 	const giveClue = () => {
@@ -60,21 +69,38 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	// show a letter from every player other than you
 	for (let player = 0; player < G.players.length; player++) {
 		if (player !== Number(playerID)){
+			let letter = G.words[player][G.players[player].letterPosition] || G.bonusLetters[player]
+
 			cardRow.push(
 				<CardFaceUp 
 				key = {`card${player}`}
-				letter = {G.words[player][G.players[player].letterPosition]}
+				letter = {letter}
 				player = {G.players[player]} />
 			)
 		}
 	  }
 	
+	// show permanent letters if applicable
+	const permanentLetterRow = []
+	if (G.permanentLetter && G.permanentLetter.length){
+		for (let letterIndex = 0; letterIndex < G.permanentLetter.length; letterIndex++){
+			if (G.permanentLetter && G.permanentLetter.length){
+				permanentLetterRow.push(
+					<CardFaceUp 
+					key = {`pLetter${letterIndex}`}
+					letter = {G.permanentLetter[letterIndex]}
+					player = 'bonus' />
+				)
+			}
+		}
+	}  
 	return ( 
 		<div className = 'tc pa4'>
 			<div> 
 				{cardRow}
 				<div>
 					<CardFaceUp letter='*' player ={wildCard}/>
+					{permanentLetterRow}
 				</div>
 	          	<br/>
 	        	<br/>
@@ -90,9 +116,18 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 				<TokensTaken G={G} playerID={playerID}/>
 				<br/>
 	        	{ G.isNextCardAvailable[playerID] && !G.isClueInProgress && 
-					<button id = 'nextCard' onClick = {nextCard}>
-						{G.players[playerID].letterPosition === G.words[playerID].length-1 ? 'I know my word':'Next Card'}
-					</button> }
+					<div>
+						{G.players[playerID].letterPosition >= G.words[playerID].length-1 ?
+						<button id = 'bonusCard' onClick = {bonusLetter}>
+							{G.players[playerID].letterPosition === G.words[playerID].length-1 ? 'I know all my letters': 'I know this letter'}
+						</button>
+						:
+						<button id = 'nextCard' onClick = {nextCard}>
+							Next Card
+						</button> 
+						}
+					</div> 
+				}
 	        </div>
 
         </div> 

@@ -21,6 +21,11 @@ const isGameOver = (G) => {
     return false
 }
 
+const randomLetter = () => {
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    return characters.charAt(Math.floor(Math.random() * characters.length))
+}
+
 export const WordJellyGame = {
       name: 'word-jelly',
       setup: () => {
@@ -43,6 +48,8 @@ export const WordJellyGame = {
         }
         const tokensTaken = Array(6).fill(Number(0))
         const isNextCardAvailable = Array(6).fill(false)
+        const bonusLetters = Array(6)
+        const permanentLetters = []
 
         let isClueInProgress = false
     
@@ -54,7 +61,9 @@ export const WordJellyGame = {
           tokensAvailable,
           tokensTaken,
           isClueInProgress,
-          isNextCardAvailable
+          isNextCardAvailable,
+          bonusLetters,
+          permanentLetters
 
         });
       },
@@ -110,13 +119,19 @@ export const WordJellyGame = {
                     const clue = []
                     for(let i = 0; i < players.length; i++){
                         if(players[i]){
-                            clue.push({
-                                    letter: players[i] !== '*' ? G.words[players[i]][G.players[players[i]].letterPosition] : '*',
-                                    player: players[i] !== '*' ? players[i] : undefined
-                                })
                             if (players[i] !== '*'){
-                                isNextCardAvailable[players[i]] = true
-                            }    
+                                const letter = G.words[players[i]][G.players[players[i]].letterPosition] || G.bonusLetters[players[i]]
+                                clue.push({
+                                        letter: letter,
+                                        player: players[i]
+                                    })
+                                    isNextCardAvailable[players[i]] = true  
+                            } else {
+                                clue.push({
+                                    letter: '*',
+                                    player: undefined
+                                })
+                            }
                         }
                     }
                     clues.push(clue)
@@ -145,13 +160,12 @@ export const WordJellyGame = {
                     
                 },
                 nextCard: (G, ctx, playerID) => {
-                    // if letter position is not the last letter increase position 
-                    if (G.players[playerID].letterPosition < G.words[playerID].length-1){
+                    if (G.players[playerID].letterPosition >= G.words[playerID].length-1){
+                        // if player is out of cards generate bonus a letter
+                        G.bonusLetters[playerID] = randomLetter()
+                    }
                         G.players[playerID].letterPosition++
                         G.isNextCardAvailable[playerID] = false
-                    } else {
-                        console.log('bonus letters?')
-                    }
                 }
             },
             onEnd: (G, ctx) => {

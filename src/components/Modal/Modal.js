@@ -10,14 +10,15 @@ const Modal = ({show, onClose, G, playerID, moves}) => {
     // drop down menu options for each player, plus wild option
     const dropDownOptions = []
     dropDownOptions.push(
-        <option name='' value=''>
+        <option key='blank' name='' value=''>
         </option>
     )
     for (let player = 0; player < G.players.length; player++) {
+        const letter = G.words[player][G.players[player].letterPosition] || G.bonusLetters[player]
 		if (player !== Number(playerID)){
 			dropDownOptions.push( 
-                <option name={player} value={player}>
-                    {G.words[player][G.players[player].letterPosition].toUpperCase()+' '}
+                <option key={player} name={player} value={player}>
+                    {letter.toUpperCase() + ' '}
                     (
                     {G.players[player].name}) 
                 </option>
@@ -25,7 +26,7 @@ const Modal = ({show, onClose, G, playerID, moves}) => {
 		}
 	  }
     dropDownOptions.push(
-        <option name='wild' value='*'>
+        <option key='wild' name='wild' value='*'>
             *   (wild)
         </option>
     )  
@@ -39,7 +40,7 @@ const Modal = ({show, onClose, G, playerID, moves}) => {
     const clueForm = []
     for (let i = 1; i <= 8; i++) {
         clueForm.push(
-            <div>
+            <div key={`Clue${i}`}>
                 Clue {i}
                 <select 
                     name={`clue${i}`} 
