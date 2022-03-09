@@ -1,5 +1,6 @@
 import { Stage, TurnOrder } from 'boardgame.io/core'
 
+const strPlayers = ['0','1','2','3','4','5']
 const restrictActions = (G) => {
     G.isClueInProgress = true
 }
@@ -119,7 +120,7 @@ export const WordJellyGame = {
                     const clue = []
                     for(let i = 0; i < players.length; i++){
                         if(players[i]){
-                            if (players[i] !== '*'){
+                            if (strPlayers.includes(players[i])){
                                 const letter = G.words[players[i]][G.players[players[i]].letterPosition] || G.bonusLetters[players[i]]
                                 clue.push({
                                         letter: letter,
@@ -128,7 +129,7 @@ export const WordJellyGame = {
                                     isNextCardAvailable[players[i]] = true  
                             } else {
                                 clue.push({
-                                    letter: '*',
+                                    letter: players[i],
                                     player: undefined
                                 })
                             }

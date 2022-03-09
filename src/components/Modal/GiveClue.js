@@ -25,6 +25,16 @@ const GiveClue = ({show, onClose, G, playerID, moves}) => {
 			)
 		}
 	  }
+    if (G.permanentLetters){
+        G.permanentLetters.forEach((letter, index) => {
+            dropDownOptions.push(
+                <option key={`bonus${index}`} name={`bonus${index}`} value={letter}> 
+                        {letter.toUpperCase() + ' (Bonus)'}
+                    </option>
+            )
+        })
+        
+    }
     dropDownOptions.push(
         <option key='wild' name='wild' value='*'>
             *   (wild)
