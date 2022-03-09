@@ -4,11 +4,11 @@ import React from 'react';
 const CardFaceUp = ({letter, player}) => {
 console.log({player})
 	let cardNo =  ''
-	if (player && typeof(player)==='object'){
+	if (player && player.word && player.letterPosition < player.word.length){
 		cardNo = `Card ${player.letterPosition + 1}`
-	} else if (player && (player === 'bonus' || player.letterPosition > player.word.length)){
+	} else if (player && player.word && player.letterPosition >= player.word.length){
 		cardNo = 'Bonus'
-	}
+	} 
 
  	if (!letter){
 		letter = 'A'
@@ -19,7 +19,7 @@ console.log({player})
 		<div className= 'card tc bg-dark-gray white dib br3 pa3 ma2 grow bw2 shadow-5'>
 			<div>
 				<h1>{letter} </h1>
-				<p> {player && player.name ? player.name : '' }</p>
+				<p> {player && player.name ? player.name : 'Bonus' }</p>
 				<p> {cardNo} </p>
 			</div>
 		</div>
