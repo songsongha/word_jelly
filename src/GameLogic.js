@@ -15,11 +15,36 @@ const areAllWordsIn = (G) => {
     } 
     return true
 }
+const sumOf = (tokensAvailable) => {
+    const {red, leaves, restricted } = tokensAvailable
+    console.log('sum of token',red + leaves + restricted)
+    return red + leaves + restricted 
+}
+
+const isEveryPlayerDone = (players) =>{
+    console.log({players})
+    let result = true
+    for (let i = 0; i < players.length; i++){
+        if (players[i] && players[i].word &&
+            players[i].letterPosition < players[i].word.length){
+            result = false
+            break
+        }
+    }
+
+    console.log({result})
+    return result
+}
 
 const isGameOver = (G) => {
+    console.log('isgameover?')
     // if all clues are gone or all players have decided that they know their words
-
-    return false
+    if (sumOf(G.tokensAvailable) === 0){
+        console.log('tokens are all out')
+        return true
+    }
+   
+    return isEveryPlayerDone(G.players)
 }
 
 const randomLetter = () => {
@@ -161,12 +186,10 @@ export const WordJellyGame = {
                     
                 },
                 nextCard: (G, ctx, playerID,isBonusCorrect) => {
-                    console.log('playerID', playerID, 'isBonusCorrect', isBonusCorrect)
                     if (isBonusCorrect){
                         const bonusLetter = G.bonusLetters.slice(playerID, playerID+1)
                         const permanentLetters = [...G.permanentLetters]
                         permanentLetters.push(bonusLetter[0])
-                        console.log('permanent letter after push', permanentLetters)
                         G.permanentLetters = permanentLetters
                     }
                     if (G.players[playerID].letterPosition >= G.words[playerID].length-1){

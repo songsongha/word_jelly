@@ -84,7 +84,6 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	// show permanent letters if applicable
 	const permanentLetterRow = []
 	if (G.permanentLetters && G.permanentLetters.length){
-		console.log('permanent letter exists and has a length')
 		for (let letterIndex = 0; letterIndex < G.permanentLetters.length; letterIndex++){
 			if (G.permanentLetters && G.permanentLetters.length){
 				permanentLetterRow.push(

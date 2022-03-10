@@ -2,7 +2,6 @@ import React from 'react';
 
 
 const CardFaceUp = ({letter, player}) => {
-console.log({player})
 	let cardNo =  ''
 	if (player && player.word && player.letterPosition < player.word.length){
 		cardNo = `Card ${player.letterPosition + 1}`
