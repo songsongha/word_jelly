@@ -23,7 +23,6 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	}
 
 	const giveClue = () => {
-		console.log('give clue called')
 		events.endTurn({ next: playerID })
 		setOpenModal(true)
 	}
@@ -38,7 +37,7 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	
 	const isClueAvailable = () => {
 		if (G.tokensAvailable.leaves > 0 || 
-			G.players[playerID].tokensTaken === 0 || 
+			G.tokensTaken[playerID] === 0 || 
 			(G.tokensAvailable.red === 0 && G.tokensAvailable.restricted > 0)) {
 				return true
 			}
