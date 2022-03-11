@@ -13,9 +13,9 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
 	const [openReveal, setOpenReveal] = useState(false)
 
-	if (ctx.phase === 'reveal'){
-		setOpenReveal(true)
-	}
+	// if (ctx.phase === 'reveal'){
+	// 	setOpenReveal(true)
+	// }
 	const nextCard = () => {
 		moves.nextCard(playerID)
 	}
@@ -28,10 +28,10 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		}
 	}
 
-	const giveClue = () => {
-		events.endTurn({ next: playerID })
-		setOpenModal(true)
-	}
+	// const giveClue = () => {
+	// 	events.endTurn({ next: playerID })
+	// 	setOpenModal(true)
+	// }
 
 	const submitWord = () => {
 		
@@ -41,15 +41,15 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		moves.submitWords(playerID, name, word)
       }
 	
-	const isClueAvailable = () => {
-		if (G.tokensAvailable.leaves > 0 || 
-			G.tokensTaken[playerID] === 0 || 
-			(G.tokensAvailable.red === 0 && G.tokensAvailable.restricted > 0)) {
-				return true
-			}
+	// const isClueAvailable = () => {
+	// 	if (G.tokensAvailable.leaves > 0 || 
+	// 		G.tokensTaken[playerID] === 0 || 
+	// 		(G.tokensAvailable.red === 0 && G.tokensAvailable.restricted > 0)) {
+	// 			return true
+	// 		}
 		
-		return false
-	}
+	// 	return false
+	// }
 
 
 if (ctx.phase === 'setUp' && !G.players[playerID].word){
@@ -101,43 +101,44 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 		}
 	}  
 	return ( 
-		<div className = 'tc pa4'>
-			<div> 
-				{cardRow}
-				<div>
-					<CardFaceUp letter='*' player ={wildCard}/>
-					{permanentLetterRow}
-				</div>
-	          	<br/>
-	        	<br/>
-	        </div>
-	        <div className = 'pa5'>
-				<CluePanel G={G} playerID={playerID}/>
-				<TokenTracker G={G}/>
-	        	{ isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
-	        </div>
-			<GiveClue show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
-			<GuessBonus show={openGuessBonus} onClose={()=> setOpenGuessBonus(false)} G={G} playerID={playerID} moves={moves} />
-			<Reveal show={openReveal} onClose={()=> setOpenReveal(false)} G={G} playerID={playerID} moves={moves} />
-	        <div>
-	        	<CardFaceDown G={G} playerID={playerID}/>
-				<TokensTaken G={G} playerID={playerID}/>
-				<br/>
-	        	{ G.isNextCardAvailable[playerID] && !G.isClueInProgress && 
+		<div className='flex flex-row justify-between'>
+			<div className = 'tc pa4 w-75'>
+				<div> 
+					{cardRow}
 					<div>
-						{G.players[playerID].letterPosition >= G.words[playerID].length-1 ?
-						<button id = 'bonusCard' onClick = {bonusLetter}>
-							{G.players[playerID].letterPosition === G.words[playerID].length-1 ? 'I know all my letters': 'I know this letter'}
-						</button>
-						:
-						<button id = 'nextCard' onClick = {nextCard}>
-							Next Card
-						</button> 
-						}
-					</div> 
-				}
+						<CardFaceUp letter='*' player ={wildCard}/>
+						{permanentLetterRow}
+					</div>
+					<br/>
+					<br/>
+				</div>
+				<GiveClue show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
+				<GuessBonus show={openGuessBonus} onClose={()=> setOpenGuessBonus(false)} G={G} playerID={playerID} moves={moves} />
+				<Reveal show={openReveal} onClose={()=> setOpenReveal(false)} G={G} playerID={playerID} moves={moves} />
+				<div>
+					<CardFaceDown G={G} playerID={playerID}/>
+					<TokensTaken G={G} playerID={playerID}/>
+					<br/>
+					{ G.isNextCardAvailable[playerID] && !G.isClueInProgress && 
+						<div>
+							{G.players[playerID].letterPosition >= G.words[playerID].length-1 ?
+							<button id = 'bonusCard' onClick = {bonusLetter}>
+								{G.players[playerID].letterPosition === G.words[playerID].length-1 ? 'I know all my letters': 'I know this letter'}
+							</button>
+							:
+							<button id = 'nextCard' onClick = {nextCard}>
+								Next Card
+							</button> 
+							}
+						</div> 
+					}
+				</div>
+			</div>
+			<div className = 'tc pa4 w-25'>
+				<CluePanel G={G} playerID={playerID} setOpenModel={setOpenModal} events={events}/>
+				{/* <TokenTracker G={G}/>
+	        	{ isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> } */}
 	        </div>
-
         </div> 
 		)
 	} else {

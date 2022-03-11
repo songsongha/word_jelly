@@ -1,6 +1,21 @@
 import React from 'react';
+import TokenTracker from '../TokenTracker/TokenTracker'
 
-const CluePanel = ({G, playerID}) => {
+
+const CluePanel = ({G, playerID, setOpenModal, events}) => {
+    const isClueAvailable = () => {
+		if (G.tokensAvailable.leaves > 0 || 
+			G.tokensTaken[playerID] === 0 || 
+			(G.tokensAvailable.red === 0 && G.tokensAvailable.restricted > 0)) {
+				return true
+			}
+		
+		return false
+	}
+    const giveClue = () => {
+		events.endTurn({ next: playerID })
+		setOpenModal(true)
+	}
     const display = []
     const clues = G.clues
     const cardPosition = G.players[playerID].letterPosition + 1
@@ -22,11 +37,12 @@ const CluePanel = ({G, playerID}) => {
             }
         }
     }
-    console.log({display})
 
 return (
     <div className= 'cluePanel'>
         <div>
+            <TokenTracker G={G}/>
+	        	{ isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
             <h1 className='f3'>Clues</h1>
             {display}
             <br/>
