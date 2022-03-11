@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import CardFaceUp from '../Cards/CardFaceUp';
 import CardFaceDown from '../Cards/CardFaceDown';
 import GiveClue from '../Modal/GiveClue'
+import Reveal from '../Modal/Reveal'
 import CluePanel from '../CluePanel/CluePanel'
 import TokenTracker from '../TokenTracker/TokenTracker';
 import TokensTaken from '../TokenTracker/TokensTaken';
@@ -10,6 +11,11 @@ import GuessBonus from '../Modal/GuessBonus';
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
+	const [openReveal, setOpenReveal] = useState(false)
+
+	if (ctx.phase === 'reveal'){
+		setOpenReveal(true)
+	}
 	const nextCard = () => {
 		moves.nextCard(playerID)
 	}
@@ -60,7 +66,7 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 			Waiting for other players to enter words
 		</div>
 		)
-}else if (ctx.phase === 'play') {
+}else if (ctx.phase === 'play' || ctx.phase === 'reveal') {
 	let cardRow = []
 	let wildCard = {
 		name: 'Wild'
@@ -112,6 +118,7 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	        </div>
 			<GiveClue show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
 			<GuessBonus show={openGuessBonus} onClose={()=> setOpenGuessBonus(false)} G={G} playerID={playerID} moves={moves} />
+			<Reveal show={openReveal} onClose={()=> setOpenReveal(false)} G={G} playerID={playerID} moves={moves} />
 	        <div>
 	        	<CardFaceDown G={G} playerID={playerID}/>
 				<TokensTaken G={G} playerID={playerID}/>
