@@ -9,27 +9,6 @@ import MyCards from '../MyCards/MyCards'
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
-	
-
-	// if (ctx.phase === 'reveal'){
-	// 	setOpenReveal(true)
-	// }
-	// const nextCard = () => {
-	// 	moves.nextCard(playerID)
-	// }
-
-	// const bonusLetter = () => {
-	// 	if (G.players[playerID].letterPosition === G.words[playerID].length-1){
-	// 		moves.nextCard(playerID)
-	// 	} else {
-	// 		setOpenGuessBonus(true)
-	// 	}
-	// }
-
-	// const giveClue = () => {
-	// 	events.endTurn({ next: playerID })
-	// 	setOpenModal(true)
-	// }
 
 	const submitWord = () => {
 		
@@ -38,17 +17,6 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 
 		moves.submitWords(playerID, name, word)
       }
-	
-	// const isClueAvailable = () => {
-	// 	if (G.tokensAvailable.leaves > 0 || 
-	// 		G.tokensTaken[playerID] === 0 || 
-	// 		(G.tokensAvailable.red === 0 && G.tokensAvailable.restricted > 0)) {
-	// 			return true
-	// 		}
-		
-	// 	return false
-	// }
-
 
 if (ctx.phase === 'setUp' && !G.players[playerID].word){
 	return ( 
@@ -111,23 +79,7 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 					<br/>
 				</div>
 				<div>
-				<MyCards G={G} playerID={playerID} setOpenModal={setOpenGuessBonus} moves={moves}/>
-					{/* <CardFaceDown G={G} playerID={playerID}/>
-					<TokensTaken G={G} playerID={playerID}/>
-					<br/>
-					{ G.isNextCardAvailable[playerID] && !G.isClueInProgress && 
-						<div>
-							{G.players[playerID].letterPosition >= G.words[playerID].length-1 ?
-							<button id = 'bonusCard' onClick = {bonusLetter}>
-								{G.players[playerID].letterPosition === G.words[playerID].length-1 ? 'I know all my letters': 'I know this letter'}
-							</button>
-							:
-							<button id = 'nextCard' onClick = {nextCard}>
-								Next Card
-							</button> 
-							}
-						</div> 
-					} */}
+					<MyCards G={G} playerID={playerID} setOpenModal={setOpenGuessBonus} moves={moves}/>
 				</div>
 				<GiveClue show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
 				<GuessBonus show={openGuessBonus} onClose={()=> setOpenGuessBonus(false)} G={G} playerID={playerID} moves={moves} />
@@ -135,8 +87,6 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 			</div>
 			<div className = 'tc pa4 w-25'>
 				<CluePanel G={G} playerID={playerID} setOpenModal={setOpenModal} events={events}/>
-				{/* <TokenTracker G={G}/>
-	        	{ isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> } */}
 	        </div>
         </div> 
 		)
