@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
 import './modal.css'
 
-const Reveal = ({show, onClose, G, playerID, moves}) => {
+const Reveal = ({ctx, onClose, G, playerID, moves}) => {
     const [wordGuess, setWordGuess] = useState('')
 
-    if (!show){
+    if (ctx.phase !== 'reveal'){
         return null
     }
 
@@ -12,8 +12,13 @@ const Reveal = ({show, onClose, G, playerID, moves}) => {
         setWordGuess(event.target.value)
       }
     const handleSubmit = () => {
+        console.log('submit pressed')
         if (playerID > 0 && wordGuess.toUpperCase === G.players[playerID-1].word.toUpperCase){
-            console.log('wordGuess', wordGuess, 'word', G.players[playerID-1].word)
+            console.log('first case wordGuess', wordGuess, 'word', G.players[playerID-1].word)
+        } else if (playerID === '0' && wordGuess.toUpperCase === G.players[G.players.length-1].word.toUpperCase){
+            console.log('second case wordGuess', wordGuess, 'word', G.players[G.players.length-1].word)
+        } else {
+            console.log('wrong letter!')
         }
         onClose()
     }

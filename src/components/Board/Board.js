@@ -4,14 +4,13 @@ import CardFaceDown from '../Cards/CardFaceDown';
 import GiveClue from '../Modal/GiveClue'
 import Reveal from '../Modal/Reveal'
 import CluePanel from '../CluePanel/CluePanel'
-import TokenTracker from '../TokenTracker/TokenTracker';
 import TokensTaken from '../TokenTracker/TokensTaken';
 import GuessBonus from '../Modal/GuessBonus';
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
-	const [openReveal, setOpenReveal] = useState(false)
+	
 
 	// if (ctx.phase === 'reveal'){
 	// 	setOpenReveal(true)
@@ -112,9 +111,6 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 					<br/>
 					<br/>
 				</div>
-				<GiveClue show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
-				<GuessBonus show={openGuessBonus} onClose={()=> setOpenGuessBonus(false)} G={G} playerID={playerID} moves={moves} />
-				<Reveal show={openReveal} onClose={()=> setOpenReveal(false)} G={G} playerID={playerID} moves={moves} />
 				<div>
 					<CardFaceDown G={G} playerID={playerID}/>
 					<TokensTaken G={G} playerID={playerID}/>
@@ -133,9 +129,12 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
 						</div> 
 					}
 				</div>
+				<GiveClue show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
+				<GuessBonus show={openGuessBonus} onClose={()=> setOpenGuessBonus(false)} G={G} playerID={playerID} moves={moves} />
+				<Reveal ctx={ctx} onClose={()=> {}} G={G} playerID={playerID} moves={moves} />
 			</div>
 			<div className = 'tc pa4 w-25'>
-				<CluePanel G={G} playerID={playerID} setOpenModel={setOpenModal} events={events}/>
+				<CluePanel G={G} playerID={playerID} setOpenModal={setOpenModal} events={events}/>
 				{/* <TokenTracker G={G}/>
 	        	{ isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> } */}
 	        </div>
