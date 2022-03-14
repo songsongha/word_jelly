@@ -13,10 +13,11 @@ const Reveal = ({ctx, onClose, G, playerID, moves}) => {
       }
     const handleSubmit = () => {
         console.log('submit pressed')
-        if (playerID > 0 && wordGuess.toUpperCase === G.players[playerID-1].word.toUpperCase){
-            console.log('first case wordGuess', wordGuess, 'word', G.players[playerID-1].word)
-        } else if (playerID === '0' && wordGuess.toUpperCase === G.players[G.players.length-1].word.toUpperCase){
-            console.log('second case wordGuess', wordGuess, 'word', G.players[G.players.length-1].word)
+        
+        if (playerID > 0 && wordGuess.toUpperCase() === G.players[playerID-1].word.toUpperCase()){
+            console.log('first case wordGuess', wordGuess.toUpperCase(), 'word', G.players[playerID-1].word.toUpperCase())
+        } else if (playerID === '0' && wordGuess.toUpperCase() === G.players[G.players.length-1].word.toUpperCase()){
+            console.log('second case wordGuess', wordGuess.toUpperCase(), 'word', G.players[G.players.length-1].word.toUpperCase())
         } else {
             console.log('wrong letter!')
         }

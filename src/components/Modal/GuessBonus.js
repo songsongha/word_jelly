@@ -13,7 +13,7 @@ const GuessBonus = ({show, onClose, G, playerID, moves}) => {
       }
     const handleSubmit = () => {
         let isBonusCorrect = false
-        if (bonusGuess.toUpperCase === G.bonusLetters[playerID].toUpperCase){
+        if (bonusGuess.toUpperCase() === G.bonusLetters[playerID].toUpperCase()){
             isBonusCorrect = true
         }
         moves.nextCard(playerID, isBonusCorrect)
