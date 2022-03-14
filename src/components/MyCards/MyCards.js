@@ -27,7 +27,7 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
 	}
     // show pile of cards that are known
     const cardRow = []
-	for (let i = 0; i < letterPosition; i++) {
+	for (let i = 0; i < letterPosition && i < G.words[playerID].length; i++) {
         cardRow.push(
             <CardFaceDown 
             key = {`myCard${i}`}

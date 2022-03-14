@@ -143,6 +143,15 @@ export const WordJellyGame = {
                     const isNextCardAvailable = [...G.isNextCardAvailable]
                     const clues = [...G.clues] 
                     const clue = []
+                    const letterPositions= []
+                    const Gplayers = [...G.players]
+                    // get a snap shot of the letter positions at this time
+                    // first index of every clue is the snapshot of letterPosition
+                    for (let i = 0; i < Gplayers.length; i++){
+                        letterPositions.push(Gplayers[i].letterPosition)
+                    }
+                    clue.push(letterPositions)
+
                     for(let i = 0; i < players.length; i++){
                         if(players[i]){
                             if (strPlayers.includes(players[i])){
@@ -160,6 +169,7 @@ export const WordJellyGame = {
                             }
                         }
                     }
+                    
                     clues.push(clue)
                     
                     // decrease tokensAvailable

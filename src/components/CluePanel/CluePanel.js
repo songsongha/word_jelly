@@ -17,18 +17,28 @@ const CluePanel = ({G, playerID, setOpenModal, events}) => {
 		setOpenModal(true)
 	}
     const display = []
-    const clues = G.clues
-    const cardPosition = G.players[playerID].letterPosition + 1
-    
+    const clues = [...G.clues]
+
     if (clues) {
         for (let i = 0; i < clues.length; i++) {
             // only display the clue if the player is involved in the clue
             if (clues[i] && clues[i].length && clues[i].find(obj => obj.player === playerID)){
+                let letterPositionArray = []
                 let rowText = ''
                 for(let j = 0; j < clues[i].length; j++){
-                    rowText += clues[i][j].player !== playerID ? clues[i][j].letter.toUpperCase() + ' ' : '? '
+                    if (j === 0){
+                        letterPositionArray = [...clues[i][j]]
+                    } else {
+                        rowText += clues[i][j].player !== playerID ? clues[i][j].letter.toUpperCase() + ' ' : '? '
+                    }
                 }
-                rowText += ' (Card ' + cardPosition + ')'
+                
+                const cardNo = letterPositionArray[playerID] + 1
+                if (cardNo <= G.words[playerID].length){
+                    rowText += ' (Card ' + cardNo + ')'
+                } else {
+                    rowText+= ' (Bonus)'
+                }
                 display.push(
                     <div key ={i}>
                         {rowText}
