@@ -48,7 +48,7 @@ const isGameOver = (G) => {
 }
 
 const randomLetter = () => {
-    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    var characters = 'ABCDEFGHIKLMNOPRSTUWY'
     return characters.charAt(Math.floor(Math.random() * characters.length))
 }
 
