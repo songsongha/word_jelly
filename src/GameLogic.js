@@ -231,6 +231,29 @@ export const WordJellyGame = {
 
         },
         reveal: {
+            moves:{
+                guessWord: (G, ctx, submission) => {
+                    console.log('guess word')
+                    const {playerID, wordGuess} = submission
+                    
+                    if (playerID > 0 && wordGuess.toUpperCase() === G.players[playerID-1].word.toUpperCase()){
+            
+                    } else if (playerID === '0' && wordGuess.toUpperCase() === G.players[G.players.length-1].word.toUpperCase()){
+                        console.log('second case wordGuess', wordGuess.toUpperCase(), 'word', G.players[G.players.length-1].word.toUpperCase())
+                    } else {
+                        console.log('wrong letter!')
+                    }
+                }
+
+            },
+            turn: {
+                onBegin: (G, ctx, playerID) => {
+                    console.log('turn begins')
+                    ctx.events.setActivePlayers({
+                        all: Stage.NULL,
+                    })
+                }
+            }
 
         }
     }
