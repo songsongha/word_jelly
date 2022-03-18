@@ -18,7 +18,7 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		moves.submitWords(playerID, name, word)
       }
 
-if (ctx.phase === 'setUp' && !G.players[playerID].word){
+if (ctx.phase === 'setUp' && !G.players[playerID].submittedWord){
 	return ( 
 		<div className='tc'>
 			Name: <input type = 'text' id = 'txtName'/>
@@ -26,7 +26,7 @@ if (ctx.phase === 'setUp' && !G.players[playerID].word){
             <button id = 'btnSubmit'onClick={submitWord}>Submit</button>
 		</div>
 		)
-} else if (ctx.phase === 'setUp' && G.players[playerID].word){
+} else if (ctx.phase === 'setUp' && G.players[playerID].submittedWord){
 	return ( 
 		<div className='tc'>
 			Waiting for other players to enter words

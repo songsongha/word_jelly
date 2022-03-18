@@ -19,7 +19,7 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
 
     let currentCard = ''
     if (G){
-		if (letterPosition >= G.players[playerID].word.length){
+		if (letterPosition >= G.gameResults[playerID].word.length){
 			currentCard = 'Bonus'
 		} else {
 			currentCard = `Card ${letterPosition + 1}`

@@ -21,30 +21,27 @@ const sumOf = (tokensAvailable) => {
     return red + leaves + restricted 
 }
 
-const isEveryPlayerDone = (players) =>{
-    console.log({players})
+const isEveryPlayerDone = (G) =>{
+    const {players, words} = G
     let result = true
     for (let i = 0; i < players.length; i++){
-        if (players[i] && players[i].word &&
-            players[i].letterPosition < players[i].word.length){
+        if (players[i] && words[i] &&
+            players[i].letterPosition < words[i].length){
             result = false
             break
         }
     }
-
-    console.log({result})
     return result
 }
 
 const isGameOver = (G) => {
-    console.log('isgameover?')
     // if all clues are gone or all players have decided that they know their words
     if (sumOf(G.tokensAvailable) === 0){
         console.log('tokens are all out')
         return true
     }
    
-    return isEveryPlayerDone(G.players)
+    return isEveryPlayerDone(G)
 }
 
 const randomLetter = () => {
@@ -62,7 +59,7 @@ export const WordJellyGame = {
             id: p.toString(),
             name: "Player " + (p),
             letterPosition: 0,
-            word: ''
+            submittedWord: false
           });
         }
         const words = Array(6)
@@ -76,6 +73,10 @@ export const WordJellyGame = {
         const isNextCardAvailable = Array(6).fill(false)
         const bonusLetters = Array(6)
         let permanentLetters = []
+        const gameResults = Array(6).fill({
+            word: '',
+            guess: ''
+        })
 
         let isClueInProgress = false
     
@@ -89,7 +90,8 @@ export const WordJellyGame = {
           isClueInProgress,
           isNextCardAvailable,
           bonusLetters,
-          permanentLetters
+          permanentLetters,
+          gameResults
 
         });
       },
@@ -98,16 +100,18 @@ export const WordJellyGame = {
             moves: {
                 submitWords: (G, ctx, playerID, name, word) => {
 
+                    
                     // commit player info and words
                     if (name) G.players[playerID].name = name
-
-                    G.players[playerID].word = word
+                    G.players[playerID].submittedWord = true
                     
                     // shuffle words and assign to person to the right
                     if (Number(playerID) < G.players.length-1){
                         G.words[Number(playerID) + 1] = shuffle(word)
+                        G.gameResults[Number(playerID) + 1].word = word
                     } else {
                         G.words[0] = shuffle(word)
+                        G.gameResults[0].word = word
                     }
 
                     ctx.events.endStage()
@@ -235,13 +239,15 @@ export const WordJellyGame = {
                 guessWord: (G, ctx, submission) => {
                     console.log('guess word')
                     const {playerID, wordGuess} = submission
+                    // insert word into gameResults for display later
+                    G.gameResults[playerID].guess = wordGuess
                     
-                    if (playerID > 0 && wordGuess.toUpperCase() === G.players[playerID-1].word.toUpperCase()){
-            
-                    } else if (playerID === '0' && wordGuess.toUpperCase() === G.players[G.players.length-1].word.toUpperCase()){
-                        console.log('second case wordGuess', wordGuess.toUpperCase(), 'word', G.players[G.players.length-1].word.toUpperCase())
+                    if (wordGuess.toUpperCase() === G.gameResults[playerID].word.toUpperCase()){
+                        // correct guess
+                        console.log('correct guess')
                     } else {
-                        console.log('wrong letter!')
+                        // incorrect guess
+                        console.log('wrong guess')
                     }
                 }
 

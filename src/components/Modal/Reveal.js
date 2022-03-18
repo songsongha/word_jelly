@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import './modal.css'
 
-const Reveal = ({ctx, onClose, G, playerID, moves}) => {
+const Reveal = ({ctx, G, playerID, moves}) => {
     const [wordGuess, setWordGuess] = useState('')
     const [showTextBox, setShowTextBox] = useState(true)
 
@@ -21,7 +21,6 @@ const Reveal = ({ctx, onClose, G, playerID, moves}) => {
         }
         moves.guessWord(submission)
 
-        onClose()
     }
     
     return (
