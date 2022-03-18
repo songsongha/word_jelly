@@ -49,6 +49,17 @@ const randomLetter = () => {
     return characters.charAt(Math.floor(Math.random() * characters.length))
 }
 
+const isAnagram = (word, guess) =>{
+    
+    if (word.length === guess.length &&
+        word.split("").sort().join("").toUpperCase() === guess.split("").sort().join("").toUpperCase()) {
+        // need to also check if anagram is a word
+        return true
+    }
+    return false
+
+}
+
 export const WordJellyGame = {
       name: 'word-jelly',
       setup: () => {
@@ -75,7 +86,8 @@ export const WordJellyGame = {
         let permanentLetters = []
         const gameResults = Array(6).fill({
             word: '',
-            guess: ''
+            guess: '',
+            score: 0
         })
 
         let isClueInProgress = false
@@ -238,13 +250,16 @@ export const WordJellyGame = {
             moves:{
                 guessWord: (G, ctx, submission) => {
                     console.log('guess word')
+                    const {gameResults} = G
                     const {playerID, wordGuess} = submission
                     // insert word into gameResults for display later
-                    G.gameResults[playerID].guess = wordGuess
+                    gameResults[playerID].guess = wordGuess
                     
-                    if (wordGuess.toUpperCase() === G.gameResults[playerID].word.toUpperCase()){
+                    // calculate score
+                    if (wordGuess.toUpperCase() === gameResults[playerID].word.toUpperCase() || 
+                        isAnagram(gameResults[playerID].word, wordGuess)){
                         // correct guess
-                        console.log('correct guess')
+                        gameResults[playerID].score = 3 * wordGuess.length
                     } else {
                         // incorrect guess
                         console.log('wrong guess')
