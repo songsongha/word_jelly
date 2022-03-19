@@ -47,7 +47,8 @@ if (ctx.phase === 'setUp' && !G.players[playerID].submittedWord){
 				<CardFaceUp 
 				key = {`card${player}`}
 				letter = {letter}
-				player = {G.players[player]} />
+				player = {G.players[player]}
+				word = {G.words[player]} />
 			)
 		}
 	  }

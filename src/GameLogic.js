@@ -260,10 +260,7 @@ export const WordJellyGame = {
                         isAnagram(gameResults[playerID].word, wordGuess)){
                         // correct guess
                         gameResults[playerID].score = 3 * wordGuess.length
-                    } else {
-                        // incorrect guess
-                        console.log('wrong guess')
-                    }
+                    } 
                 }
 
             },

@@ -22,6 +22,16 @@ const Reveal = ({ctx, G, playerID, moves}) => {
         moves.guessWord(submission)
 
     }
+    const resultsTable = G.gameResults.map((player,index) =>{
+        const {word, guess, score} = player
+        return(
+            <tr key={index}>
+                <td>{word}</td>
+                <td>{guess}</td>
+                <td>{score}</td>
+            </tr>
+        )
+    })
     
     return (
         <div className='modal'>
@@ -29,7 +39,7 @@ const Reveal = ({ctx, G, playerID, moves}) => {
                 <header className='modal-header'>
                     <h4 className='modal-title'>Game Over!</h4>
                 </header>
-                {showTextBox &&
+                {showTextBox ?
                     <main className='modal-body'>
                         
                         What do you think your word is? <br/>
@@ -37,6 +47,13 @@ const Reveal = ({ctx, G, playerID, moves}) => {
                         value={wordGuess || ''}
                         onChange={handleChange}></input>
                     </main>
+                :
+                    <table id='results'>
+                        <tbody>
+                        {resultsTable}
+                        </tbody>
+                    </table>
+                    
                 }
                 <footer className='modal-footer'>
                     {showTextBox && <button className='button' onClick={handleSubmit}>Submit</button>}

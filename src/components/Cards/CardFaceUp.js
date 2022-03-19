@@ -1,11 +1,11 @@
 import React from 'react';
 
 
-const CardFaceUp = ({letter, player}) => {
+const CardFaceUp = ({letter, player, word}) => {
 	let cardNo =  ''
-	if (player && player.word && player.letterPosition < player.word.length){
+	if (player && word && player.letterPosition < word.length){
 		cardNo = `Card ${player.letterPosition + 1}`
-	} else if (player && player.word && player.letterPosition >= player.word.length){
+	} else if (player && word && player.letterPosition >= word.length){
 		cardNo = 'Bonus'
 	} 
 
