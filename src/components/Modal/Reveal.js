@@ -22,14 +22,25 @@ const Reveal = ({ctx, G, playerID, moves}) => {
         moves.guessWord(submission)
 
     }
-    const resultsTable = G.gameResults.map((player,index) =>{
+    const areAllGuessesIn = () => {
+        if (G.gameResults.some(e => e.guess === '')) {
+            return false
+          }
+        return true
+    }
+    const totalScore = G.gameResults.reduce((acc, curr) => {
+        return acc + curr.score
+      }, 0)
+    
+    const resultsTable = G.gameResults.map((player,index, array) =>{
         const {word, guess, score} = player
+
         return(
             <tr key={index}>
-                <td>Player {index}</td>
-                <td>{word}</td>
-                <td>{guess}</td>
-                <td>{score}</td>
+                <td className='ph3'>{G.players[index].name}</td>
+                <td className='ph3'>{guess ? word : ''}</td>
+                <td className= {`ph3 ${score > 0 ? 'green': 'red' }`}>{guess}</td>
+                {(index === 0) && <td rowSpan={array.length} className='ph3 f-subheadline'>{totalScore}</td>}
             </tr>
         )
     })
@@ -51,13 +62,13 @@ const Reveal = ({ctx, G, playerID, moves}) => {
 
                 :
                     <div className='tc'>
-                        <table id='results'>
+                        <table id='results' className='center'>
                             <tbody>
                                 <tr>
-                                    <th key='player'>Player</th>    
-                                    <th key='word'>Word</th>
-                                    <th key='guess'>Guess</th>
-                                    <th key='score'>Score</th>
+                                    <th key='player'className='ph3'>Player</th>    
+                                    <th key='word'className='ph3'>Word</th>
+                                    <th key='guess'className='ph3'>Guess</th>
+                                    <th key='score'className='ph5'> Total Score</th>
                                 </tr>
                                 
 
@@ -69,7 +80,8 @@ const Reveal = ({ctx, G, playerID, moves}) => {
                 }
                 </main>
                 <footer className='modal-footer'>
-                    {showTextBox && <button className='button' onClick={handleSubmit}>Submit</button>}
+                    {showTextBox ? <button key='submit' className='button' onClick={handleSubmit}>Submit</button>
+                                : areAllGuessesIn () ? <button key='newGame' className='button' onClick={()=>console.log('new game!')}>New Game</button>:'' }
                 </footer>
             </div>
         </div>
