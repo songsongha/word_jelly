@@ -26,6 +26,7 @@ const Reveal = ({ctx, G, playerID, moves}) => {
         const {word, guess, score} = player
         return(
             <tr key={index}>
+                <td>Player {index}</td>
                 <td>{word}</td>
                 <td>{guess}</td>
                 <td>{score}</td>
@@ -39,22 +40,34 @@ const Reveal = ({ctx, G, playerID, moves}) => {
                 <header className='modal-header'>
                     <h4 className='modal-title'>Game Over!</h4>
                 </header>
+                <main className='modal-body'>
                 {showTextBox ?
-                    <main className='modal-body'>
-                        
+                    <div>
                         What do you think your word is? <br/>
                         <input type = 'text' id = 'txtGuess'
                         value={wordGuess || ''}
                         onChange={handleChange}></input>
-                    </main>
+                    </div>
+
                 :
-                    <table id='results'>
-                        <tbody>
-                        {resultsTable}
-                        </tbody>
-                    </table>
+                    <div className='tc'>
+                        <table id='results'>
+                            <tbody>
+                                <tr>
+                                    <th key='player'>Player</th>    
+                                    <th key='word'>Word</th>
+                                    <th key='guess'>Guess</th>
+                                    <th key='score'>Score</th>
+                                </tr>
+                                
+
+                            {resultsTable}
+                            </tbody>
+                        </table>
+                    </div>
                     
                 }
+                </main>
                 <footer className='modal-footer'>
                     {showTextBox && <button className='button' onClick={handleSubmit}>Submit</button>}
                 </footer>
