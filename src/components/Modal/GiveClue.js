@@ -68,11 +68,12 @@ const GiveClue = ({show, onClose, G, playerID, moves}) => {
             playerID
         }
         moves.giveClue(submission)
+        setFormValues({})
         onClose()
     }
     const handleCancel = () => {
         // need to find a way to restore action status
-        setFormValues({})
+        
         onClose()
     }
     return (
