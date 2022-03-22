@@ -28,10 +28,13 @@ const Reveal = ({ctx, G, playerID, moves}) => {
           }
         return true
     }
-    const totalScore = G.gameResults.reduce((acc, curr) => {
-        return acc + curr.score
-      }, 0)
-    
+    const totalScore = () => { 
+        const wordScore = G.gameResults.reduce((acc, curr) => {
+            return acc + curr.score
+        }, 0)
+        const tokenScore =  G.tokensAvailable.leaves + G.tokensAvailable.restricted
+        return wordScore + tokenScore
+      }
     const resultsTable = G.gameResults.map((player,index, array) =>{
         const {word, guess, score} = player
 
