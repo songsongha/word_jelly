@@ -6,8 +6,17 @@ const Lobby = ({setRoute}) => {
 	const [matchID, setMatchID] = useState('')
 	const [playerName, setPlayerName] = useState('')
 	const [lobbyState, setLobbyState] = useState('lobby')
+	const [match, setMatch] = useState('')
 
 	const lobbyClient = useMemo(() => { return new LobbyClient({ server: 'http://localhost:8000' })},[])
+
+	const findMatch = useCallback(async (matchID) =>{
+		if (matchID){
+			const match = await lobbyClient.getMatch('word-jelly', matchID)
+			console.log('match inside findMatch', match)
+			setMatch(match)
+		}
+	},[lobbyClient])
 
 	const joinGame = useCallback(async (matchID,playerName) => {
 		console.log('join game')
@@ -20,9 +29,10 @@ const Lobby = ({setRoute}) => {
 			playerName
 			}
 		)
+		findMatch(matchID)
 		setLobbyState('wait')
 		console.log({playerCredentials})
-	},[lobbyClient])
+	},[findMatch, lobbyClient])
 
 	const newGame = useCallback(async () =>{
 		const { matchID } = await lobbyClient.createMatch('word-jelly', {
@@ -33,17 +43,9 @@ const Lobby = ({setRoute}) => {
 
 	},[lobbyClient])
 	
-	const findMatch = useCallback(async (matchID) =>{
-		if (matchID){
-			const match = await lobbyClient.getMatch('word-jelly', matchID)
-			console.log('match inside findMatch', match)
-			return match
-		}
-	},[lobbyClient])
 
 	const displayMatch = useMemo(() =>{
 
-		const match = findMatch(matchID)
 		console.log('match inside of deplsay Match',match)
 		
 		if (match && match.players) {
@@ -78,7 +80,7 @@ const Lobby = ({setRoute}) => {
 				</div>
 			)
 		}
-	},[findMatch, matchID]) 
+	},[match, matchID]) 
 
 	return ( 
 		<div className='tc'>
