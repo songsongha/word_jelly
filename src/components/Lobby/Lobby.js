@@ -9,13 +9,16 @@ const Lobby = ({setRoute}) => {
 	const [match, setMatch] = useState('')
 
 	const lobbyClient = useMemo(() => { return new LobbyClient({ server: 'http://localhost:8000' })},[])
-
-	const findMatch = useCallback(async (matchID) =>{
-		if (matchID){
-			const match = await lobbyClient.getMatch('word-jelly', matchID)
-			console.log('match inside findMatch', match)
-			setMatch(match)
-		}
+	
+	const findMatch = useCallback((matchID) =>{
+		const interval = setInterval(async() => {
+			if (matchID){
+				const match = await lobbyClient.getMatch('word-jelly', matchID)
+				console.log('match inside findMatch', match)
+				setMatch(match)
+			}
+		}, 2000)
+		return () => clearInterval(interval)
 	},[lobbyClient])
 
 	const joinGame = useCallback(async (matchID,playerName) => {
