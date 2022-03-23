@@ -41,4 +41,3 @@ const [playerId, setPlayerId] = useState({})
   }
 
 export default App;
-//       display = <GameSetUp setRoute={setRoute} wordLength={wordLength} setWord = {setWord} setPlayer={setPlayer}/>
