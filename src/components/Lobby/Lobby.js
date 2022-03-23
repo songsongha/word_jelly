@@ -102,7 +102,9 @@ const Lobby = ({setRoute}) => {
 				<div>
 					Enter Game ID:
 					<input type = 'text' id = 'txtGameId' onChange={(e) => {setMatchID(e.target.value)}}/>
+					Your Name:<input type = 'text' id = 'txtName' onChange={(e) => {setPlayerName(e.target.value)}}/>
 					<button id = 'btnJoin' onClick={() => joinGame(matchID,playerName)}>Join Game</button>
+					
 				</div>
 			}
 			{ lobbyState === 'wait' &&
