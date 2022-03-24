@@ -7,49 +7,58 @@ const Lobby = ({setRoute}) => {
 	const [playerName, setPlayerName] = useState('')
 	const [lobbyState, setLobbyState] = useState('lobby')
 	const [match, setMatch] = useState('')
+	const [errorMsg, setErrorMsg] = useState('')
 
 	const lobbyClient = useMemo(() => { return new LobbyClient({ server: 'http://localhost:8000' })},[])
 	
 	const findMatch = useCallback((matchID) =>{
 		const interval = setInterval(async() => {
 			if (matchID){
+				try {
 				const match = await lobbyClient.getMatch('word-jelly', matchID)
 				console.log('match inside findMatch', match)
 				setMatch(match)
+				} catch (error){
+					setErrorMsg('There was an issue finding the match. Please try again')
+				}
 			}
 		}, 2000)
 		return () => clearInterval(interval)
 	},[lobbyClient])
 
 	const joinGame = useCallback(async (matchID,playerName) => {
-		console.log('join game')
-		console.log({playerName})
-		console.log({matchID})
-		const { playerCredentials } = await lobbyClient.joinMatch(
-			'word-jelly',
-			matchID,
-			{
-			playerName
-			}
-		)
-		findMatch(matchID)
-		setLobbyState('wait')
-		console.log({playerCredentials})
+		setErrorMsg('')
+		try {
+			const { playerCredentials } = await lobbyClient.joinMatch(
+				'word-jelly',
+				matchID,
+				{
+				playerName
+				}
+			)
+			findMatch(matchID)
+			setLobbyState('wait')
+			console.log({playerCredentials})
+		} catch (e) {
+			setErrorMsg('There was an issue with the Game ID.  Please try again')
+		}
 	},[findMatch, lobbyClient])
 
 	const newGame = useCallback(async () =>{
-		const { matchID } = await lobbyClient.createMatch('word-jelly', {
-			numPlayers: 6
-		})
-		setMatchID(matchID)
-		setLobbyState('newGame')
+		try{
+			const { matchID } = await lobbyClient.createMatch('word-jelly', {
+				numPlayers: 6
+			})
+			setMatchID(matchID)
+			setLobbyState('newGame')
+		}catch{
+			setErrorMsg('There was an issue with creating a new game. Please try again')
+		}
 
 	},[lobbyClient])
 	
 
 	const displayMatch = useMemo(() =>{
-
-		console.log('match inside of deplsay Match',match)
 		
 		if (match && match.players) {
 			const playerTable = match.players.map(player => {
@@ -87,6 +96,9 @@ const Lobby = ({setRoute}) => {
 
 	return ( 
 		<div className='tc'>
+			<div className='pb3 dark-red'>
+			{errorMsg}
+			</div>
 			{lobbyState === 'lobby' &&
 			<div>
 				<button id = 'btnCreate'onClick={newGame}>New Game</button>
