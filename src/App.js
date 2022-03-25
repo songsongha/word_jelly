@@ -14,10 +14,11 @@ const App = () => {
     
 const [route, setRoute] = useState('lobby')
 const [playerId, setPlayerId] = useState({})
+const [playerCredentials, setPlayerCredentials] = useState('')
   
     let display;
     if (route === 'lobby') {
-      display = <Lobby setRoute={setRoute}/>
+      display = <Lobby setRoute={setRoute} setPlayerCredentials={{setPlayerCredentials}}/>
     } else if (route === 'play') {
       const WordJellyClient = Client({
             game: WordJellyGame,
@@ -29,7 +30,7 @@ const [playerId, setPlayerId] = useState({})
       display = <WordJellyClient playerID={playerId} />
 
     } else if (route === 'newGame') {
-      display = <NewGame setRoute={setRoute} setPlayerId={setPlayerId}/>
+      display = <NewGame setRoute={setRoute} setPlayerId={setPlayerId} playerCredentials={playerCredentials}/>
    }
 
     return(

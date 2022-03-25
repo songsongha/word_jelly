@@ -1,17 +1,18 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { LobbyClient } from 'boardgame.io/client'
 
-// TODO: Error handling!  What if join game doesn't match?
-const Lobby = ({setRoute}) => {
+const Lobby = ({setRoute, setPlayerCredentials}) => {
 	const [matchID, setMatchID] = useState('')
 	const [playerName, setPlayerName] = useState('')
 	const [lobbyState, setLobbyState] = useState('lobby')
 	const [match, setMatch] = useState('')
 	const [errorMsg, setErrorMsg] = useState('')
+	const [playerCred, setPlayerCred] = useState('')
 
 	const lobbyClient = useMemo(() => { return new LobbyClient({ server: 'http://localhost:8000' })},[])
 	
 	const findMatch = useCallback((matchID) =>{
+		setErrorMsg('')
 		const interval = setInterval(async() => {
 			if (matchID){
 				try {
@@ -38,29 +39,44 @@ const Lobby = ({setRoute}) => {
 			)
 			findMatch(matchID)
 			setLobbyState('wait')
+			setPlayerCred(playerCredentials)
 			console.log({playerCredentials})
+			
 		} catch (e) {
 			setErrorMsg('There was an issue with the Game ID.  Please try again')
 		}
 	},[findMatch, lobbyClient])
 
 	const newGame = useCallback(async () =>{
+		setErrorMsg('')
 		try{
 			const { matchID } = await lobbyClient.createMatch('word-jelly', {
 				numPlayers: 6
 			})
 			setMatchID(matchID)
 			setLobbyState('newGame')
-		}catch{
+		}catch (e) {
 			setErrorMsg('There was an issue with creating a new game. Please try again')
 		}
 
 	},[lobbyClient])
-	
+
 
 	const displayMatch = useMemo(() =>{
-		
+
+		const startGame = () => {
+			console.log('game started!')
+			setRoute('newGame')
+			setPlayerCredentials(playerCred)
+		}
 		if (match && match.players) {
+			const isMatchFull = () => {
+				if(match && match.players){
+					return !match.players.some(x => x.name === undefined);
+				}
+				return false
+			}
+			
 			const playerTable = match.players.map(player => {
 				const {id, name} = player
 				return(
@@ -70,6 +86,7 @@ const Lobby = ({setRoute}) => {
 					</tr>
 				)
 			})
+
 
 			return (
 				<div className='tc'>
@@ -83,6 +100,7 @@ const Lobby = ({setRoute}) => {
 						{playerTable}
 						</tbody>
 					</table>
+					{isMatchFull() && <button id = 'btnCreate'onClick={startGame}>Start Game</button> }
 				</div>
 			)
 		} else {
@@ -92,7 +110,7 @@ const Lobby = ({setRoute}) => {
 				</div>
 			)
 		}
-	},[match, matchID]) 
+	},[match, matchID, playerCred, setPlayerCredentials, setRoute]) 
 
 	return ( 
 		<div className='tc'>
