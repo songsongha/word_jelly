@@ -1,7 +1,7 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { LobbyClient } from 'boardgame.io/client'
 
-const Lobby = ({setRoute, setPlayerCredentials}) => {
+const Lobby = ({setRoute, setPlayerID, setClientMatchID, setCredentials}) => {
 	const [matchID, setMatchID] = useState('')
 	const [playerName, setPlayerName] = useState('')
 	const [lobbyState, setLobbyState] = useState('lobby')
@@ -30,7 +30,7 @@ const Lobby = ({setRoute, setPlayerCredentials}) => {
 	const joinGame = useCallback(async (matchID,playerName) => {
 		setErrorMsg('')
 		try {
-			const { playerCredentials } = await lobbyClient.joinMatch(
+			const playerCred = await lobbyClient.joinMatch(
 				'word-jelly',
 				matchID,
 				{
@@ -39,8 +39,8 @@ const Lobby = ({setRoute, setPlayerCredentials}) => {
 			)
 			findMatch(matchID)
 			setLobbyState('wait')
-			setPlayerCred(playerCredentials)
-			console.log({playerCredentials})
+			setPlayerCred(playerCred)
+			console.log({playerCred})
 			
 		} catch (e) {
 			setErrorMsg('There was an issue with the Game ID.  Please try again')
@@ -66,8 +66,10 @@ const Lobby = ({setRoute, setPlayerCredentials}) => {
 
 		const startGame = () => {
 			console.log('game started!')
-			setRoute('newGame')
-			setPlayerCredentials(playerCred)
+			setRoute('play')
+			setPlayerID(playerCred.playerID)
+			setCredentials(playerCred.playerCredentials)
+			setClientMatchID(matchID)
 		}
 		if (match && match.players) {
 			const isMatchFull = () => {
@@ -110,7 +112,7 @@ const Lobby = ({setRoute, setPlayerCredentials}) => {
 				</div>
 			)
 		}
-	},[match, matchID, playerCred, setPlayerCredentials, setRoute]) 
+	},[match, matchID, playerCred, setClientMatchID, setPlayerID, setRoute, setCredentials]) 
 
 	return ( 
 		<div className='tc'>
