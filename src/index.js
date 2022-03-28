@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React, { useEffect } from 'react'
+import ReactDOM from 'react-dom'
+import './index.css'
+import App from './App'
+import reportWebVitals from './reportWebVitals'
 import 'tachyons';
+import { BrowserRouter } from 'react-router-dom'
+import Navigation from './components/Navigation/Navigation'
 
 const Title = () => {
 	useEffect(() => {
@@ -16,7 +18,10 @@ const Title = () => {
 ReactDOM.render(
   <React.StrictMode>
     <Title />
-    <App />
+    <Navigation/>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

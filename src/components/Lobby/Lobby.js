@@ -48,16 +48,16 @@ const Lobby = ({setRoute, setPlayerID, setClientMatchID, setCredentials}) => {
 	},[findMatch, lobbyClient])
 
 	const newGame = useCallback(async () =>{
-		setErrorMsg('')
-		try{
-			const { matchID } = await lobbyClient.createMatch('word-jelly', {
-				numPlayers: 6
-			})
-			setMatchID(matchID)
-			setLobbyState('newGame')
-		}catch (e) {
-			setErrorMsg('There was an issue with creating a new game. Please try again')
-		}
+			setErrorMsg('')
+			try{
+				const { matchID } = await lobbyClient.createMatch('word-jelly', {
+					numPlayers: 6
+				})
+				setMatchID(matchID)
+				setLobbyState('newGame')
+			}catch (e) {
+				setErrorMsg('There was an issue with creating a new game. Please try again')
+			}
 
 	},[lobbyClient])
 
@@ -68,7 +68,7 @@ const Lobby = ({setRoute, setPlayerID, setClientMatchID, setCredentials}) => {
 			console.log('game started!')
 			setRoute('play')
 			setPlayerID(playerCred.playerID)
-			setCredentials(playerCred.playerCredentials)
+			setCredentials(playerCred.playerCredentials	)
 			setClientMatchID(matchID)
 		}
 		if (match && match.players) {
