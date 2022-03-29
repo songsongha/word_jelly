@@ -25,7 +25,8 @@ if (ctx.phase === 'setUp' && G && G.players && G.players[playerID] && !G.players
 	return ( 
 		<div className='tc'>
 			Name: <input type = 'text' id = 'txtName'/>
-            Word: <input type = 'text' id = 'txtWord'/>
+            {wordLength !== 'open' ? `${wordLength}-Letter ` : 'Any Length ' }
+			Word: <input type = 'text' id = 'txtWord'/>
             <button id = 'btnSubmit'onClick={submitWord}>Submit</button>
 		</div>
 		)
