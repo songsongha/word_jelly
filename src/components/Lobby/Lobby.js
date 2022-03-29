@@ -1,118 +1,36 @@
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { LobbyClient } from 'boardgame.io/client'
+import { useNavigate } from 'react-router-dom'
 
-const Lobby = ({setRoute, setPlayerID, setClientMatchID, setCredentials}) => {
+const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setLobbyClient}) => {
 	const [matchID, setMatchID] = useState('')
-	const [playerName, setPlayerName] = useState('')
 	const [lobbyState, setLobbyState] = useState('lobby')
-	const [match, setMatch] = useState('')
 	const [errorMsg, setErrorMsg] = useState('')
-	const [playerCred, setPlayerCred] = useState('')
+	const [wordLength, setWordLength] = useState('5')
 
-	const lobbyClient = useMemo(() => { return new LobbyClient({ server: 'http://localhost:8000' })},[])
+	let navigate = useNavigate()
 	
-	const findMatch = useCallback((matchID) =>{
-		setErrorMsg('')
-		const interval = setInterval(async() => {
-			if (matchID){
-				try {
-				const match = await lobbyClient.getMatch('word-jelly', matchID)
-				console.log('match inside findMatch', match)
-				setMatch(match)
-				} catch (error){
-					setErrorMsg('There was an issue finding the match. Please try again')
-				}
-			}
-		}, 2000)
-		return () => clearInterval(interval)
-	},[lobbyClient])
+	useEffect(() => {
+		const lobbyClient =  new LobbyClient({ server: 'http://localhost:8000' })
+		setLobbyClient(lobbyClient)
+	},[setLobbyClient])
+		
 
-	const joinGame = useCallback(async (matchID,playerName) => {
-		setErrorMsg('')
-		try {
-			const playerCred = await lobbyClient.joinMatch(
-				'word-jelly',
-				matchID,
-				{
-				playerName
-				}
-			)
-			findMatch(matchID)
-			setLobbyState('wait')
-			setPlayerCred(playerCred)
-			console.log({playerCred})
-			
-		} catch (e) {
-			setErrorMsg('There was an issue with the Game ID.  Please try again')
-		}
-	},[findMatch, lobbyClient])
-
-	const newGame = useCallback(async () =>{
+	const newGame = useCallback(async (numPlayers, wordLength) =>{
+		console.log({wordLength})
 			setErrorMsg('')
 			try{
 				const { matchID } = await lobbyClient.createMatch('word-jelly', {
-					numPlayers: 6
+					numPlayers: Number(numPlayers)
 				})
 				setMatchID(matchID)
 				setLobbyState('newGame')
 			}catch (e) {
+				console.log({e})
 				setErrorMsg('There was an issue with creating a new game. Please try again')
 			}
 
 	},[lobbyClient])
-
-
-	const displayMatch = useMemo(() =>{
-
-		const startGame = () => {
-			console.log('game started!')
-			setRoute('play')
-			setPlayerID(playerCred.playerID)
-			setCredentials(playerCred.playerCredentials	)
-			setClientMatchID(matchID)
-		}
-		if (match && match.players) {
-			const isMatchFull = () => {
-				if(match && match.players){
-					return !match.players.some(x => x.name === undefined);
-				}
-				return false
-			}
-			
-			const playerTable = match.players.map(player => {
-				const {id, name} = player
-				return(
-					<tr key={id}>
-						<td className='ph3'>{id+1}</td>
-						<td className='ph3'>{name || ''}</td>
-					</tr>
-				)
-			})
-
-
-			return (
-				<div className='tc'>
-					Game ID: {matchID}
-					<table id='results' className='center'>
-						<tbody>
-							<tr>
-								<th key='player'className='ph3'>Player</th>    
-								<th key='word'className='ph3'>Name</th>
-							</tr>
-						{playerTable}
-						</tbody>
-					</table>
-					{isMatchFull() && <button id = 'btnCreate'onClick={startGame}>Start Game</button> }
-				</div>
-			)
-		} else {
-			return (
-				<div>
-					Finding match...
-				</div>
-			)
-		}
-	},[match, matchID, playerCred, setClientMatchID, setPlayerID, setRoute, setCredentials]) 
 
 	return ( 
 		<div className='tc'>
@@ -121,32 +39,28 @@ const Lobby = ({setRoute, setPlayerID, setClientMatchID, setCredentials}) => {
 			</div>
 			{lobbyState === 'lobby' &&
 			<div>
-				<button id = 'btnCreate'onClick={newGame}>New Game</button>
-				<button id = 'btnJoin' onClick={() => setLobbyState('joinGame')}>Join Game</button>
+				<label htmlFor='numPlayers'>Number of Players:</label>
+					<select name='numPlayers' id='numPlayers' onChange={(e => {setNumPlayers(e.target.value)})}>
+						<option value='6'>6</option>
+					</select>
+				<label htmlFor='wordLength'>Length of Word:</label>
+					<select name='wordLength' id='wordLength'onChange={(e => {setWordLength(e.target.value)})}>
+						<option value='5'>5 Letters (Normal)</option>
+						<option value='3'>3 Letters (Easy) </option>
+						<option value='7'>7 Letters (Hard)</option>
+						<option value='open'>Any length (Open)</option>
+					</select><br/>
+				<button id = 'btnCreate'onClick={() => newGame(numPlayers, wordLength)}>New Game</button>
 			</div>
 			}
 			{ lobbyState === 'newGame' &&
 				<div>
-					Send your friends this Game ID: <br/>
-					{matchID} <br/>
+					Send your friends this URL: <br/>
+					http://localhost:3000/play/{wordLength}/{matchID} <br/>
 					<br/>
-					Your Name:<input type = 'text' id = 'txtName' onChange={(e) => {setPlayerName(e.target.value)}}/>
-					<button id = 'btnJoin' onClick={() => joinGame(matchID,playerName)}>Join Game</button>
+					{/* Your Name:<input type = 'text' id = 'txtName' onChange={(e) => {setPlayerName(e.target.value)}}/> */}
+					<button id = 'btnJoin' onClick={() => navigate(`/play/${wordLength}/${matchID}`)}>Join Game</button>
 				</div>}
-			{ lobbyState === 'joinGame' &&
-				<div>
-					Enter Game ID:
-					<input type = 'text' id = 'txtGameId' onChange={(e) => {setMatchID(e.target.value)}}/>
-					Your Name:<input type = 'text' id = 'txtName' onChange={(e) => {setPlayerName(e.target.value)}}/>
-					<button id = 'btnJoin' onClick={() => joinGame(matchID,playerName)}>Join Game</button>
-					
-				</div>
-			}
-			{ lobbyState === 'wait' &&
-				<div>
-					{displayMatch}
-				</div>
-			}
 		</div>
 		)
 }
