@@ -45,15 +45,11 @@ const WordJellyClient = ({numPlayers, lobbyClient}) => {
         
         setErrorMsg('')
         if (!credentials){
-            console.log('credentials dont exist',credentials)
             const localStore = loadState(id)
-            console.log({localStore})
             if (!localStore){
-                console.log('no local store')
                 joinMatch()
             } else {
                 setState(localStore)
-                console.log('yes local store')
             }
         }
         
