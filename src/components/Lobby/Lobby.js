@@ -1,23 +1,17 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { LobbyClient } from 'boardgame.io/client'
 import { useNavigate } from 'react-router-dom'
 
-const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setLobbyClient}) => {
+const Lobby = ({numPlayers, lobbyClient, setNumPlayers}) => {
 	const [matchID, setMatchID] = useState('')
 	const [lobbyState, setLobbyState] = useState('lobby')
 	const [errorMsg, setErrorMsg] = useState('')
 	const [wordLength, setWordLength] = useState('5')
 
 	let navigate = useNavigate()
-	
-	useEffect(() => {
-		const lobbyClient =  new LobbyClient({ server: 'http://localhost:8000' })
-		setLobbyClient(lobbyClient)
-	},[setLobbyClient])
 		
-
-	const newGame = useCallback(async (numPlayers, wordLength) =>{
-		console.log({wordLength})
+	const newGame = useCallback(async (numPlayers) =>{
+		const lobbyClient =  new LobbyClient({ server: 'http://localhost:8000' })
 			setErrorMsg('')
 			try{
 				const { matchID } = await lobbyClient.createMatch('word-jelly', {
