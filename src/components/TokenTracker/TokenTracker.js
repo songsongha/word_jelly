@@ -33,7 +33,7 @@ return (
         <ClueToken key='token-5' color ={determineColor(5)}/>
         <ClueToken key='token-6' color ={determineColor(6)}/>
         </div>
-        <div className='row4 mt4 ml6 pt1'>
+        <div className='row4 mt4 ml6 pt1 pl2'>
         <ClueToken key='token-7' color ={determineColor(7)}/>
         </div>
         <div className='row5 flex justify-around pl3 pr4'>
