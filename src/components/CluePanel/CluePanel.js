@@ -1,6 +1,6 @@
 import React from 'react';
 import TokenTracker from '../TokenTracker/TokenTracker'
-
+import flowerOutline from './flowerOutline2.png'
 
 const CluePanel = ({G, playerID, setOpenModal, events}) => {
     const isClueAvailable = () => {
@@ -51,8 +51,10 @@ const CluePanel = ({G, playerID, setOpenModal, events}) => {
 return (
     <div className= 'cluePanel'>
         <div>
-            <TokenTracker G={G}/>
-	        	{ isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
+            <div className='w5 h5 mb3' style={{ backgroundImage:`url(${flowerOutline})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat:"no-repeat" }}>
+                <TokenTracker G={G}/>
+            </div>
+	        { isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
             <h1 className='f3'>Clues</h1>
             {display}
             <br/>

@@ -5,7 +5,7 @@ const ClueToken = ({color, number}) => {
 	let circleClass = 'circle bg-';
 	circleClass += color;
 	return (
-		<span className= 'pa3'>
+		<span className= 'ph2'>
 			<div className= {circleClass}>
 			{number}
 			</div>
