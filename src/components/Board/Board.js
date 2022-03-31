@@ -21,6 +21,17 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		moves.submitWords(playerID, name, word)
       }
 
+	const waitTable = G.players.map((player,index, array) =>{
+		const {name, submittedWord} = player
+
+		return(
+			<tr key={index}>
+				<td className='ph3'>{name}</td>
+				<td className={`${submittedWord ? 'green': ''}`}>{submittedWord ? 'Ready' : 'Not yet joined'}</td>
+			</tr>
+		)  
+	})
+
 if (ctx.phase === 'setUp' && G && G.players && G.players[playerID] && !G.players[playerID].submittedWord){
 	return ( 
 		<div className='tc'>
@@ -33,7 +44,16 @@ if (ctx.phase === 'setUp' && G && G.players && G.players[playerID] && !G.players
 } else if (ctx.phase === 'setUp' && G.players && G.players[playerID] && G.players[playerID].submittedWord){
 	return ( 
 		<div className='tc'>
-			Waiting for other players to enter words
+			Waiting for other players join and enter words
+			<table id='wait' className='center pt4'>
+				<tbody>
+					<tr>
+						<th key='player'className='ph3'>Player</th>    
+						<th key='ready'className='ph3'>Status</th>
+					</tr>
+				{waitTable}
+				</tbody>
+			</table>
 		</div>
 		)
 }else if (ctx.phase === 'play' || ctx.phase === 'reveal') {

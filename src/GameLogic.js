@@ -75,7 +75,7 @@ export const WordJellyGame = {
         for (let p = 0; p < 6; p++) {
           players.push({
             id: p.toString(),
-            name: "Player " + (p),
+            name: "Player " + (p+1),
             letterPosition: 0,
             submittedWord: false
           });
