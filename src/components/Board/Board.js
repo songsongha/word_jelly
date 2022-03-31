@@ -11,7 +11,7 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
 	let { wordLength } = useParams()
-	console.log({wordLength})
+
 
 	const submitWord = () => {
 		

@@ -4,10 +4,9 @@ import { Client } from "boardgame.io/react"
 import { SocketIO } from "boardgame.io/multiplayer"
 import Board from '../components/Board/Board'
 import { useParams } from 'react-router-dom'
-import { LobbyClient } from 'boardgame.io/client'
 import { loadState, saveState } from '../localStorage'
 
-const WordJellyClient = ({numPlayers, lobbyClient}) => {
+const WordJellyClient = ({numPlayers,lobbyClient}) => {
     const [errorMsg, setErrorMsg] = useState('')
     const [credentials, setCredentials] = useState('')
     const [playerID, setPlayerID] = useState()
@@ -26,7 +25,6 @@ const WordJellyClient = ({numPlayers, lobbyClient}) => {
 
     useEffect(() => {
         async function joinMatch() {
-            const lobbyClient =  new LobbyClient({ server: 'http://localhost:8000' })
             try {
                 const match = await lobbyClient.joinMatch(
                     'word-jelly',
@@ -39,7 +37,7 @@ const WordJellyClient = ({numPlayers, lobbyClient}) => {
                 
             } catch (e) {
                 console.log({e})
-                setErrorMsg('There was an issue with the Game ID.  Please try again')
+                setErrorMsg('There was an issue with the Game ID or game may be full.  Please try again')
             }
           }
         
@@ -52,8 +50,6 @@ const WordJellyClient = ({numPlayers, lobbyClient}) => {
                 setState(localStore)
             }
         }
-        
-
 		
 	},[credentials, id, lobbyClient, setState])
    
@@ -68,7 +64,7 @@ const WordJellyClient = ({numPlayers, lobbyClient}) => {
     
         return(
             <div>
-                {errorMsg ? 'No game found. Check URL and try again' :
+                {errorMsg ? errorMsg :
                     <WordJellyClient matchID={id} playerID={playerID} credentials={credentials} />
                 }
             </div>

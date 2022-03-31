@@ -34,6 +34,13 @@ const isEveryPlayerDone = (G) =>{
     return result
 }
 
+const areAllGuessesIn = (G) => {
+    if (G.gameResults.some(e => e.guess === '')) {
+        return false
+      }
+    return true
+}
+
 const isGameOver = (G) => {
     // if all clues are gone or all players have decided that they know their words
     if (sumOf(G.tokensAvailable) === 0){
@@ -107,7 +114,11 @@ export const WordJellyGame = {
 
         });
       },
-      phases: {
+    endIf: (G, ctx) => {
+        if (areAllGuessesIn(G)){
+            return true
+        }},
+    phases: {
         setUp: {
             moves: {
                 submitWords: (G, ctx, playerID, name, word) => {

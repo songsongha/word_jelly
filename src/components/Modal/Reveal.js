@@ -84,7 +84,7 @@ const Reveal = ({ctx, G, playerID, moves}) => {
                 </main>
                 <footer className='modal-footer'>
                     {showTextBox ? <button key='submit' className='button' onClick={handleSubmit}>Submit</button>
-                                : areAllGuessesIn () ? <button key='newGame' className='button' onClick={()=>console.log('new game!')}>New Game</button>:'' }
+                                : ctx.gameover ? <button key='newGame' className='button' onClick={()=>console.log('new game!')}>New Game</button>:'' }
                 </footer>
             </div>
         </div>

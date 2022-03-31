@@ -1,5 +1,4 @@
 import React, { useCallback, useState } from 'react'
-import { LobbyClient } from 'boardgame.io/client'
 import { useNavigate } from 'react-router-dom'
 
 const Lobby = ({numPlayers, lobbyClient, setNumPlayers}) => {
@@ -11,7 +10,6 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers}) => {
 	let navigate = useNavigate()
 		
 	const newGame = useCallback(async (numPlayers) =>{
-		const lobbyClient =  new LobbyClient({ server: 'http://localhost:8000' })
 			setErrorMsg('')
 			try{
 				const { matchID } = await lobbyClient.createMatch('word-jelly', {
@@ -23,7 +21,7 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers}) => {
 				console.log({e})
 				setErrorMsg('There was an issue with creating a new game. Please try again')
 			}
-
+		
 	},[lobbyClient])
 
 	return ( 
