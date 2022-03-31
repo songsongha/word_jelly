@@ -1,11 +1,13 @@
 import React, {useState} from 'react'
 import './modal.css'
+import { useNavigate } from 'react-router-dom'
 
-const Reveal = ({ctx, G, playerID, moves}) => {
+const Reveal = ({ctx, G, playerID, moves,lobbyClient}) => {
     const [wordGuess, setWordGuess] = useState('')
     const [showTextBox, setShowTextBox] = useState(true)
+    const navigate = useNavigate()
 
-    if (ctx.phase !== 'reveal'){
+    if (ctx.phase !== 'reveal' && ctx.phase !== null){
         return null
     }
 
@@ -22,11 +24,9 @@ const Reveal = ({ctx, G, playerID, moves}) => {
         moves.guessWord(submission)
 
     }
-    const areAllGuessesIn = () => {
-        if (G.gameResults.some(e => e.guess === '')) {
-            return false
-          }
-        return true
+
+    const newGame = () => {
+        navigate('/')   
     }
     const totalScore = () => { 
         const wordScore = G.gameResults.reduce((acc, curr) => {
@@ -43,7 +43,7 @@ const Reveal = ({ctx, G, playerID, moves}) => {
                 <td className='ph3'>{G.players[index].name}</td>
                 <td className='ph3'>{guess ? word : ''}</td>
                 <td className= {`ph3 ${score > 0 ? 'green': 'red' }`}>{guess}</td>
-                {(index === 0) && <td rowSpan={array.length} className='ph3 f-subheadline'>{totalScore}</td>}
+                {(index === 0) && <td rowSpan={array.length} className='ph3 f-subheadline'>{totalScore()}</td>}
             </tr>
         )
     })
@@ -55,7 +55,7 @@ const Reveal = ({ctx, G, playerID, moves}) => {
                     <h4 className='modal-title'>Game Over!</h4>
                 </header>
                 <main className='modal-body'>
-                {showTextBox ?
+                {!ctx.gameover && showTextBox ?
                     <div>
                         What do you think your word is? <br/>
                         <input type = 'text' id = 'txtGuess'
@@ -83,8 +83,8 @@ const Reveal = ({ctx, G, playerID, moves}) => {
                 }
                 </main>
                 <footer className='modal-footer'>
-                    {showTextBox ? <button key='submit' className='button' onClick={handleSubmit}>Submit</button>
-                                : ctx.gameover ? <button key='newGame' className='button' onClick={()=>console.log('new game!')}>New Game</button>:'' }
+                    {ctx.gameover ? <button key='newGame' className='button' onClick={newGame}>New Game</button>
+                        :showTextBox ? <button key='submit' className='button' onClick={handleSubmit}>Submit</button> : '' }
                 </footer>
             </div>
         </div>

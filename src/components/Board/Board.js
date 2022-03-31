@@ -98,8 +98,7 @@ if (ctx.phase === 'setUp' && G && G.players && G.players[playerID] && !G.players
 	} else {
 		return (
 			<div className='tc'>
-				Issue with phase, see console
-				{console.log('phase',ctx.phase)}
+				<Reveal ctx={ctx} onClose={()=> {}} G={G} playerID={playerID} moves={moves} />
 			</div>
 		)	
 	}
