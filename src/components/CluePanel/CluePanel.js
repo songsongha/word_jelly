@@ -51,7 +51,7 @@ const CluePanel = ({G, playerID, setOpenModal, events}) => {
 return (
     <div className= 'cluePanel'>
         <div>
-            <div className='w5 h5 mb3' style={{ backgroundImage:`url(${flowerOutline})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat:"no-repeat" }}>
+            <div className='w5 h5 mb3 center' style={{ backgroundImage:`url(${flowerOutline})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat:"no-repeat" }}>
                 <TokenTracker G={G}/>
             </div>
 	        { isClueAvailable() && !G.isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
