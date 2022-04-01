@@ -7,23 +7,13 @@ import GuessBonus from '../Modal/GuessBonus'
 import MyCards from '../MyCards/MyCards'
 import { useParams } from 'react-router-dom'
 import GameSetUp from '../GameSetUp/GameSetUp'
+import WaitForWords from './WaitForWords/WaitForWords'
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const {players, words, bonusLetters, permanentLetters} = G
 	const [openModal, setOpenModal] = useState(false)
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
 	let { wordLength } = useParams()
-	
-	const waitTable = players.map((player,index, array) =>{
-		const {name, submittedWord} = player
-
-		return(
-			<tr key={index}>
-				<td className='ph3'>{name}</td>
-				<td className={`${submittedWord ? 'green': ''}`}>{submittedWord ? 'Ready' : 'Not yet joined'}</td>
-			</tr>
-		)  
-	})
 
 if (ctx.phase === 'setUp' && players && players[playerID] && !players[playerID].submittedWord){
 	return ( 
@@ -31,18 +21,7 @@ if (ctx.phase === 'setUp' && players && players[playerID] && !players[playerID].
 		)
 } else if (ctx.phase === 'setUp' && players && players[playerID] && players[playerID].submittedWord){
 	return ( 
-		<div className='tc'>
-			Waiting for other players join and enter words
-			<table id='wait' className='center pt4'>
-				<tbody>
-					<tr>
-						<th key='player'className='ph3'>Player</th>    
-						<th key='ready'className='ph3'>Status</th>
-					</tr>
-				{waitTable}
-				</tbody>
-			</table>
-		</div>
+		<WaitForWords players={players} />
 		)
 }else if (ctx.phase === 'play' || ctx.phase === 'reveal') {
 	let cardRow = []
