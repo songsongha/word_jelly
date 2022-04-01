@@ -14,7 +14,7 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
 	let { wordLength } = useParams()
 	
-	const waitTable = G.players.map((player,index, array) =>{
+	const waitTable = players.map((player,index, array) =>{
 		const {name, submittedWord} = player
 
 		return(
