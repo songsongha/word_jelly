@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import CardFaceUp from '../Cards/CardFaceUp'
 import GiveClue from '../Modal/GiveClue'
 import Reveal from '../Modal/Reveal'
@@ -6,21 +6,13 @@ import CluePanel from '../CluePanel/CluePanel'
 import GuessBonus from '../Modal/GuessBonus'
 import MyCards from '../MyCards/MyCards'
 import { useParams } from 'react-router-dom'
+import GameSetUp from '../GameSetUp/GameSetUp'
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 	const [openModal, setOpenModal] = useState(false)
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
 	let { wordLength } = useParams()
-
-
-	const submitWord = () => {
-		
-		const name = document.getElementById('txtName').value
-		const word = document.getElementById('txtWord').value 
-
-		moves.submitWords(playerID, name, word)
-      }
-
+	
 	const waitTable = G.players.map((player,index, array) =>{
 		const {name, submittedWord} = player
 
@@ -34,12 +26,7 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 
 if (ctx.phase === 'setUp' && G && G.players && G.players[playerID] && !G.players[playerID].submittedWord){
 	return ( 
-		<div className='tc'>
-			Name: <input type = 'text' id = 'txtName'/>
-            {wordLength !== 'open' ? `${wordLength}-Letter ` : 'Any Length ' }
-			Word: <input type = 'text' id = 'txtWord'/>
-            <button id = 'btnSubmit'onClick={submitWord}>Submit</button>
-		</div>
+		<GameSetUp wordLength={wordLength} moves={moves} playerID={playerID} />
 		)
 } else if (ctx.phase === 'setUp' && G.players && G.players[playerID] && G.players[playerID].submittedWord){
 	return ( 

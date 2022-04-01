@@ -1,29 +1,36 @@
-import React from 'react'
+import React, { useEffect }from 'react'
 
-const GameSetUp = ({setRoute, wordLength, setWord, setPlayer}) => {
-    const guid=()=> {
-        const s4=()=> Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);     
-        return `${s4() + s4()}-${s4()}-${s4()}-${s4()}-${s4() + s4() + s4()}`;
-      }
+const GameSetUp = ({wordLength, moves, playerID}) => {
+    
+    const submitWord = () => {
+		
+		const name = document.getElementById('txtName').value
+		const word = document.getElementById('txtWord').value 
 
-    const submitForm = () => {
-        const player = {
-            name: document.getElementById('txtName').value,
-            playerId: document.getElementById('txtNum').value
-        }  
-        console.log({player})
-        setPlayer(player)
-        setWord(document.getElementById('txtWord').value)
-        setRoute('play')
-      }
+		moves.submitWords(playerID, name, word)
+    }
+        
+    useEffect(() => {
+        const listener = event => {
+            if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+            console.log('Enter key was pressed. Run your function.');
+            event.preventDefault();
+            submitWord()
+            }
+        };
+        document.addEventListener('keydown', listener);
+        return () => {
+            document.removeEventListener('keydown', listener);
+        }
+    }, [])
 
-	return ( 
-		<div className='tc'>
-            Player Num: <input type = 'text' id = 'txtNum' />
-			Name: <input type = 'text' id = 'txtName'/>
+    return ( 
+        <div className='tc'>
+            Name: <input type = 'text' id = 'txtName'/>
+            {wordLength !== 'open' ? `${wordLength}-Letter ` : 'Any Length ' }
             Word: <input type = 'text' id = 'txtWord'/>
-            <button id = 'btnSubmit'onClick={submitForm}>Submit</button>
-		</div>
-		)
+            <button id = 'btnSubmit'onClick={submitWord}>Submit</button>
+        </div>
+    )
 }
 export default GameSetUp
