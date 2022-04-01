@@ -1,14 +1,14 @@
-import React, { useEffect }from 'react'
+import React, { useCallback, useEffect }from 'react'
 
 const GameSetUp = ({wordLength, moves, playerID}) => {
     
-    const submitWord = () => {
+    const submitWord = useCallback(() => {
 		
 		const name = document.getElementById('txtName').value
 		const word = document.getElementById('txtWord').value 
 
 		moves.submitWords(playerID, name, word)
-    }
+    },[moves, playerID])
         
     useEffect(() => {
         const listener = event => {
@@ -22,7 +22,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
         return () => {
             document.removeEventListener('keydown', listener);
         }
-    }, [])
+    }, [submitWord])
 
     return ( 
         <div className='tc'>

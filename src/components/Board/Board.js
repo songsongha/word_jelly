@@ -9,6 +9,7 @@ import { useParams } from 'react-router-dom'
 import GameSetUp from '../GameSetUp/GameSetUp'
 
 const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
+	const {players, words, bonusLetters, permanentLetters} = G
 	const [openModal, setOpenModal] = useState(false)
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
 	let { wordLength } = useParams()
@@ -24,11 +25,11 @@ const Board = ({ ctx, G, moves, playerID, isActive, events }) => {
 		)  
 	})
 
-if (ctx.phase === 'setUp' && G && G.players && G.players[playerID] && !G.players[playerID].submittedWord){
+if (ctx.phase === 'setUp' && players && players[playerID] && !players[playerID].submittedWord){
 	return ( 
 		<GameSetUp wordLength={wordLength} moves={moves} playerID={playerID} />
 		)
-} else if (ctx.phase === 'setUp' && G.players && G.players[playerID] && G.players[playerID].submittedWord){
+} else if (ctx.phase === 'setUp' && players && players[playerID] && players[playerID].submittedWord){
 	return ( 
 		<div className='tc'>
 			Waiting for other players join and enter words
@@ -50,29 +51,29 @@ if (ctx.phase === 'setUp' && G && G.players && G.players[playerID] && !G.players
 	}
 	
 	// show a letter from every player other than you
-	for (let player = 0; player < G.players.length; player++) {
+	for (let player = 0; player < players.length; player++) {
 		if (player !== Number(playerID)){
-			let letter = G.words[player][G.players[player].letterPosition] || G.bonusLetters[player]
+			let letter = words[player][players[player].letterPosition] || bonusLetters[player]
 
 			cardRow.push(
 				<CardFaceUp 
 				key = {`card${player}`}
 				letter = {letter}
-				player = {G.players[player]}
-				word = {G.words[player]} />
+				player = {players[player]}
+				word = {words[player]} />
 			)
 		}
 	  }
 	
 	// show permanent letters if applicable
 	const permanentLetterRow = []
-	if (G.permanentLetters && G.permanentLetters.length){
-		for (let letterIndex = 0; letterIndex < G.permanentLetters.length; letterIndex++){
-			if (G.permanentLetters && G.permanentLetters.length){
+	if (permanentLetters && permanentLetters.length){
+		for (let letterIndex = 0; letterIndex < permanentLetters.length; letterIndex++){
+			if (permanentLetters && permanentLetters.length){
 				permanentLetterRow.push(
 					<CardFaceUp 
 					key = {`pLetter${letterIndex}`}
-					letter = {G.permanentLetters[letterIndex]}
+					letter = {permanentLetters[letterIndex]}
 					player = 'bonus' />
 				)
 			}
