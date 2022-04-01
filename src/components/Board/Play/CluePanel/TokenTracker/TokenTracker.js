@@ -3,7 +3,6 @@ import ClueToken from '../ClueToken/ClueToken';
 
 const TokenTracker = ({G}) => {
     const{leaves, red, restricted} = G.tokensAvailable
-    console.log('tokenTracker')
 
     const display = useMemo(()=>{
 
