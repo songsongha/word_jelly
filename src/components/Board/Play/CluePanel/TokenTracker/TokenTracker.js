@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import ClueToken from '../ClueToken/ClueToken';
 
 const TokenTracker = ({G}) => {
-    // number of clues available is dependent on number of players playing; 11 is available in 6 player version
-    const redLayout = [0,1,2,4,5,6]
-    const leavesLayout = [7,8,9,10]
-    const restrictedLayout = [3]
+    const{leaves, red, restricted} = G.tokensAvailable
 
-    const determineColor = (position) => {
-        if (redLayout.includes(position) && redLayout.findIndex(e => e === position ) < G.tokensAvailable.red){
+    const determineColor = useCallback((position) => {
+        // number of clues available is dependent on number of players playing; 11 is available in 6 player version
+        const redLayout = [0,1,2,4,5,6]
+        const leavesLayout = [7,8,9,10]
+        const restrictedLayout = [3]
+
+        if (redLayout.includes(position) && redLayout.findIndex(e => e === position ) < red){
             return 'red'
-        } else if ((leavesLayout.includes(position) && leavesLayout.findIndex(e => e === position ) < G.tokensAvailable.leaves) ||
-         (restrictedLayout.includes(position) && restrictedLayout.findIndex(e => e === position ) < G.tokensAvailable.restricted)){
+        } else if ((leavesLayout.includes(position) && leavesLayout.findIndex(e => e === position ) < leaves) ||
+         (restrictedLayout.includes(position) && restrictedLayout.findIndex(e => e === position ) < restricted)){
             return 'green'
         }  
         return 'gray'
-    }
+    },[leaves, red, restricted])
 
 
 return (
