@@ -1,27 +1,43 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect, useCallback} from 'react'
 import './modal.css'
 
 const GuessBonus = ({show, onClose, G, playerID, moves}) => {
+    const {bonusLetters} = G
     const [bonusGuess, setBonusGuess] = useState('')
 
-    if (!show){
-        return null
-    }
-    // if input letter matches G.bonusGuess[playerID] then that letter is added to G.permanentLetters, a new bonus letter should be generated
-    const handleChange = (event) => {
-        setBonusGuess(event.target.value)
-      }
-    const handleSubmit = () => {
+    const handleSubmit = useCallback(() => {
         let isBonusCorrect = false
-        if (bonusGuess.toUpperCase() === G.bonusLetters[playerID].toUpperCase()){
+        if (bonusGuess.toUpperCase() === bonusLetters[playerID].toUpperCase()){
             isBonusCorrect = true
         }
         moves.nextCard(playerID, isBonusCorrect)
         onClose()
-    }
+    },[bonusLetters, bonusGuess, moves, onClose, playerID])
+
     const handleCancel = () => {
         setBonusGuess('')
         onClose()
+    }
+
+    const handleChange = (event) => {
+        setBonusGuess(event.target.value)
+      }
+      
+    useEffect(() => {
+        const listener = event => {
+            if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+                event.preventDefault();
+                handleSubmit()
+            }
+        };
+        document.addEventListener('keydown', listener);
+        return () => {
+            document.removeEventListener('keydown', listener);
+        }
+    }, [handleSubmit])
+    
+    if (!show){
+        return null
     }
     return (
         <div className='modal'>
