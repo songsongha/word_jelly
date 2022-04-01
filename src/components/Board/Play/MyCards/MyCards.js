@@ -1,6 +1,6 @@
 import React from 'react'
 import CardFaceDown from '../Cards/CardFaceDown'
-import TokensTaken from '../TokenTracker/TokensTaken'
+import TokensTaken from '../CluePanel/TokenTracker/TokensTaken'
 
 
 const MyCards = ({G, playerID, setOpenModal, moves}) => {

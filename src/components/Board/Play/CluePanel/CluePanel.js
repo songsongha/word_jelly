@@ -1,5 +1,5 @@
 import React from 'react';
-import TokenTracker from '../TokenTracker/TokenTracker'
+import TokenTracker from './TokenTracker/TokenTracker'
 import flowerOutline from './flowerOutline2.png'
 
 const CluePanel = ({G, playerID, setOpenModal, events}) => {
