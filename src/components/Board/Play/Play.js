@@ -11,7 +11,6 @@ const Play= ({ctx, G, moves, playerID, events }) => {
     const {players, words, bonusLetters, permanentLetters, gameResults} = G
     const [openModal, setOpenModal] = useState(false)
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
-    console.log('how often is play being rendered')
     
     const cardRow = useMemo(()=>{
         // show a letter from every player other than you

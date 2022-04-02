@@ -2,7 +2,6 @@ import React, {useState, useEffect, useCallback} from 'react'
 import './modal.css'
 
 const GuessWord = ({show, ctx, playerID, moves}) => {
-    console.log({show})
     const [wordGuess, setWordGuess] = useState('')
 
     const handleChange = (event) => {

@@ -4,7 +4,6 @@ import './modal.css'
 const GuessBonus = ({show, onClose, G, playerID, moves}) => {
     const {bonusLetters} = G
     const [bonusGuess, setBonusGuess] = useState('')
-    console.log('guessBonus', show)
 
     const handleSubmit = useCallback(() => {
         let isBonusCorrect = false
