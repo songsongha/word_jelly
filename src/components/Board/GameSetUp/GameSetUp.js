@@ -26,7 +26,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
 
     return ( 
         <div className='tc'>
-            Name: <input type = 'text' id = 'txtName'/>
+            Name: <input type = 'text' id = 'txtName' autoFocus/>
             {wordLength !== 'open' ? `${wordLength}-Letter ` : 'Any Length ' }
             Word: <input type = 'text' id = 'txtWord'/>
             <button id = 'btnSubmit'onClick={submitWord}>Submit</button>

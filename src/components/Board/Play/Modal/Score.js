@@ -1,46 +1,32 @@
-import React, {useState} from 'react'
+import React from 'react'
 import './modal.css'
 import { useNavigate } from 'react-router-dom'
 
-const Reveal = ({ctx, G, playerID, moves,lobbyClient}) => {
-    const [wordGuess, setWordGuess] = useState('')
-    const [showTextBox, setShowTextBox] = useState(true)
+const Score = ({show, ctx, G}) => {
+    const {tokensAvailable, gameResults, players} = G
     const navigate = useNavigate()
 
-    if (ctx.phase !== 'reveal' && ctx.phase !== null){
+    if (!show){
+        console.log ('Score is not being shown')
         return null
-    }
-
-    const handleChange = (event) => {
-        setWordGuess(event.target.value)
-      }
-    const handleSubmit = () => {
-        console.log('submit pressed')
-        setShowTextBox(false)
-        const submission = {
-            playerID,
-            wordGuess
-        }
-        moves.guessWord(submission)
-
     }
 
     const newGame = () => {
         navigate('/')   
     }
     const totalScore = () => { 
-        const wordScore = G.gameResults.reduce((acc, curr) => {
+        const wordScore = gameResults.reduce((acc, curr) => {
             return acc + curr.score
         }, 0)
-        const tokenScore =  G.tokensAvailable.leaves + G.tokensAvailable.restricted
+        const tokenScore =  tokensAvailable.leaves + tokensAvailable.restricted
         return wordScore + tokenScore
       }
-    const resultsTable = G.gameResults.map((player,index, array) =>{
+    const resultsTable = gameResults.map((player,index, array) =>{
         const {word, guess, score} = player
 
         return(
             <tr key={index}>
-                <td className='ph3'>{G.players[index].name}</td>
+                <td className='ph3'>{players[index].name}</td>
                 <td className='ph3'>{guess ? word : ''}</td>
                 <td className= {`ph3 ${score > 0 ? 'green': 'red' }`}>{guess}</td>
                 {(index === 0) && <td rowSpan={array.length} className='ph3 f-subheadline'>{totalScore()}</td>}
@@ -55,15 +41,6 @@ const Reveal = ({ctx, G, playerID, moves,lobbyClient}) => {
                     <h4 className='modal-title'>Game Over!</h4>
                 </header>
                 <main className='modal-body'>
-                {!ctx.gameover && showTextBox ?
-                    <div>
-                        What do you think your word is? <br/>
-                        <input type = 'text' id = 'txtGuess'
-                        value={wordGuess || ''}
-                        onChange={handleChange}></input>
-                    </div>
-
-                :
                     <div className='tc'>
                         <table id='results' className='center'>
                             <tbody>
@@ -73,21 +50,16 @@ const Reveal = ({ctx, G, playerID, moves,lobbyClient}) => {
                                     <th key='guess'className='ph3'>Guess</th>
                                     <th key='score'className='ph5'> Total Score</th>
                                 </tr>
-                                
-
                             {resultsTable}
                             </tbody>
                         </table>
                     </div>
-                    
-                }
                 </main>
                 <footer className='modal-footer'>
-                    {ctx.gameover ? <button key='newGame' className='button' onClick={newGame}>New Game</button>
-                        :showTextBox ? <button key='submit' className='button' onClick={handleSubmit}>Submit</button> : '' }
+                    {ctx.gameover && <button key='newGame' className='button' onClick={newGame}>New Game</button>}
                 </footer>
             </div>
         </div>
     )
 }
-export default Reveal
+export default Score

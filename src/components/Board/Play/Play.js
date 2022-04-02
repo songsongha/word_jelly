@@ -1,13 +1,14 @@
 import React, {useState, useMemo} from 'react'
 import CardFaceUp from './Cards/CardFaceUp'
 import GiveClue from './Modal/GiveClue'
-import Reveal from './Modal/Reveal'
 import CluePanel from './CluePanel/CluePanel'
 import GuessBonus from './Modal/GuessBonus'
 import MyCards from './MyCards/MyCards'
+import GuessWord from './Modal/GuessWord'
+import Score from './Modal/Score'
 
 const Play= ({ctx, G, moves, playerID, events }) => {
-    const {players, words, bonusLetters, permanentLetters} = G
+    const {players, words, bonusLetters, permanentLetters, gameResults} = G
     const [openModal, setOpenModal] = useState(false)
 	const [openGuessBonus, setOpenGuessBonus] = useState(false)
     console.log('how often is play being rendered')
@@ -65,7 +66,9 @@ const Play= ({ctx, G, moves, playerID, events }) => {
 				</div>
 				<GiveClue show={openModal} onClose={() => setOpenModal(false)} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
 				<GuessBonus show={openGuessBonus} onClose={()=> setOpenGuessBonus(false)} G={G} playerID={playerID} moves={moves} />
-				<Reveal ctx={ctx} onClose={()=> {}} G={G} playerID={playerID} moves={moves} />
+                <GuessWord show={ctx.phase === 'guessWord'} ctx={ctx} onClose={()=> {}} playerID={playerID} moves={moves} />
+                <Score show={gameResults[playerID].guess || ctx.phase === null} ctx={ctx} onClose={()=> {}} G={G} />
+
 			</div>
 			<div className = 'tc pa4 w-25'>
 				<CluePanel G={G} playerID={playerID} setOpenModal={setOpenModal} events={events}/>

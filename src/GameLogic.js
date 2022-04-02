@@ -254,10 +254,10 @@ export const WordJellyGame = {
                 },
             },
             endIf: G => (isGameOver(G)),
-            next: 'reveal'
+            next: 'guessWord'
 
         },
-        reveal: {
+        guessWord: {
             moves:{
                 guessWord: (G, ctx, submission) => {
                     console.log('guess word')

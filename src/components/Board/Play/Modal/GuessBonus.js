@@ -4,6 +4,7 @@ import './modal.css'
 const GuessBonus = ({show, onClose, G, playerID, moves}) => {
     const {bonusLetters} = G
     const [bonusGuess, setBonusGuess] = useState('')
+    console.log('guessBonus', show)
 
     const handleSubmit = useCallback(() => {
         let isBonusCorrect = false
@@ -22,23 +23,26 @@ const GuessBonus = ({show, onClose, G, playerID, moves}) => {
     const handleChange = (event) => {
         setBonusGuess(event.target.value)
       }
-      
+
     useEffect(() => {
-        const listener = event => {
-            if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-                event.preventDefault();
-                handleSubmit()
+        if (show){
+            const listener = event => {
+                if (event.code === 'Enter' || event.code === 'NumpadEnter') {
+                    event.preventDefault();
+                    handleSubmit()
+                }
             }
-        };
-        document.addEventListener('keydown', listener);
-        return () => {
-            document.removeEventListener('keydown', listener);
+            document.addEventListener('keydown', listener)
+            return () => {
+                document.removeEventListener('keydown', listener)
+            }
         }
-    }, [handleSubmit])
+    }, [handleSubmit, show])
     
     if (!show){
         return null
     }
+
     return (
         <div className='modal'>
             <div className='modal-content'>
@@ -46,7 +50,7 @@ const GuessBonus = ({show, onClose, G, playerID, moves}) => {
                     <h4 className='modal-title'>Guess Bonus Letter</h4>
                 </header>
                 <main className='modal-body'>
-                    My letter is: <input type = 'text' id = 'txtGuess'
+                    My letter is: <input type = 'text' id = 'txtGuess' autoFocus
                     value={bonusGuess || ''}
                     onChange={handleChange}></input>
                 </main>
