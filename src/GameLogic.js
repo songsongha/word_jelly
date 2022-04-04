@@ -122,7 +122,6 @@ export const WordJellyGame = {
         setUp: {
             moves: {
                 submitWords: (G, ctx, playerID, name, word) => {
-
                     
                     // commit player info and words
                     if (name) G.players[playerID].name = name

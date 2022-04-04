@@ -1,40 +1,5 @@
 import React, { useState, useCallback, useEffect }from 'react'
 
-// const GameSetUp = ({wordLength, moves, playerID}) => {
-    
-//     const submitForm = useCallback(() => {
-		
-// 		const name = document.getElementById('txtName').value
-// 		const word = document.getElementById('txtWord').value 
-
-// 		moves.submitWords(playerID, name, word)
-//     },[moves, playerID])
-        
-//     useEffect(() => {
-//         const listener = event => {
-//             if (event.code === 'Enter' || event.code === 'NumpadEnter') {
-//             console.log('Enter key was pressed. Run your function.')
-//             event.preventDefault()
-//             submitForm()
-//             }
-//         }
-//         document.addEventListener('keydown', listener)
-//         return () => {
-//             document.removeEventListener('keydown', listener)
-//         }
-//     }, [submitForm])
-
-//     return ( 
-//         <div className='tc'>
-//             Name: <input type = 'text' id = 'txtName' autoFocus/>
-//             {wordLength !== 'open' ? `${wordLength}-Letter ` : 'Any Length ' }
-//             Word: <input type = 'text' id = 'txtWord'/>
-//             <button id = 'btnSubmit'onClick={submitForm}>Submit</button>
-//         </div>
-//     )
-// }
-// export default GameSetUp
-
 const GameSetUp = ({wordLength, moves, playerID}) => {
     const intialValues = { name: '', word: '' }
     const [formValues, setFormValues] = useState(intialValues)
@@ -44,7 +9,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
 
     const submitForm = useCallback(() => {
         const {name, word} = formValues
-		moves.submitWords(playerID, ...name, ...word)
+		moves.submitWords(playerID, name, word)
     },[formValues, moves, playerID])
   
    const handleChange = (e) => {
@@ -54,6 +19,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
   
     const validate = useCallback((values) => {
         const {name, word} = values
+        const regex = /^[A-Za-z]+$/
         let errors = {}
         if (!name) {
             errors.name = 'Please enter your name'
@@ -64,6 +30,8 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
             errors.word = 'Must enter a word'
         } else if (word.length !== Number(wordLength)) {
             errors.word = `Word must be exactly ${wordLength} characters`
+        } else if (!regex.test(word)){
+            errors.word = 'Word cannot contain numbers or symbols'
         }
         // check for real word??
         return errors
