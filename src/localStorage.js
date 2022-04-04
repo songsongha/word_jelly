@@ -19,3 +19,11 @@ export const saveState = (key,state) => {
         console.log({e})
     }
 }
+
+export const clearState = () =>{
+    try {
+        sessionStorage.clear()
+    } catch (e) {
+        console.log({e})
+    }
+}

@@ -50,7 +50,6 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers}) => {
 					Send your friends this URL: <br/>
 					http://localhost:3000/play/{wordLength}/{matchID} <br/>
 					<br/>
-					{/* Your Name:<input type = 'text' id = 'txtName' onChange={(e) => {setPlayerName(e.target.value)}}/> */}
 					<button id = 'btnJoin' onClick={() => navigate(`/play/${wordLength}/${matchID}`)}>Join Game</button>
 				</div>}
 		</div>

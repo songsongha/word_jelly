@@ -1,4 +1,5 @@
 import { Stage, TurnOrder } from 'boardgame.io/core'
+import { clearState } from './localStorage'
 
 const strPlayers = ['0','1','2','3','4','5']
 const restrictActions = (G) => {
@@ -17,7 +18,6 @@ const areAllWordsIn = (G) => {
 }
 const sumOf = (tokensAvailable) => {
     const {red, leaves, restricted } = tokensAvailable
-    console.log('sum of token',red + leaves + restricted)
     return red + leaves + restricted 
 }
 
@@ -44,7 +44,6 @@ const areAllGuessesIn = (G) => {
 const isGameOver = (G) => {
     // if all clues are gone or all players have decided that they know their words
     if (sumOf(G.tokensAvailable) === 0){
-        console.log('tokens are all out')
         return true
     }
    
@@ -116,6 +115,7 @@ export const WordJellyGame = {
       },
     endIf: (G, ctx) => {
         if (areAllGuessesIn(G)){
+            clearState()
             return true
         }},
     phases: {
@@ -141,10 +141,6 @@ export const WordJellyGame = {
 
                 }
             },
-            onEnd: (G, ctx) => {
-                // on phase end, shuffle words here?
-                console.log('setUp phase ending')
-            },
             turn: {
                 onBegin: (G, ctx) => {
                     // everyone to input words simultaneously
@@ -161,7 +157,6 @@ export const WordJellyGame = {
         play: {
             moves: {
                 giveClue: (G, ctx, submission) => {
-                    console.log('give clue')
 
                     const playerID = submission.playerID
 
@@ -237,18 +232,12 @@ export const WordJellyGame = {
                         G.isNextCardAvailable[playerID] = false
                 }
             },
-            onEnd: (G, ctx) => {
-                // on phase end
-                console.log('play phase ending')
-            },
             turn: {
                 onBegin: (G, ctx, playerID) => {
-                    console.log('turn begins')
                     ctx.events.setActivePlayers({
                         all: Stage.NULL,
                     })
                     if (ctx.turn > 2){
-                        console.log('turn greater than 2')
                         restrictActions(G)
                     }
                 },
@@ -260,7 +249,6 @@ export const WordJellyGame = {
         guessWord: {
             moves:{
                 guessWord: (G, ctx, submission) => {
-                    console.log('guess word')
                     const {gameResults} = G
                     const {playerID, wordGuess} = submission
                     // insert word into gameResults for display later
@@ -277,7 +265,6 @@ export const WordJellyGame = {
             },
             turn: {
                 onBegin: (G, ctx, playerID) => {
-                    console.log('turn begins')
                     ctx.events.setActivePlayers({
                         all: Stage.NULL,
                     })
