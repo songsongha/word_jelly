@@ -37,7 +37,8 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
         return errors
     },[wordLength])
 
-    const handleSubmit =  useCallback(() => {
+    const handleSubmit =  useCallback((e) => {
+        e.preventDefault()
         setFormErrors(validate(formValues))
         setIsSubmitting(true)
       },[formValues, validate])
@@ -50,7 +51,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
     const listener = event => {
         if (event.code === 'Enter' || event.code === 'NumpadEnter') {
         event.preventDefault()
-        handleSubmit()
+        handleSubmit(event)
         }
     }
     document.addEventListener('keydown', listener)
