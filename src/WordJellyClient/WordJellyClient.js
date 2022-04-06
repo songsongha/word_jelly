@@ -6,7 +6,7 @@ import Board from '../components/Board/Board'
 import { useParams } from 'react-router-dom'
 import { loadState, saveState } from '../localStorage'
 
-const WordJellyClient = ({numPlayers,lobbyClient}) => {
+const WordJellyClient = ({ numPlayers, lobbyClient, setShowRules }) => {
     const [errorMsg, setErrorMsg] = useState('')
     const [credentials, setCredentials] = useState('')
     const [playerID, setPlayerID] = useState()
@@ -24,6 +24,7 @@ const WordJellyClient = ({numPlayers,lobbyClient}) => {
     },[id])
 
     useEffect(() => {
+        setShowRules(true)
         async function joinMatch() {
             try {
                 const match = await lobbyClient.joinMatch(
@@ -51,7 +52,7 @@ const WordJellyClient = ({numPlayers,lobbyClient}) => {
             }
         }
 		
-	},[credentials, id, lobbyClient, setState])
+	},[credentials, id, lobbyClient, setShowRules, setState])
    
 
           const WordJellyClient = Client({

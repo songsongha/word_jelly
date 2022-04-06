@@ -1,9 +1,14 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 const intro = 'Original board game rules can be found '
 
-const Rules = () => {
-	return(
+const Rules = ({setShowRules}) => {
+
+    useEffect(() => {
+		setShowRules(false)
+	}, [setShowRules])
+	
+    return(
 		<div className='ph7'>
             <h1 className= 'title'>Basic Rules / Game Play:</h1>
                 <br/>

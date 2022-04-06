@@ -1,13 +1,16 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Lobby = ({numPlayers, lobbyClient, setNumPlayers}) => {
+const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 	const [matchID, setMatchID] = useState('')
 	const [lobbyState, setLobbyState] = useState('lobby')
 	const [errorMsg, setErrorMsg] = useState('')
 	const [wordLength, setWordLength] = useState('5')
 
 	let navigate = useNavigate()
+	useEffect(() => {
+		setShowRules(true)
+	}, [setShowRules])
 		
 	const createGame = useCallback(async (numPlayers) =>{
 			setErrorMsg('')

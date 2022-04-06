@@ -4,8 +4,7 @@ import './index.css'
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 import 'tachyons';
-import { BrowserRouter } from 'react-router-dom'
-import Navigation from './components/Navigation/Navigation'
+import { BrowserRouter } from 'react-router-dom'  
 
 const Title = () => {
 	useEffect(() => {
@@ -18,7 +17,6 @@ const Title = () => {
 ReactDOM.render(
   <React.StrictMode>
     <Title />
-    <Navigation/>
     <BrowserRouter>
       <App />
     </BrowserRouter>

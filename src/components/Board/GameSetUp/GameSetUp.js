@@ -63,10 +63,6 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
 
     return (
         <div className='container tc'>
-          {/* <h1>Sign in to continue</h1>
-          {Object.keys(formErrors).length === 0 && isSubmitting && (
-            <span className='success-msg'>Signed in successfully</span>
-          )} */}
           <form onSubmit={handleSubmit} noValidate>
             <div className='form-row'>
               <label htmlFor='name'>Name : </label>

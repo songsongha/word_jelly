@@ -2,16 +2,23 @@ import React from 'react';
 import './Navigation.css';
 import logo from './logo.jpg';
 
-const Navigation = () => {
+const Navigation = ({showRules}) => {
 	return(
-		<div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'flex-between', marginBottom: '40px'}}>
+		<div style = {{marginBottom: '40px'}}>
+		<div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'flex-between'}}>
 			<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', paddingLeft: '20px', width: '75%'}}>
 				<h1 className= 'title'> Word Jelly</h1>
 				<img src={logo} alt='Logo' width='100'/>
 			</div>
 			<nav style={{display: 'flex', justifyContent: 'flex-end', width: '25%'}}>
-				<a href="https://www.ultraboardgames.com/letter-jam/game-rules.php" target="_blank" rel="noreferrer" className='f3 link dim black underline pa3 pointer'>Rules</a>
+				{showRules && 
+				<a href='http://localhost:3000/rules' target="_blank" rel="noreferrer" className='f5 link dim black underline pa3 pointer'>Rules</a>}
 			</nav>
+		</div>
+		<div style={{paddingLeft: '20px', width: '75%'}}>
+		An online version of the table top game LetterJam!<br/>
+		<br/>
+		</div>
 		</div>
 	);
 }
