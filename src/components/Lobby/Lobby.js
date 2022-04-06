@@ -77,7 +77,7 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers}) => {
 					http://localhost:3000/play/{wordLength}/{matchID} <br/>
 					<br/>
 					</p>
-					<button id = 'btnJoin' onClick={() => navigate(`/play/${wordLength}/${matchID}`)}>Join Game</button>
+					<button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' id = 'btnJoin' onClick={() => navigate(`/play/${wordLength}/${matchID}`)}>Join Game</button>
 				</div>}
 		</div>
 		)
