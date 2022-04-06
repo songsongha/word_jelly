@@ -16,7 +16,7 @@ const Navigation = ({showRules}) => {
 			</nav>
 		</div>
 		<div style={{paddingLeft: '20px', width: '75%'}}>
-		An online version of the table top game LetterJam!<br/>
+		<p className='fw3 f6 pt0 mt0'>An online version of the table top game Letter Jam!</p>
 		<br/>
 		</div>
 		</div>
