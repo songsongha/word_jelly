@@ -3,6 +3,7 @@ import Lobby from './components/Lobby/Lobby'
 import WordJellyClient from './WordJellyClient/WordJellyClient'
 import { Route, Routes} from 'react-router-dom'
 import { LobbyClient } from 'boardgame.io/client'
+import Rules from './components/Rules/Rules'
 
 const App = () => {
 
@@ -17,6 +18,9 @@ const lobbyClient =  new LobbyClient({ server: 'http://localhost:8000' })
           }/>
           <Route path='/play/:wordLength/:id' element={
             <WordJellyClient numPlayers={numPlayers} lobbyClient={lobbyClient}/>
+          }/>
+          <Route path='/rules' element={
+            <Rules/>
           }/>
         </Routes>
       </div>
