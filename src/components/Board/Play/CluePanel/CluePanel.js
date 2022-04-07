@@ -61,8 +61,12 @@ return (
             <div className='w5 h5 mb3 center' style={{ backgroundImage:`url(${flowerOutline})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat:"no-repeat" }}>
                 <TokenTracker G={G}/>
             </div>
-	        { isClueAvailable() && !isClueInProgress && <button id= 'giveClue' onClick = {giveClue}>Give Clue</button> }
-            <h4>Clues Received:</h4>
+	        { isClueAvailable() && !isClueInProgress && 
+            <button className='b mt3 ph3 pv2 input-reset ba b--black bg-light-gray grow pointer f6 dib br3' 
+                id= 'giveClue' 
+                onClick = {giveClue}>
+                    Give Clue</button> }
+            <h4 className='fw5'>Clues Received:</h4>
             {display}
             <br/>
         </div>
