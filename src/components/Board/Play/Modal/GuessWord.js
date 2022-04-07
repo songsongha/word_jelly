@@ -51,7 +51,7 @@ const GuessWord = ({show, ctx, playerID, moves}) => {
                     </div>
                 </main>
                 <footer className='modal-footer'>
-                    <button key='submit' className='button' onClick={handleSubmit}>Submit</button>
+                    <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' key='submit' onClick={handleSubmit}>Submit</button>
                 </footer>
             </div>       
         </div>

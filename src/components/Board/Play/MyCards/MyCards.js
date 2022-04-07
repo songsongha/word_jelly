@@ -35,11 +35,11 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
                 { isNextCardAvailable[playerID] && !isClueInProgress && 
                 <div>
                     {players[playerID].letterPosition >= words[playerID].length-1 ?
-                    <button id = 'bonusCard' onClick = {bonusLetter}>
+                    <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib'id = 'bonusCard' onClick = {bonusLetter}>
                         {players[playerID].letterPosition === words[playerID].length-1 ? 'I know all my letters': 'I know this letter'}
                     </button>
                     :
-                    <button id = 'nextCard' onClick = {nextCard}>
+                    <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' id = 'nextCard' onClick = {nextCard}>
                         Next Card
                     </button> 
                     }

@@ -62,7 +62,7 @@ return (
                 <TokenTracker G={G}/>
             </div>
 	        { isClueAvailable() && !isClueInProgress && 
-            <button className='b mt3 ph3 pv2 input-reset ba b--black bg-light-gray grow pointer f6 dib br3' 
+            <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' 
                 id= 'giveClue' 
                 onClick = {giveClue}>
                     Give Clue</button> }

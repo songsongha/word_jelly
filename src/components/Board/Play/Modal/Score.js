@@ -56,7 +56,7 @@ const Score = ({show, ctx, G}) => {
                     </div>
                 </main>
                 <footer className='modal-footer'>
-                    {ctx.gameover && <button key='newGame' className='button' onClick={newGame}>New Game</button>}
+                    {ctx.gameover && <button key='newGame' className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' onClick={newGame}>New Game</button>}
                 </footer>
             </div>
         </div>

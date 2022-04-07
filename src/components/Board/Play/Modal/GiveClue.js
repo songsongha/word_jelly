@@ -87,7 +87,7 @@ const GiveClue = ({show, onClose, G, playerID, moves}) => {
                 </main>
                 <footer className='modal-footer'>
                     {/* <button className='button' onClick={handleCancel}>Cancel</button> */}
-                    <button className='button' onClick={handleSubmit}>Submit</button>
+                    <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' onClick={handleSubmit}>Submit</button>
                 </footer>
             </div>
         </div>
