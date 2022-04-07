@@ -28,7 +28,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
         }
         if (!word) {
             errors.word = 'Must enter a word'
-        } else if (word.length !== Number(wordLength)) {
+        } else if (wordLength !== 'open' && word.length !== Number(wordLength)) {
             errors.word = `Word must be exactly ${wordLength} characters`
         } else if (!regex.test(word)){
             errors.word = 'Word cannot contain numbers or symbols'
@@ -62,40 +62,38 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
     }, [formErrors, handleSubmit, isSubmitting, submitForm])
 
     return (
-        <div className='container tc'>
-          <form onSubmit={handleSubmit} noValidate>
-            <div className='form-row'>
-              <label htmlFor='name'>Name : </label>
+        <div className="pa4 black-80">
+          <form className="measure center w-50"onSubmit={handleSubmit} noValidate>
+            <div className='mt3'>
+              <label class="db fw6 lh-copy f6" htmlFor='name'>Name : </label>
               <input
                 type='text'
                 name='name'
                 id='name'
                 value={formValues.name}
                 onChange={handleChange}
-                className={formErrors.name && 'input-error'}
+                className={formErrors.name && 'b--red'}
                 autoFocus
               />
-              {formErrors.name && (
-                <span className='error red'>{formErrors.name}</span>
-              )}
+             <div className='error red'>{formErrors.name}</div>
             </div>
-            <div className='form-row'>
-              <label htmlFor='word'>{wordLength !== 'open' ? `${wordLength}-Letter ` : 'Any Length ' }Word:</label>
+            <div className='mt3'>
+              <label class="db fw6 lh-copy f6" htmlFor='word'>{wordLength !== 'open' ? `${wordLength}-Letter ` : 'Any Length ' }Word:</label>
               <input
                 type='word'
                 name='word'
                 id='word'
                 value={formValues.word}
                 onChange={handleChange}
-                className={formErrors.word && 'input-error'}
+                className={formErrors.word && 'b--red'}
               />
-              {formErrors.word && (
-                <span className='error red'>{formErrors.word}</span>
-              )}
+                <div className='error red'>{formErrors.word}</div>
             </div>
-            <button type='submit'>Submit</button>
+            <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' type='submit'>Submit</button>
           </form>
         </div>
       )
     }
     export default GameSetUp
+
+    
