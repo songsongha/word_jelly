@@ -9,11 +9,7 @@ const server = Server({
   games: [WordJellyGame],
 
   origins: [
-    // // Allow your game site to connect.
-    // 'https://www.mygame.domain',
-
-    // Allow localhost to connect, except when NODE_ENV is 'production'.
-    Origins.LOCALHOST_IN_DEVELOPMENT
+    'https://young-hamlet-81046.herokuapp.com/', Origins.LOCALHOST_IN_DEVELOPMENT
   ],
 });
 
