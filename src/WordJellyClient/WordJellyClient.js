@@ -6,7 +6,11 @@ import Board from '../components/Board/Board'
 import { useParams } from 'react-router-dom'
 import { loadState, saveState } from '../localStorage'
 
+const { protocol, hostname, port } = window.location
+const server = `${protocol}//${hostname}:${port}`
+
 const WordJellyClient = ({ numPlayers, lobbyClient, setShowRules }) => {
+
     const [errorMsg, setErrorMsg] = useState('')
     const [credentials, setCredentials] = useState('')
     const [playerID, setPlayerID] = useState()
@@ -60,7 +64,7 @@ const WordJellyClient = ({ numPlayers, lobbyClient, setShowRules }) => {
                 numPlayers,
                 board: Board,
                 debug: false,
-                multiplayer: SocketIO({ server: "localhost:8000" })
+                multiplayer: SocketIO({ server: server })
             })
     
         return(
