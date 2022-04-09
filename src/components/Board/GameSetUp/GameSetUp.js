@@ -89,7 +89,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
               />
                 <div className='error red'>{formErrors.word}</div>
             </div>
-            <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' type='submit'>Submit</button>
+            <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' type='submit'>Join Game</button>
           </form>
         </div>
       )

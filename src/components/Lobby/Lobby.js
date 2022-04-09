@@ -80,13 +80,14 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 					http://localhost:3000/play/{wordLength}/{matchID} <br/>
 					<br/>
 					</p>
-					<button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' id = 'btnJoin' onClick={() => navigate(`/play/${wordLength}/${matchID}`)}>Join Game</button>
+					<button 
+					className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' 
+					id = 'btnJoin' 
+					onClick={() => navigate(`/play/${wordLength}/${matchID}`)}>Got It</button>
 				</div>}
 		</div>
 		)
 }
 export default Lobby
 
-// (only the 6 player version is available, 2-5 player 
-// 	versions under development)
 
