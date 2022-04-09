@@ -24,7 +24,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
         if (!name) {
             errors.name = 'Please enter your name'
         } else if (name.length > 7) {
-            errors.name = 'Name must be less than 7 characters long'
+            errors.name = 'Name must be 7 or less characters long'
         }
         if (!word) {
             errors.word = 'Must enter a word'

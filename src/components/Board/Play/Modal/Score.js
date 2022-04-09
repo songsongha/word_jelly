@@ -7,7 +7,6 @@ const Score = ({show, ctx, G}) => {
     const navigate = useNavigate()
 
     if (!show){
-        console.log ('Score is not being shown')
         return null
     }
 

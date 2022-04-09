@@ -71,11 +71,11 @@ const GiveClue = ({show, onClose, G, playerID, moves}) => {
         setFormValues({})
         onClose()
     }
-    const handleCancel = () => {
-        // need to find a way to restore action status
+    // const handleCancel = () => {
+    //     // need to find a way to restore action status
         
-        onClose()
-    }
+    //     onClose()
+    // }
     return (
         <div className='modal'>
             <div className='modal-content'>
