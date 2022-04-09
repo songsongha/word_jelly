@@ -1,5 +1,4 @@
 import { Stage, TurnOrder } from 'boardgame.io/core'
-import { clearState } from './localStorage'
 
 const strPlayers = ['0','1','2','3','4','5']
 const restrictActions = (G) => {
@@ -115,7 +114,6 @@ export const WordJellyGame = {
       },
     endIf: (G, ctx) => {
         if (areAllGuessesIn(G)){
-            clearState()
             return true
         }},
     phases: {

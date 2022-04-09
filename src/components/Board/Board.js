@@ -10,7 +10,10 @@ const Board = ({ ctx, G, moves, playerID, events }) => {
 
 	if (ctx.phase === 'setUp' && players && players[playerID] && !players[playerID].submittedWord){
 		return ( 
+			<div>
+			<WaitForWords players={players} />
 			<GameSetUp wordLength={wordLength} moves={moves} playerID={playerID} />
+			</div>
 			)
 	} else if (ctx.phase === 'setUp' && players && players[playerID] && players[playerID].submittedWord){
 		return ( 

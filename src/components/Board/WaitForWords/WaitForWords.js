@@ -13,7 +13,7 @@ const WaitForWords= ({players}) => {
 	})
 return (
     <div className='tc'>
-			Waiting for other players join and enter words
+			Waiting for players to join and enter words...
 			<table id='wait' className='center pt4'>
 				<tbody>
 					<tr>
