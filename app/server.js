@@ -2,7 +2,7 @@
 import path from 'path'
 import serve from 'koa-static'
 const { Server, Origins } = require('boardgame.io/server')
-const WordJellyGame = require("./GameLogic").WordJellyGame
+const WordJellyGame = require("./src/GameLogic").WordJellyGame
 
 const server = Server({
   // Provide the definitions for your game(s).
