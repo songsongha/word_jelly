@@ -77,7 +77,8 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 					Send your friends this URL:
 					</legend>
 					<p className='mt3 ph8'>
-					http://localhost:3000/play/{wordLength}/{matchID} <br/>
+					
+https://young-hamlet-81046.herokuapp.com/play/{wordLength}/{matchID} <br/>
 					<br/>
 					</p>
 					<button 

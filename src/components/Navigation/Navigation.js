@@ -12,7 +12,8 @@ const Navigation = ({showRules}) => {
 			</div>
 			<nav style={{display: 'flex', justifyContent: 'flex-end', width: '25%'}}>
 				{showRules && 
-				<a href='http://localhost:3000/rules' target="_blank" rel="noreferrer" className='f5 link dim black underline pa3 pointer'>Rules</a>}
+				<a href='
+				https://young-hamlet-81046.herokuapp.com/rules' target="_blank" rel="noreferrer" className='f5 link dim black underline pa3 pointer'>Rules</a>}
 			</nav>
 		</div>
 		<div style={{paddingLeft: '20px', width: '75%'}}>
