@@ -20,33 +20,33 @@ const CluePanel = ({G, playerID, events}) => {
     const display = useMemo(()=>{
         const display = []
         const clues = [...G.clues]
-
         if (clues) {
             for (let i = 0; i < clues.length; i++) {
-                // only display the clue if the player is involved in the clue
-                if (clues[i] && clues[i].length && clues[i].find(obj => obj.player === playerID)){
-                    let letterPositionArray = []
-                    let rowText = ''
-                    for(let j = 0; j < clues[i].length; j++){
-                        if (j === 0){
-                            letterPositionArray = [...clues[i][j]]
-                        } else {
-                            rowText += clues[i][j].player !== playerID ? clues[i][j].letter.toUpperCase() + ' ' : '? '
-                        }
+                const isPartOfClue = clues[i] && clues[i].length && clues[i].find(obj => obj.player === playerID)? true : false
+                let letterPositionArray = []
+                let rowText = ''
+                for(let j = 0; j < clues[i].length; j++){
+                    if (j === 0){
+                        letterPositionArray = [...clues[i][j]]
+                    } else {
+                        rowText += clues[i][j].player !== playerID ? clues[i][j].letter.toUpperCase() + ' ' : '? '
                     }
-                    
-                    const cardNo = letterPositionArray[playerID] + 1
+                }
+                
+                const cardNo = letterPositionArray[playerID] + 1
+                // only display card reference if player is involved in the clue
+                if (isPartOfClue){
                     if (cardNo <= words[playerID].length){
                         rowText += ' (Card ' + cardNo + ')'
                     } else {
                         rowText+= ' (Bonus)'
                     }
-                    display.push(
-                        <div key ={i}>
-                            {rowText}
-                        </div>
-                    )
                 }
+                display.push(
+                    <div key ={i} className={isPartOfClue ? '' : 'moon-gray strike' }>
+                        {rowText}
+                    </div>
+                )
             }
         }
         return display
