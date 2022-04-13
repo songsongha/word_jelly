@@ -231,6 +231,9 @@ export const WordJellyGame = {
                     }
                         G.players[playerID].letterPosition++
                         G.isNextCardAvailable[playerID] = false
+                },
+                cancelClue: (G) => {
+                    G.isClueInProgress = false
                 }
             },
             turn: {

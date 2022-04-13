@@ -16,7 +16,6 @@ const CluePanel = ({G, playerID, events}) => {
 	}
     const giveClue = () => {
 		events.endTurn({ next: playerID })
-		// setOpenModal(true)
 	}
     const display = useMemo(()=>{
         const display = []
