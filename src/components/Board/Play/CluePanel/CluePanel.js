@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import TokenTracker from './TokenTracker/TokenTracker'
 import flowerOutline from './flowerOutline2.png'
 
-const CluePanel = ({G, playerID, setOpenModal, events}) => {
+const CluePanel = ({G, playerID, events}) => {
     const {tokensAvailable, tokensTaken, words, isClueInProgress} = G
 
     const isClueAvailable = () => {
@@ -16,7 +16,7 @@ const CluePanel = ({G, playerID, setOpenModal, events}) => {
 	}
     const giveClue = () => {
 		events.endTurn({ next: playerID })
-		setOpenModal(true)
+		// setOpenModal(true)
 	}
     const display = useMemo(()=>{
         const display = []

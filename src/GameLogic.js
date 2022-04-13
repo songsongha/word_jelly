@@ -1,8 +1,9 @@
 import { Stage, TurnOrder } from 'boardgame.io/core'
 
 const strPlayers = ['0','1','2','3','4','5']
-const restrictActions = (G) => {
+const restrictActions = (G, ctx) => {
     G.isClueInProgress = true
+    G.clueGiver = ctx.currentPlayer
 }
 
 
@@ -96,6 +97,7 @@ export const WordJellyGame = {
         })
 
         let isClueInProgress = false
+        let clueGiver = '5'
     
 
         return ({
@@ -108,7 +110,8 @@ export const WordJellyGame = {
           isNextCardAvailable,
           bonusLetters,
           permanentLetters,
-          gameResults
+          gameResults,
+          clueGiver,
 
         });
       },
@@ -208,6 +211,7 @@ export const WordJellyGame = {
                     return {...G, 
                         clues: clues, 
                         isClueInProgress: false, 
+                        clueGiver: undefined,
                         tokensAvailable: tokensAvailable, 
                         tokensTaken: tokensTaken, 
                         isNextCardAvailable: isNextCardAvailable
@@ -230,12 +234,12 @@ export const WordJellyGame = {
                 }
             },
             turn: {
-                onBegin: (G, ctx, playerID) => {
+                onBegin: (G, ctx) => {
                     ctx.events.setActivePlayers({
                         all: Stage.NULL,
                     })
                     if (ctx.turn > 2){
-                        restrictActions(G)
+                        restrictActions(G, ctx)
                     }
                 },
             },
