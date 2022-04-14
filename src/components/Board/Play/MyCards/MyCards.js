@@ -1,17 +1,17 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import CardFaceDown from '../Cards/CardFaceDown'
 import TokensTaken from '../CluePanel/TokenTracker/TokensTaken'
-
 
 const MyCards = ({G, playerID, setOpenModal, moves}) => {
     const {words, players, isNextCardAvailable, isClueInProgress, gameResults} = G
     const letterPosition = players[playerID].letterPosition
+    const [formValues, setFormValues] = useState({})
 
     const current = useMemo(()=>{
         const nextCard = () => {
             moves.nextCard(playerID)
         }
-    
+        
         const bonusLetter = () => {
             if (players[playerID].letterPosition === words[playerID].length-1){
                 moves.nextCard(playerID)
@@ -51,23 +51,40 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
     
     const knownCards = useMemo(()=>{
     // show pile of cards that are known
+    const handleChange = (event) => {
+        const name = event.target.name;
+        const value = event.target.value;
+        setFormValues(values => ({...values, [name]: value}))
+      }
+
     const knownCards = []
 	for (let i = 0; i < letterPosition && i < words[playerID].length; i++) {
         knownCards.push(
-            <CardFaceDown 
-            key = {`myCard${i}`}
-            display = {`Card ${i+1}`} />
+            <div key={`myCard${i}`}>
+                <CardFaceDown 
+                display = {`Card ${i+1}`} /><br/>
+                <input
+                type='text'
+                name={`note${i}`}
+                value={formValues[`note${i}`] || ''}
+                onChange={handleChange}
+                placeholder='Notes'
+                className={'w3'}
+              />
+            </div>
         )
 	  }
       return knownCards
-    },[letterPosition, playerID, words])
+    },[formValues, letterPosition, playerID, words])
     
 
 return (
     <div className= 'myCards flex flex-row justify-around'>
-        <div className= 'w-75'>
-            Known Cards<br/>
-            {knownCards}
+        <div>
+            Known Cards <br/>
+            <div className= 'flex flex-wrap'>
+                {knownCards}
+            </div>
         </div>
         {current}
     </div>
