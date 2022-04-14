@@ -1,8 +1,10 @@
 import React, {useState} from 'react'
+import Confirmation from './Confirmation'
 import './modal.css'
 
 const GiveClue = ({show, G, playerID, moves}) => {
     const [formValues, setFormValues] = useState({})
+    const [openConfirmation, setOpenConfirmation] = useState(false)
 
     if (!show){
         return null
@@ -63,12 +65,7 @@ const GiveClue = ({show, G, playerID, moves}) => {
     }  
     
     const handleSubmit = () => {
-        const submission = {
-            formValues: {...formValues},
-            playerID
-        }
-        moves.giveClue(submission)
-        setFormValues({})
+        setOpenConfirmation(true)
     }
     const handleCancel = () => {
         moves.cancelClue(G)
@@ -82,11 +79,21 @@ const GiveClue = ({show, G, playerID, moves}) => {
                 </header>
                 <main className='modal-body'>
                         {clueForm}
+                        <Confirmation 
+                            show={openConfirmation} 
+                            onClose={()=> setOpenConfirmation(false)} 
+                            playerID={playerID}
+                            G={G} 
+                            moves={moves} 
+                            formValues={formValues} 
+                            setFormValues={setFormValues}/>
                 </main>
-                <footer className='modal-footer'>
-                    <button className='b mt3 ph3 pv2 input-reset ba b--black bg-moon-gray grow pointer f6 dib' onClick={handleCancel}>Cancel</button>
-                    <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' onClick={handleSubmit}>Submit</button>
-                </footer>
+                {!openConfirmation &&
+                    <footer className='modal-footer'>
+                        <button className='b mt3 ph3 pv2 input-reset ba b--black bg-moon-gray grow pointer f6 dib' onClick={handleCancel}>Cancel</button>
+                        <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' onClick={handleSubmit}>Submit</button>
+                    </footer>
+                }
             </div>
         </div>
     )
