@@ -78,7 +78,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
              <div className='error red'>{formErrors.name}</div>
             </div>
             <div className='mt3'>
-              <label class="db fw6 lh-copy f6" htmlFor='word'>{wordLength !== 'open' ? `${wordLength}-Letter ` : 'Any Length ' }Word:</label>
+              <label className="db fw6 lh-copy f6" htmlFor='word'>{wordLength !== 'open' ? `${wordLength}-Letter ` : 'Any Length ' }Word:</label>
               <input
                 type='word'
                 name='word'
