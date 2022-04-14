@@ -65,7 +65,7 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
         <div className="pa4 black-80">
           <form className="measure center w-50 pl6"onSubmit={handleSubmit} noValidate>
             <div className='mt3'>
-              <label class="db fw6 lh-copy f6" htmlFor='name'>Your Name : </label>
+              <label className="db fw6 lh-copy f6" htmlFor='name'>Your Name : </label>
               <input
                 type='text'
                 name='name'
