@@ -6,19 +6,29 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
     const {words, players, isNextCardAvailable, isClueInProgress, gameResults} = G
     const letterPosition = players[playerID].letterPosition
     const [formValues, setFormValues] = useState({})
+    const [currentValue, setCurrentValue] = useState('')
 
     const current = useMemo(()=>{
         const nextCard = () => {
+            setFormValues(values => ({...values, [`note${letterPosition}`]: currentValue}))
+            setCurrentValue('')
             moves.nextCard(playerID)
         }
         
         const bonusLetter = () => {
             if (players[playerID].letterPosition === words[playerID].length-1){
+                setFormValues(values => ({...values, [`note${letterPosition}`]: currentValue}))
+                setCurrentValue('')
                 moves.nextCard(playerID)
             } else {
                 setOpenModal(true)
+                //need to clear current value after guess bonus closes
             }
         } 
+        const handleChange = (event) => {
+            const value = event.target.value;
+            setCurrentValue(value)
+          }
         let currentCard = ''
         if (G){
             if (letterPosition >= gameResults[playerID].word.length){
@@ -30,7 +40,15 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
         return(
             <div className='w-25'>
                 Current Card<br/>
-                <CardFaceDown key='current' display={currentCard}/>
+                <CardFaceDown key='current' display={currentCard}/><br/>
+                <input
+                type='text'
+                name={`note`}
+                value={currentValue}
+                onChange={handleChange}
+                placeholder='Notes'
+                className={'w3'}
+              />
                 <TokensTaken G={G} playerID={playerID}/>
                 { isNextCardAvailable[playerID] && !isClueInProgress && 
                 <div>
@@ -47,7 +65,7 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
             }
             </div>
         )
-    },[G, gameResults, isClueInProgress, isNextCardAvailable, letterPosition, moves, playerID, players, setOpenModal, words])
+    },[G, currentValue, gameResults, isClueInProgress, isNextCardAvailable, letterPosition, moves, playerID, players, setOpenModal, words])
     
     const knownCards = useMemo(()=>{
     // show pile of cards that are known
