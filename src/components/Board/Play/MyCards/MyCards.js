@@ -1,12 +1,14 @@
 import React, { useMemo, useState } from 'react'
+import GuessBonus from '../Modal/GuessBonus'
 import CardFaceDown from '../Cards/CardFaceDown'
 import TokensTaken from '../CluePanel/TokenTracker/TokensTaken'
 
-const MyCards = ({G, playerID, setOpenModal, moves}) => {
+const MyCards = ({G, playerID, moves}) => {
     const {words, players, isNextCardAvailable, isClueInProgress, gameResults} = G
     const letterPosition = players[playerID].letterPosition
     const [formValues, setFormValues] = useState({})
     const [currentValue, setCurrentValue] = useState('')
+    const [openGuessBonus, setOpenGuessBonus] = useState(false)
 
     const current = useMemo(()=>{
         const nextCard = () => {
@@ -21,10 +23,11 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
                 setCurrentValue('')
                 moves.nextCard(playerID)
             } else {
-                setOpenModal(true)
+                setOpenGuessBonus(true)
                 //need to clear current value after guess bonus closes
             }
         } 
+
         const handleChange = (event) => {
             const value = event.target.value;
             setCurrentValue(value)
@@ -65,7 +68,7 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
             }
             </div>
         )
-    },[G, currentValue, gameResults, isClueInProgress, isNextCardAvailable, letterPosition, moves, playerID, players, setOpenModal, words])
+    },[G, currentValue, gameResults, isClueInProgress, isNextCardAvailable, letterPosition, moves, playerID, players, words])
     
     const knownCards = useMemo(()=>{
     // show pile of cards that are known
@@ -95,6 +98,10 @@ const MyCards = ({G, playerID, setOpenModal, moves}) => {
       return knownCards
     },[formValues, letterPosition, playerID, words])
     
+    const handleClose = () => {
+        setOpenGuessBonus(false)
+        setCurrentValue('')
+    }
 
 return (
     <div className= 'myCards flex flex-row justify-around'>
@@ -105,6 +112,7 @@ return (
             </div>
         </div>
         {current}
+        <GuessBonus show={openGuessBonus} onClose={handleClose} G={G} playerID={playerID} moves={moves} />
     </div>
     )
 }
