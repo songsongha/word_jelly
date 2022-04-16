@@ -4,7 +4,7 @@ import logo from './logo.jpg';
 
 const Navigation = ({showRules}) => {
 	return(
-		<div style = {{marginBottom: '40px'}}>
+		<div>
 		<div style = {{display: 'flex', flexDirection: 'row', justifyContent: 'flex-between'}}>
 			<div style={{display: 'flex', flexDirection: 'row', justifyContent: 'left', paddingLeft: '20px', width: '75%'}}>
 				<h1 className= 'title'> Word Jelly</h1>
@@ -18,7 +18,6 @@ const Navigation = ({showRules}) => {
 		</div>
 		<div style={{paddingLeft: '20px', width: '75%'}}>
 		<p className='fw3 f6 pt0 mt0'>An online version of the table top game Letter Jam!</p>
-		<br/>
 		</div>
 		</div>
 	);

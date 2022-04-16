@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 import TokenTracker from './TokenTracker/TokenTracker'
 import flowerOutline from './flowerOutline2.png'
+import TokensTaken from './TokensTaken/TokensTaken';
 
 const CluePanel = ({G, playerID, events}) => {
     const {tokensAvailable, tokensTaken, words, isClueInProgress} = G
@@ -59,6 +60,9 @@ return (
             <h1 className='title'>Clues</h1>
             <div className='w5 h5 mb3 center' style={{ backgroundImage:`url(${flowerOutline})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat:"no-repeat" }}>
                 <TokenTracker G={G}/>
+            </div>
+            <div className='center'>
+                <TokensTaken G={G} />
             </div>
 	        { isClueAvailable() && !isClueInProgress && 
             <button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' 

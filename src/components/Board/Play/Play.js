@@ -1,4 +1,4 @@
-import React, {useState, useMemo} from 'react'
+import React, {useMemo} from 'react'
 import CardFaceUp from './Cards/CardFaceUp'
 import GiveClue from './Modal/GiveClue'
 import CluePanel from './CluePanel/CluePanel'
@@ -48,15 +48,13 @@ const Play= ({ctx, G, moves, playerID, events }) => {
 
 	return ( 
 		<div className='flex flex-row justify-between'>
-			<div className = 'tc pa4 w-75'>
-				<div> 
+			<div className = 'tc pt4 ph4 w-75'>
+				<div className='mb5'> 
 					{cardRow}
 					<div>
                         <CardFaceUp letter='*' player ={{name:'Wild'}}/>
 						{permanentLetterRow}
 					</div>
-					<br/>
-					<br/>
 				</div>
 				<div>
 					<MyCards G={G} playerID={playerID} moves={moves}/>
@@ -67,7 +65,7 @@ const Play= ({ctx, G, moves, playerID, events }) => {
                 <ClueNotification show={isClueInProgress && clueGiver && clueGiver !== playerID} G={G}/>
 
 			</div>
-			<div className = 'tc pa4 w-25'>
+			<div className = 'tc ph4 w-25'>
 				<CluePanel G={G} playerID={playerID} events={events}/>
 	        </div>
         </div> 

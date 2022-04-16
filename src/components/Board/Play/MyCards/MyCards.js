@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import GuessBonus from '../Modal/GuessBonus'
 import CardFaceDown from '../Cards/CardFaceDown'
-import TokensTaken from '../CluePanel/TokenTracker/TokensTaken'
 
 const MyCards = ({G, playerID, moves}) => {
     const {words, players, isNextCardAvailable, isClueInProgress, gameResults} = G
@@ -52,7 +51,6 @@ const MyCards = ({G, playerID, moves}) => {
                 placeholder='Notes'
                 className={'w3'}
               />
-                <TokensTaken G={G} playerID={playerID}/>
                 { isNextCardAvailable[playerID] && !isClueInProgress && 
                 <div>
                     {players[playerID].letterPosition >= words[playerID].length-1 ?
