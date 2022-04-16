@@ -37,7 +37,7 @@ const MyCards = ({G, playerID, moves}) => {
             if (letterPosition >= gameResults[playerID].word.length){
                 currentCard = 'Bonus'
             } else {
-                currentCard = `Card ${letterPosition + 1}`
+                currentCard = `Card ${letterPosition + 1}/${words[playerID].length}`
             }
         }
         return(
@@ -83,7 +83,7 @@ const MyCards = ({G, playerID, moves}) => {
         knownCards.push(
             <div key={`myCard${i}`}>
                 <CardFaceDown 
-                display = {`Card ${i+1}`} /><br/>
+                display = {`Card ${i+1}/${words[playerID].length}`} /><br/>
                 <input
                 type='text'
                 name={`note${i}`}

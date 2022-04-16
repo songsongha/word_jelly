@@ -4,7 +4,8 @@ import React from 'react';
 const CardFaceUp = ({letter, player, word}) => {
 	let cardNo =  ''
 	if (player && word && player.letterPosition < word.length){
-		cardNo = `Card ${player.letterPosition + 1}`
+		console.log('word length',word.length)
+		cardNo = `Card ${player.letterPosition + 1}/${word.length}`
 	} else if (player && word && player.letterPosition >= word.length){
 		cardNo = 'Bonus'
 	} 
