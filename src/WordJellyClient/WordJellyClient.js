@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { WordJellyGame } from '../GameLogic'
+import { createGame } from '../GameLogic'
 import { Client } from "boardgame.io/react"
 import { SocketIO } from "boardgame.io/multiplayer"
 import Board from '../components/Board/Board'
@@ -32,7 +32,7 @@ const WordJellyClient = ({ numPlayers, lobbyClient, setShowRules }) => {
         async function joinMatch() {
             try {
                 const match = await lobbyClient.joinMatch(
-                    'word-jelly',
+                    `word-jelly${numPlayers}`,
                     id,
                     {
                         playerName: 'Anon'
@@ -56,11 +56,11 @@ const WordJellyClient = ({ numPlayers, lobbyClient, setShowRules }) => {
             }
         }
 		
-	},[credentials, id, lobbyClient, setShowRules, setState])
+	},[credentials, id, lobbyClient, numPlayers, setShowRules, setState])
    
 
           const WordJellyClient = Client({
-                game: WordJellyGame,
+                game: createGame(numPlayers),
                 numPlayers,
                 board: Board,
                 debug: true,

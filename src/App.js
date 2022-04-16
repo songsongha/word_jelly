@@ -11,7 +11,7 @@ import Navigation from './components/Navigation/Navigation'
 
 const App = () => {
 
-const [numPlayers, setNumPlayers] = useState('6')
+const [numPlayers, setNumPlayers] = useState(6)
 const lobbyClient =  new LobbyClient({ server: 'http://localhost:8000' })
 const [showRules, setShowRules] = useState(true)
 

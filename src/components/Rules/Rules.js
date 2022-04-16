@@ -54,8 +54,7 @@ const Rules = ({setShowRules}) => {
                 There is one red token for each player plus green tokens that can be used by any player. The token in 
                 the center of the flower surrounded by red tokens is only available once all the red tokens are gone 
                 (once each player has given a clue), but the green tokens on the leaves are available immediately. When
-                a player gives a clue a token is removed from the flower. You can see how many clues you've given 
-                under your current card.<br/></p>
+                a player gives a clue a token is removed from the flower.<br/></p>
                 <h4>Receiving Clues</h4>
                 <p>
                 Clues that you received are shown on the right hand side of the screen. Your letter is represented by 

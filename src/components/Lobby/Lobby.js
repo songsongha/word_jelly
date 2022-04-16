@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { useCallback, useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
@@ -7,15 +7,23 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 	const [errorMsg, setErrorMsg] = useState('')
 	const [wordLength, setWordLength] = useState('5')
 
+		let playerChoice = []
+		for (let i = 2; i<=6; i++){
+			playerChoice.push(
+  				<option key={`playerChoice${i}`} value={i} >{i}</option>
+			)
+		}
+
 	let navigate = useNavigate()
 	useEffect(() => {
 		setShowRules(true)
 	}, [setShowRules])
 		
 	const createGame = useCallback(async (numPlayers) =>{
+		console.log({numPlayers})
 			setErrorMsg('')
 			try{
-				const { matchID } = await lobbyClient.createMatch('word-jelly', {
+				const { matchID } = await lobbyClient.createMatch(`word-jelly${numPlayers}`, {
 					numPlayers: Number(numPlayers)
 				})
 				setMatchID(matchID)
@@ -45,10 +53,10 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 				their letters. Unscramble your letters to spell your word.
 				</p>
 				<label htmlFor='numPlayers'className='db fw6 lh-copy f6'>Number of Players:</label>
-				<div>
-          			<label><input className='ml3 mr2' type='radio' name='numPlayers' value='6' checked onChange={(e => {setNumPlayers(e.target.value)})}/>
-				  	6 
-				  	</label> 
+				<div className='pl3'>
+				<select name='numPlayers' value={numPlayers} onChange={(e => {setNumPlayers(e.target.value)})}>
+					{playerChoice}
+				</select>
 				</div>
 					<label htmlFor='wordLength'className='db fw6 lh-copy f6'>Length of Word:</label>
 				<div>

@@ -1,12 +1,13 @@
 // src/server.js
 import path from 'path'
 import serve from 'koa-static'
+import { createGame } from './GameLogic';
 const { Server, Origins } = require('boardgame.io/server')
-const WordJellyGame = require("./GameLogic").WordJellyGame
+// const WordJellyGame = require("./GameLogic").WordJellyGame
 
 const server = Server({
   // Provide the definitions for your game(s).
-  games: [WordJellyGame],
+  games: [createGame(2),createGame(3),createGame(4),createGame(5),createGame(6)],
 
   origins: [
     'https://young-hamlet-81046.herokuapp.com/', Origins.LOCALHOST_IN_DEVELOPMENT
