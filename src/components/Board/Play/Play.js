@@ -59,6 +59,9 @@ const Play= ({ctx, G, moves, playerID, events }) => {
 				<div>
 					<MyCards G={G} playerID={playerID} moves={moves}/>
 				</div>
+                <div className='pt5 fw5 f2 moon-gray'>
+                    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+                </div>
 				<GiveClue show={isClueInProgress && clueGiver === playerID} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
                 <GuessWord show={ctx.phase === 'guessWord'} ctx={ctx} onClose={()=> {}} playerID={playerID} moves={moves} />
                 <Score show={gameResults[playerID].guess || ctx.phase === null} ctx={ctx} onClose={()=> {}} G={G} />
