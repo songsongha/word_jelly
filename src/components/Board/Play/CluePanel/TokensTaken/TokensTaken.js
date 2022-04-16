@@ -1,31 +1,34 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import TinyToken from './TinyToken/TinyToken'
 
 const TokensTaken = ({G}) => {
     const {players, tokensTaken} = G
 
-    const tokenTable = players.map((player,index) =>{
-        const display = []
-        if (tokensTaken[index] === 0){
-            display.push(<div key={index}className='gray m0 p0'>None</div>)
-        } else {
-            for (let i = 0; i < tokensTaken[index]; i++){
-                let color = 'red'
-                if (i > 0 ){
-                    color = 'green'
+    const tokenTable = useMemo(() => {
+        const tokenTable = players.map((player,index) =>{
+            const display = []
+            if (tokensTaken[index] === 0){
+                display.push(<div key={index}className='gray m0 p0'>None</div>)
+            } else {
+                for (let i = 0; i < tokensTaken[index]; i++){
+                    let color = 'red'
+                    if (i > 0 ){
+                        color = 'green'
+                    }
+                    display.push(
+                        <TinyToken key={`tokenUsed-${i}`} color ={color}/>
+                    )
                 }
-                display.push(
-                    <TinyToken key={`tokenUsed-${i}`} color ={color}/>
-                )
             }
-        }
-        return(
-            <tr key={index}>
-                <td className='pl3 pr2 f6 tl'>{player.name}</td>
-                <td className='pl3 f6 flex'>{display}</td>
-            </tr>
-        )
-    })
+            return(
+                <tr key={index}>
+                    <td className='pl3 pr2 f6 tl'>{player.name}</td>
+                    <td className='pl3 f6 flex'>{display}</td>
+                </tr>
+            )
+        })
+        return tokenTable
+    },[players, tokensTaken])
 
 return (
     <div className= 'TokensTaken ml5'>
