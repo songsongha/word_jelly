@@ -8,7 +8,7 @@ import Score from './Modal/Score'
 import ClueNotification from './Modal/ClueNotification'
 
 const Play= ({ctx, G, moves, playerID, events }) => {
-    const {players, words, bonusLetters, permanentLetters, gameResults, clueGiver, isClueInProgress} = G
+    const {players, words, bonusLetters, permanentLetters, gameResults, clueGiver, isClueInProgress, dummyHands} = G
     
     const cardRow = useMemo(()=>{
         // show a letter from every player other than you
@@ -24,9 +24,21 @@ const Play= ({ctx, G, moves, playerID, events }) => {
                     word = {words[player]} />
                 )
             }
-	  }
+        }
+        for (let i = 0; i < dummyHands.length; i++) {   
+            console.log({i}) 
+            // display dummy hands
+            let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].word[dummyHands.length-1]
+            cardRow.push(
+                <CardFaceUp 
+                key = {`dummyCard${i}`}
+                letter = {letter}
+                player = {dummyHands[i]}
+                word = {dummyHands[i].word} />
+            )
+        }
     return cardRow  
-    },[bonusLetters, playerID, players, words])
+    },[bonusLetters, dummyHands, playerID, players, words])
     
     const permanentLetterRow = useMemo(()=>{
         // show permanent letters if applicable

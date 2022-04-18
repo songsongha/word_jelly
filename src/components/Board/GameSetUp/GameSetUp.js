@@ -9,8 +9,8 @@ const GameSetUp = ({wordLength, moves, playerID}) => {
 
     const submitForm = useCallback(() => {
         const {name, word} = formValues
-		moves.submitWords(playerID, name, word)
-    },[formValues, moves, playerID])
+		moves.submitWords(playerID, name, word, wordLength)
+    },[formValues, moves, playerID, wordLength])
   
    const handleChange = (e) => {
         const { name, value } = e.target

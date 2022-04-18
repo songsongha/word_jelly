@@ -20,7 +20,6 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 	}, [setShowRules])
 		
 	const createGame = useCallback(async (numPlayers) =>{
-		console.log({numPlayers})
 			setErrorMsg('')
 			try{
 				const { matchID } = await lobbyClient.createMatch(`word-jelly${numPlayers}`, {
@@ -73,7 +72,7 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 				</div>
 				<button className='b mt3 ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib' 
 				id = 'btnCreate'
-				onClick={() => createGame(numPlayers, wordLength)}>
+				onClick={() => createGame(numPlayers)}>
 					Create Game
 				</button>
 			</div>

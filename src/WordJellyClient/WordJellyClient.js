@@ -10,7 +10,6 @@ import { loadState, saveState } from '../localStorage'
 // const server = `${protocol}//${hostname}:${port}`
 
 const WordJellyClient = ({ numPlayers, lobbyClient, setShowRules }) => {
-
     const [errorMsg, setErrorMsg] = useState('')
     const [credentials, setCredentials] = useState('')
     const [playerID, setPlayerID] = useState()
@@ -59,13 +58,13 @@ const WordJellyClient = ({ numPlayers, lobbyClient, setShowRules }) => {
 	},[credentials, id, lobbyClient, numPlayers, setShowRules, setState])
    
 
-          const WordJellyClient = Client({
-                game: createGame(numPlayers),
-                numPlayers,
-                board: Board,
-                debug: true,
-                multiplayer: SocketIO({ server: "localhost:8000" })
-            })
+    const WordJellyClient = Client({
+        game: createGame(numPlayers),
+        numPlayers,
+        board: Board,
+        debug: true,
+        multiplayer: SocketIO({ server: "localhost:8000" })
+    })
     
         return(
             <div>
