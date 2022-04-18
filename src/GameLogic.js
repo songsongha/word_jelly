@@ -92,7 +92,7 @@ export const createGame = (numPlayers) =>{
               id: p.toString(),
               name: `NPC ${6-p}`,
               letterPosition: 0,
-              word: '' // will get inserted at Game SetUp
+              word: createWord(12-p)
             });
           }
           const words = Array(numPlayers)
@@ -140,7 +140,7 @@ export const createGame = (numPlayers) =>{
       phases: {
           setUp: {
               moves: {
-                  submitWords: (G, ctx, playerID, name, word, wordLength) => {
+                  submitWords: (G, ctx, playerID, name, word) => {
                       
                       // commit player info and words
                       if (name) G.players[playerID].name = name
@@ -154,15 +154,6 @@ export const createGame = (numPlayers) =>{
                           G.words[0] = shuffle(word)
                           G.gameResults[0].word = word
                       }
-                      if (playerID === '0' && G.dummyHands && G.dummyHands.length){
-                        for (let i = 0; i < G.dummyHands.length; i++){
-                            if (wordLength !== 'open'){
-                                G.dummyHands[i].word = createWord(wordLength)
-                            } else {
-                                G.dummyHands[i].word = createWord(5)
-                            }
-                        }
-                    }
   
                       ctx.events.endStage()
   
