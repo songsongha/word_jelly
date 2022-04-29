@@ -6,9 +6,6 @@ import { LobbyClient } from 'boardgame.io/client'
 import Rules from './components/Rules/Rules'
 import Navigation from './components/Navigation/Navigation'
 
-// const { protocol, hostname, port } = window.location
-// const server = `${protocol}//${hostname}:${port}`
-
 const App = () => {
 
 const [numPlayers, setNumPlayers] = useState(6)

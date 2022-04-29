@@ -6,8 +6,8 @@ import Board from '../components/Board/Board'
 import { useParams } from 'react-router-dom'
 import { loadState, saveState } from '../localStorage'
 
-// const { protocol, hostname, port } = window.location
-// const server = `${protocol}//${hostname}:${port}`
+const { protocol, hostname, port } = window.location
+const server = `${protocol}//${hostname}:${port}`
 
 const WordJellyClient = ({ numPlayers, lobbyClient, setShowRules }) => {
     const [errorMsg, setErrorMsg] = useState('')
