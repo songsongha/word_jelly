@@ -26,7 +26,6 @@ const Play= ({ctx, G, moves, playerID, events }) => {
             }
         }
         for (let i = 0; i < dummyHands.length; i++) {   
-            console.log({i}) 
             // display dummy hands
             let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].word[dummyHands.length-1]
             cardRow.push(

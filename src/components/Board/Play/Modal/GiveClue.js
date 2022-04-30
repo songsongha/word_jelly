@@ -3,6 +3,7 @@ import Confirmation from './Confirmation'
 import './modal.css'
 
 const GiveClue = ({show, G, playerID, moves}) => {
+    const {dummyHands} = G
     const [formValues, setFormValues] = useState({})
     const [openConfirmation, setOpenConfirmation] = useState(false)
 
@@ -27,6 +28,16 @@ const GiveClue = ({show, G, playerID, moves}) => {
 			)
 		}
 	  }
+    for (let i = 0; i < G.dummyHands.length; i++) {
+        let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].word[dummyHands.length-1]
+			dropDownOptions.push( 
+                <option key={`dummy${i}`} name={`dummy${i}`} value={dummyHands[i].id}>
+                    {letter.toUpperCase() + ' '}
+                    (
+                    {dummyHands[i].name}) 
+                </option>
+			)
+		}
     if (G.permanentLetters){
         G.permanentLetters.forEach((letter, index) => {
             dropDownOptions.push(

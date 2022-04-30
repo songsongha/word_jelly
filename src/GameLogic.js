@@ -1,6 +1,5 @@
 import { Stage, TurnOrder } from 'boardgame.io/core'
 
-const strPlayers = ['0','1','2','3','4','5']
 const restrictActions = (G, ctx) => {
     G.isClueInProgress = true
     G.clueGiver = ctx.currentPlayer
@@ -86,11 +85,11 @@ export const createGame = (numPlayers) =>{
               submittedWord: false
             });
           }
-          const dummyHands = []
+          let dummyHands = []
           for (let p = numPlayers; p < 6; p++) {
             dummyHands.push({
               id: p.toString(),
-              name: `NPC ${6-p}`,
+              name: `NPC ${p-numPlayers+1}`,
               letterPosition: 0,
               word: createWord(12-p)
             });
@@ -175,9 +174,8 @@ export const createGame = (numPlayers) =>{
           play: {
               moves: {
                   giveClue: (G, ctx, submission) => {
-  
-                      const playerID = submission.playerID
-  
+
+                    const {playerID, dummyUsed, strPlayers, strDummy, word} = submission
                       // update the clue panel for everyone and make next card available
                       const players = Object.values(submission.formValues)
                       const isNextCardAvailable = [...G.isNextCardAvailable]
@@ -185,13 +183,35 @@ export const createGame = (numPlayers) =>{
                       const clue = []
                       const letterPositions= []
                       const Gplayers = [...G.players]
+                      const dummyHands = []
+                    
+                      // populate dummyhands + advance letter position
+                      for (let i =0; i < G.dummyHands.length; i++){
+                        if (dummyUsed && dummyUsed.length && dummyUsed.includes(i)){
+                            const dummyObj = {
+                                id: G.dummyHands[i].id,
+                                name: G.dummyHands[i].name,
+                                letterPosition: Number(G.dummyHands[i].letterPosition) + 1,
+                                word: G.dummyHands[i].word
+                            }
+                            dummyHands.push(dummyObj)
+                        }else{
+                            dummyHands.push({...G.dummyHands[i]})
+                        }
+                        
+                      }
+                   
                       // get a snap shot of the letter positions at this time
                       // first index of every clue is the snapshot of letterPosition
                       for (let i = 0; i < Gplayers.length; i++){
                           letterPositions.push(Gplayers[i].letterPosition)
                       }
                       clue.push(letterPositions)
-  
+
+                      for (let i = 0; i < G.dummyHands.length; i++){
+                        letterPositions.push(G.dummyHands[i].letterPosition)
+                    }
+
                       for(let i = 0; i < players.length; i++){
                           if(players[i]){
                               if (strPlayers.includes(players[i])){
@@ -201,7 +221,13 @@ export const createGame = (numPlayers) =>{
                                           player: players[i]
                                       })
                                       isNextCardAvailable[players[i]] = true  
-                              } else {
+                              } else if(strDummy.includes(players[i])){
+                                  const letter = word[i]
+                                    clue.push({
+                                        letter: letter,
+                                        player: undefined
+                                    })
+                                } else {
                                   clue.push({
                                       letter: players[i],
                                       player: undefined
@@ -214,7 +240,6 @@ export const createGame = (numPlayers) =>{
                       
                       // decrease tokensAvailable
                       const tokensAvailable = {...G.tokensAvailable}
-  
                       if (G.tokensTaken[playerID] === 0){
                           tokensAvailable.red--
                       } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves > 0){
@@ -222,6 +247,7 @@ export const createGame = (numPlayers) =>{
                       } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves === 0){
                           tokensAvailable.restricted--
                       }
+
                       // adjust count for person giving clue
                       const tokensTaken = [...G.tokensTaken]
                       tokensTaken[playerID]++
@@ -232,7 +258,8 @@ export const createGame = (numPlayers) =>{
                           clueGiver: undefined,
                           tokensAvailable: tokensAvailable, 
                           tokensTaken: tokensTaken, 
-                          isNextCardAvailable: isNextCardAvailable
+                          isNextCardAvailable: isNextCardAvailable,
+                          dummyHands: dummyHands
                       }
                       
                   },
