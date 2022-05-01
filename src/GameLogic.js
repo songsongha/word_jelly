@@ -96,11 +96,13 @@ export const createGame = (numPlayers) =>{
           }
           const words = Array(numPlayers)
           let clues = []
+          const red = numPlayers > 3 ? numPlayers : 6
+          const restricted = numPlayers > 3 ? 1 : 3
+          const leaves = 11 - red - restricted
           const tokensAvailable = {
-              // depends on number of players
-              red: 6,
-              leaves: 4,
-              restricted: 1
+              red,
+              leaves,
+              restricted 
           }
           const tokensTaken = Array(numPlayers).fill(Number(0))
           const isNextCardAvailable = Array(numPlayers).fill(false)
