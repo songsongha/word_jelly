@@ -35,9 +35,7 @@ export const determineLayout = (numPlayers) => {
 }
 
 export const determineColor = (tokensAvailable, layout, position) => {
-    console.log('determine color is called')
     const{leaves, red, restricted} = tokensAvailable
-   
     const { redLayout, leavesLayout, restrictedLayout } = layout
 
     if (redLayout.includes(position) && redLayout.findIndex(e => e === position ) < red){
