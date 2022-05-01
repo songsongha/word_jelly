@@ -21,6 +21,24 @@ const CluePanel = ({G, playerID, events}) => {
     const giveClue = () => {
 		events.endTurn({ next: playerID })
 	}
+    const backgroundImage = useMemo(()=>{
+        const numPlayers = G.players.length
+        switch (numPlayers) {
+            case 2:
+            case 3:
+                return flowerOutline23
+            case 4:
+                return flowerOutline4
+            case 5:
+                return flowerOutline5
+            case 6:
+                return flowerOutline6
+            default:
+                console.log(`There was an error with backgroundImage`)
+                return undefined
+        }
+    },[G.players.length])
+
     const display = useMemo(()=>{
         const display = []
         const clues = [...G.clues]
@@ -61,7 +79,7 @@ return (
     <div className= 'cluePanel'>
         <div>
             <h1 className='title'>Clues</h1>
-            <div className='w5 h5 mb3 center' style={{ backgroundImage:`url(${flowerOutline23})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat:"no-repeat" }}>
+            <div className='w5 h5 mb3 center' style={{ backgroundImage:`url(${backgroundImage})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat:"no-repeat" }}>
                 <TokenTracker G={G}/>
             </div>
             <div className='center'>
