@@ -3,19 +3,11 @@ import ClueToken from '../ClueToken/ClueToken';
 import { determineColor, determineLayout } from './TokenTrackerHelper';
 
 const TokenTracker = ({G}) => {
-    // const {tokensAvailable} = G 
-    
-    // const numPlayers = G.players.length
+    const {tokensAvailable} = G 
+    const numPlayers = G.players.length
     
     const display = useMemo(()=>{
-        const numPlayers = 3
-        const tokensAvailable = {
-            red: 6,
-            leaves: 2,
-            restricted: 3 
-        }
         const layout = determineLayout(numPlayers)
-        console.log({layout})
         switch (numPlayers) {
             case 2:
             case 3:
