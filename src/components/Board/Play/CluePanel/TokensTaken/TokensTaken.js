@@ -3,6 +3,7 @@ import TinyToken from './TinyToken/TinyToken'
 
 const TokensTaken = ({G}) => {
     const {players, tokensTaken} = G
+    const numPlayers = G.players.length
 
     const tokenTable = useMemo(() => {
         const tokenTable = players.map((player,index) =>{
@@ -12,7 +13,9 @@ const TokensTaken = ({G}) => {
             } else {
                 for (let i = 0; i < tokensTaken[index]; i++){
                     let color = 'red'
-                    if (i > 0 ){
+                    if ((numPlayers > 3 && i > 0) ||
+                         (numPlayers === 3 && i > 1 ) || 
+                         (numPlayers === 2 && i > 2)){
                         color = 'green'
                     }
                     display.push(

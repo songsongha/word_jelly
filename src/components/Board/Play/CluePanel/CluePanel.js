@@ -8,15 +8,24 @@ import TokensTaken from './TokensTaken/TokensTaken';
 
 const CluePanel = ({G, playerID, events}) => {
     const {tokensAvailable, tokensTaken, words, isClueInProgress} = G
+    const numPlayers = G.players.length
 
     const isClueAvailable = () => {
-		if (tokensAvailable.leaves > 0 || 
-			tokensTaken[playerID] === 0 || 
-			(tokensAvailable.red === 0 && tokensAvailable.restricted > 0)) {
-				return true
-			}
-		
-		return false
+        if (numPlayers < 4){
+            if (tokensAvailable.leaves > 0 || 
+                tokensTaken[playerID] < 6 / numPlayers || 
+                (tokensAvailable.red === 0 && tokensAvailable.restricted > 0)) {
+                    return true
+                }
+            return false
+        } else {
+            if (tokensAvailable.leaves > 0 || 
+                tokensTaken[playerID] === 0 || 
+                (tokensAvailable.red === 0 && tokensAvailable.restricted > 0)) {
+                    return true
+                }
+            return false
+        }
 	}
     const giveClue = () => {
 		events.endTurn({ next: playerID })

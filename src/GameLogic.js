@@ -242,7 +242,10 @@ export const createGame = (numPlayers) =>{
                       
                       // decrease tokensAvailable
                       const tokensAvailable = {...G.tokensAvailable}
-                      if (G.tokensTaken[playerID] === 0){
+                      console.log('G.players.length', G.players.length)
+                      console.log('G.tokensTaken[playerID] < 6/G.players.length)', G.tokensTaken[playerID] < 6/G.players.length)
+                      if (G.tokensTaken[playerID] === 0 || 
+                            (G.players.length < 4 && G.tokensTaken[playerID] < 6/G.players.length)){
                           tokensAvailable.red--
                       } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves > 0){
                           tokensAvailable.leaves--

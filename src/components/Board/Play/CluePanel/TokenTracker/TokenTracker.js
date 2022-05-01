@@ -137,7 +137,7 @@ const TokenTracker = ({G}) => {
                 return null
         }
         
-    },[])
+    },[numPlayers, tokensAvailable])
 
 return (
     <div>
