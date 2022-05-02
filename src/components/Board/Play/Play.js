@@ -6,6 +6,7 @@ import MyCards from './MyCards/MyCards'
 import GuessWord from './Modal/GuessWord'
 import Score from './Modal/Score'
 import ClueNotification from './Modal/ClueNotification'
+import ClueToken from './CluePanel/ClueToken/ClueToken'
 
 const Play= ({ctx, G, moves, playerID, events }) => {
     const {players, words, bonusLetters, permanentLetters, gameResults, clueGiver, isClueInProgress, dummyHands} = G
@@ -17,23 +18,31 @@ const Play= ({ctx, G, moves, playerID, events }) => {
             if (player !== Number(playerID)){
                 let letter = words[player][players[player].letterPosition] || bonusLetters[player]
                 cardRow.push(
+                    <span key = {`card${player}`} className='flex flex-column items-center display: inline-block'>
                     <CardFaceUp 
-                    key = {`card${player}`}
                     letter = {letter}
                     player = {players[player]}
                     word = {words[player]} />
+                    </span>
                 )
             }
         }
+        
         for (let i = 0; i < dummyHands.length; i++) {   
             // display dummy hands
             let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].word[dummyHands.length-1]
+            let color = 'green'
+            if (dummyHands.letterPosition >= dummyHands[i].word.length-1){
+                color = 'gray'
+            }
             cardRow.push(
+                <span key = {`dummyCard${i}`} className='flex flex-column items-center display: inline-block'>
                 <CardFaceUp 
-                key = {`dummyCard${i}`}
                 letter = {letter}
                 player = {dummyHands[i]}
                 word = {dummyHands[i].word} />
+                <ClueToken key={`dummyToken-${i}`} color={color}/>
+                </span>
             )
         }
     return cardRow  
@@ -61,7 +70,9 @@ const Play= ({ctx, G, moves, playerID, events }) => {
 		<div className='flex flex-row justify-between'>
 			<div className = 'tc pt4 ph4 w-75'>
 				<div className='mb5'> 
-					{cardRow}
+                    <div className='flex justify-center '>
+                    {cardRow}
+                    </div>
 					<div>
                         <CardFaceUp letter='*' player ={{name:'Wild'}}/>
 						{permanentLetterRow}

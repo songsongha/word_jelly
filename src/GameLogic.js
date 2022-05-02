@@ -178,84 +178,88 @@ export const createGame = (numPlayers) =>{
                   giveClue: (G, ctx, submission) => {
 
                     const {playerID, dummyUsed, strPlayers, strDummy, word} = submission
-                      // update the clue panel for everyone and make next card available
-                      const players = Object.values(submission.formValues)
-                      const isNextCardAvailable = [...G.isNextCardAvailable]
-                      const clues = [...G.clues] 
-                      const clue = []
-                      const letterPositions= []
-                      const Gplayers = [...G.players]
-                      const dummyHands = []
-                    
-                      // populate dummyhands + advance letter position
-                      for (let i =0; i < G.dummyHands.length; i++){
-                        if (dummyUsed && dummyUsed.length && dummyUsed.includes(i)){
-                            const dummyObj = {
-                                id: G.dummyHands[i].id,
-                                name: G.dummyHands[i].name,
-                                letterPosition: Number(G.dummyHands[i].letterPosition) + 1,
-                                word: G.dummyHands[i].word
-                            }
-                            dummyHands.push(dummyObj)
-                        }else{
-                            dummyHands.push({...G.dummyHands[i]})
-                        }
-                        
-                      }
-                   
-                      // get a snap shot of the letter positions at this time
-                      // first index of every clue is the snapshot of letterPosition
-                      for (let i = 0; i < Gplayers.length; i++){
-                          letterPositions.push(Gplayers[i].letterPosition)
-                      }
-                      clue.push(letterPositions)
+                    const players = Object.values(submission.formValues)
+                    const isNextCardAvailable = [...G.isNextCardAvailable]
+                    const clues = [...G.clues] 
+                    const clue = []
+                    const letterPositions= []
+                    const Gplayers = [...G.players]
+                    const dummyHands = []
+                    const tokensAvailable = {...G.tokensAvailable}
 
-                      for (let i = 0; i < G.dummyHands.length; i++){
+                    // decrease tokensAvailable 
+                    if (G.tokensTaken[playerID] === 0 || 
+                        (G.players.length < 4 && G.tokensTaken[playerID] < 6/G.players.length)){
+                        tokensAvailable.red--
+                    } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves > 0){
+                        tokensAvailable.leaves--
+                    } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves === 0){
+                        tokensAvailable.restricted--
+                    }
+
+                    // adjust count for person giving clue
+                    const tokensTaken = [...G.tokensTaken]
+                    tokensTaken[playerID]++
+
+                    // populate dummyhands + advance letter position
+                    for (let i =0; i < G.dummyHands.length; i++){
+                    if (dummyUsed && dummyUsed.length && dummyUsed.includes(i)){
+                        const letterPosition = Number(G.dummyHands[i].letterPosition) + 1
+                        console.log('letterPosition',letterPosition)
+                        const dummyObj = {
+                            id: G.dummyHands[i].id,
+                            name: G.dummyHands[i].name,
+                            letterPosition,
+                            word: G.dummyHands[i].word
+                        }
+                        dummyHands.push(dummyObj)
+                        // // add a leaves token if an NPC has used all their cards
+                        // if (letterPosition === G.dummyHands[i].word.length-1){
+                        //     console.log('letterPosition === G.dummyHands[i].word.length-1')
+                        //     tokensAvailable.leaves = tokensAvailable.leaves + 1
+                        //     console.log ({tokensAvailable})
+                        // }
+                    }else{
+                        dummyHands.push({...G.dummyHands[i]})
+                    }
+                    }
+                   
+                    // get a snap shot of the letter positions at this time
+                    // first index of every clue is the snapshot of letterPosition
+                    for (let i = 0; i < Gplayers.length; i++){
+                        letterPositions.push(Gplayers[i].letterPosition)
+                    }
+                    clue.push(letterPositions)
+
+                    for (let i = 0; i < G.dummyHands.length; i++){
                         letterPositions.push(G.dummyHands[i].letterPosition)
                     }
 
-                      for(let i = 0; i < players.length; i++){
-                          if(players[i]){
-                              if (strPlayers.includes(players[i])){
-                                  const letter = G.words[players[i]][G.players[players[i]].letterPosition] || G.bonusLetters[players[i]]
-                                  clue.push({
-                                          letter: letter,
-                                          player: players[i]
-                                      })
-                                      isNextCardAvailable[players[i]] = true  
-                              } else if(strDummy.includes(players[i])){
-                                  const letter = word[i]
-                                    clue.push({
-                                        letter: letter,
-                                        player: undefined
+                    // update the clue panel for everyone and make next card available
+                    for(let i = 0; i < players.length; i++){
+                        if(players[i]){
+                            if (strPlayers.includes(players[i])){
+                                const letter = G.words[players[i]][G.players[players[i]].letterPosition] || G.bonusLetters[players[i]]
+                                clue.push({
+                                    letter: letter,
+                                    player: players[i]
                                     })
-                                } else {
-                                  clue.push({
-                                      letter: players[i],
-                                      player: undefined
-                                  })
-                              }
-                          }
-                      }
-                      
-                      clues.push(clue)
-                      
-                      // decrease tokensAvailable
-                      const tokensAvailable = {...G.tokensAvailable}
-                      console.log('G.players.length', G.players.length)
-                      console.log('G.tokensTaken[playerID] < 6/G.players.length)', G.tokensTaken[playerID] < 6/G.players.length)
-                      if (G.tokensTaken[playerID] === 0 || 
-                            (G.players.length < 4 && G.tokensTaken[playerID] < 6/G.players.length)){
-                          tokensAvailable.red--
-                      } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves > 0){
-                          tokensAvailable.leaves--
-                      } else if (G.tokensTaken[playerID] > 0 && G.tokensAvailable.leaves === 0){
-                          tokensAvailable.restricted--
-                      }
-
-                      // adjust count for person giving clue
-                      const tokensTaken = [...G.tokensTaken]
-                      tokensTaken[playerID]++
+                                isNextCardAvailable[players[i]] = true  
+                            } else if (strDummy.includes(players[i])){
+                                const letter = word[i]
+                                clue.push({
+                                    letter: letter,
+                                    player: undefined
+                                })
+                            } else {
+                                clue.push({
+                                    letter: players[i],
+                                    player: undefined
+                                })
+                            }
+                        }
+                    }
+                    clues.push(clue)
   
                       return {...G, 
                           clues: clues, 
