@@ -5,15 +5,16 @@ import { Route, Routes} from 'react-router-dom'
 import { LobbyClient } from 'boardgame.io/client'
 import Rules from './components/Rules/Rules'
 import Navigation from './components/Navigation/Navigation'
+import usePageTracking from './usePageTracking'
 
 const { protocol, hostname, port } = window.location
 const server = `${protocol}//${hostname}:${port}`
 
 const App = () => {
-
-const [numPlayers, setNumPlayers] = useState(6)
-const lobbyClient =  new LobbyClient({ server: server })
-const [showRules, setShowRules] = useState(true)
+  usePageTracking()
+  const [numPlayers, setNumPlayers] = useState(6)
+  const lobbyClient =  new LobbyClient({ server: server })
+  const [showRules, setShowRules] = useState(true)
 
     return(
     <div>
