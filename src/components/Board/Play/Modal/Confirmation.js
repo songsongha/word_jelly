@@ -28,7 +28,7 @@ const Confirmation = ({show, onClose, playerID, G, moves, formValues, setFormVal
                 
             } else if(strDummy.includes(players[i])){
                 const dummy = Number(players[i])-G.players.length
-                const letter = G.dummyHands[dummy].word[G.dummyHands[dummy].letterPosition]
+                const letter = G.dummyHands[dummy].word[G.dummyHands[dummy].letterPosition] || G.dummyHands[dummy].random
                 clue += letter
                 if (!dummyUsed.includes(dummy)){
                     dummyUsed.push(dummy)

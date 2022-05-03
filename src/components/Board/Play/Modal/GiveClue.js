@@ -29,7 +29,7 @@ const GiveClue = ({show, G, playerID, moves}) => {
 		}
 	  }
     for (let i = 0; i < G.dummyHands.length; i++) {
-        let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].word[dummyHands.length-1]
+        let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].random
 			dropDownOptions.push( 
                 <option key={`dummy${i}`} name={`dummy${i}`} value={dummyHands[i].id}>
                     {letter.toUpperCase() + ' '}

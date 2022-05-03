@@ -91,7 +91,8 @@ export const createGame = (numPlayers) =>{
               id: p.toString(),
               name: `NPC ${p-numPlayers+1}`,
               letterPosition: 0,
-              word: createWord(12-p)
+              word: createWord(12-p),
+              random: ''
             });
           }
           const words = Array(numPlayers)
@@ -116,7 +117,7 @@ export const createGame = (numPlayers) =>{
   
           let isClueInProgress = false
           let clueGiver = '0'
-      
+          let gainToken = false
   
           return ({
             players,
@@ -130,7 +131,9 @@ export const createGame = (numPlayers) =>{
             permanentLetters,
             gameResults,
             clueGiver,
-            dummyHands
+            dummyHands,
+            gainToken
+
   
           });
         },
@@ -186,6 +189,7 @@ export const createGame = (numPlayers) =>{
                     const Gplayers = [...G.players]
                     const dummyHands = []
                     const tokensAvailable = {...G.tokensAvailable}
+                    let gainToken = false
 
                     // decrease tokensAvailable 
                     if (G.tokensTaken[playerID] === 0 || 
@@ -205,20 +209,21 @@ export const createGame = (numPlayers) =>{
                     for (let i =0; i < G.dummyHands.length; i++){
                     if (dummyUsed && dummyUsed.length && dummyUsed.includes(i)){
                         const letterPosition = Number(G.dummyHands[i].letterPosition) + 1
-                        console.log('letterPosition',letterPosition)
+                        // add a leaves token if an NPC has used all their cards
+                        if (letterPosition === G.dummyHands[i].word.length-1){
+                            console.log('letterPosition === G.dummyHands[i].word.length-1')
+                            tokensAvailable.leaves++
+                            gainToken = true
+                            console.log ({tokensAvailable})
+                        }
                         const dummyObj = {
                             id: G.dummyHands[i].id,
                             name: G.dummyHands[i].name,
                             letterPosition,
-                            word: G.dummyHands[i].word
+                            word: G.dummyHands[i].word,
+                            random: randomLetter()
                         }
                         dummyHands.push(dummyObj)
-                        // // add a leaves token if an NPC has used all their cards
-                        // if (letterPosition === G.dummyHands[i].word.length-1){
-                        //     console.log('letterPosition === G.dummyHands[i].word.length-1')
-                        //     tokensAvailable.leaves = tokensAvailable.leaves + 1
-                        //     console.log ({tokensAvailable})
-                        // }
                     }else{
                         dummyHands.push({...G.dummyHands[i]})
                     }
@@ -260,7 +265,7 @@ export const createGame = (numPlayers) =>{
                         }
                     }
                     clues.push(clue)
-  
+                    console.log({tokensAvailable})
                       return {...G, 
                           clues: clues, 
                           isClueInProgress: false, 
@@ -268,7 +273,8 @@ export const createGame = (numPlayers) =>{
                           tokensAvailable: tokensAvailable, 
                           tokensTaken: tokensTaken, 
                           isNextCardAvailable: isNextCardAvailable,
-                          dummyHands: dummyHands
+                          dummyHands: dummyHands,
+                          gainToken: gainToken
                       }
                       
                   },
@@ -288,7 +294,10 @@ export const createGame = (numPlayers) =>{
                   },
                   cancelClue: (G) => {
                       G.isClueInProgress = false
-                  }
+                  },
+                  resetGainToken: (G) => {
+                    G.gainToken = false
+                }
               },
               turn: {
                   onBegin: (G, ctx) => {

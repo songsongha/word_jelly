@@ -7,9 +7,10 @@ import GuessWord from './Modal/GuessWord'
 import Score from './Modal/Score'
 import ClueNotification from './Modal/ClueNotification'
 import ClueToken from './CluePanel/ClueToken/ClueToken'
+import GainToken from './Modal/GainToken'
 
 const Play= ({ctx, G, moves, playerID, events }) => {
-    const {players, words, bonusLetters, permanentLetters, gameResults, clueGiver, isClueInProgress, dummyHands} = G
+    const {players, words, bonusLetters, permanentLetters, gameResults, clueGiver, isClueInProgress, dummyHands, gainToken} = G
     
     const cardRow = useMemo(()=>{
         // show a letter from every player other than you
@@ -30,18 +31,15 @@ const Play= ({ctx, G, moves, playerID, events }) => {
         
         for (let i = 0; i < dummyHands.length; i++) {   
             // display dummy hands
-            let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].word[dummyHands.length-1]
-            let color = 'green'
-            if (dummyHands.letterPosition >= dummyHands[i].word.length-1){
-                color = 'gray'
-            }
+            let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].random
+
             cardRow.push(
                 <span key = {`dummyCard${i}`} className='flex flex-column items-center display: inline-block'>
                 <CardFaceUp 
                 letter = {letter}
                 player = {dummyHands[i]}
                 word = {dummyHands[i].word} />
-                <ClueToken key={`dummyToken-${i}`} color={color}/>
+                {dummyHands[i].letterPosition >= dummyHands[i].word.length-1 ? '' : <ClueToken key={`dummyToken-${i}`} color='green'/>}
                 </span>
             )
         }
@@ -88,7 +86,7 @@ const Play= ({ctx, G, moves, playerID, events }) => {
                 <GuessWord show={ctx.phase === 'guessWord'} ctx={ctx} onClose={()=> {}} playerID={playerID} moves={moves} />
                 <Score show={gameResults[playerID].guess || ctx.phase === null} ctx={ctx} onClose={()=> {}} G={G} />
                 <ClueNotification show={isClueInProgress && clueGiver && clueGiver !== playerID} G={G}/>
-
+                <GainToken show={gainToken} G={G} moves={moves} />
 			</div>
 			<div className = 'tc ph4 w-25'>
 				<CluePanel G={G} playerID={playerID} events={events}/>
