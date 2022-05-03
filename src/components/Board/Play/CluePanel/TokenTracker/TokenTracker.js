@@ -44,6 +44,11 @@ const TokenTracker = ({G}) => {
                             </span>
                             <ClueToken key='token-10' color ={determineColor(tokensAvailable,layout, 10)}/>
                         </div>
+                        {tokensAvailable.leaves > 2 &&
+                            <div className='ml4 pl2 mt2'>
+                            <ClueToken key='token-extra' color ={'green'}/>
+                            </div>
+                        }
                     </div>
                 )
             case 4:
