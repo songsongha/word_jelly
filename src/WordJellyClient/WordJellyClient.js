@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { createGame } from '../GameLogic'
+import { createGame } from '../GameLogic/GameLogic'
 import { Client } from "boardgame.io/react"
 import { SocketIO } from "boardgame.io/multiplayer"
 import Board from '../components/Board/Board'

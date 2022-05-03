@@ -1,7 +1,7 @@
 // src/server.js
 import path from 'path'
 import serve from 'koa-static'
-import { createGame } from './GameLogic';
+import { createGame } from './GameLogic/GameLogic';
 const { Server, Origins } = require('boardgame.io/server')
 // const WordJellyGame = require("./GameLogic").WordJellyGame
 
