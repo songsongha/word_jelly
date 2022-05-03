@@ -26,7 +26,7 @@ const Score = ({show, ctx, G}) => {
         return(
             <tr key={index}>
                 <td className='ph3'>{players[index].name}</td>
-                <td className='ph3'>{guess ? word : ''}</td>
+                <td className='ph3'>{guess ? word.toUpperCase() : ''}</td>
                 <td className= {`ph3 ${score > 0 ? 'green': 'red' }`}>{guess}</td>
                 {(index === 0) && <td rowSpan={array.length} className='ph3 f-subheadline'>{totalScore()}</td>}
             </tr>

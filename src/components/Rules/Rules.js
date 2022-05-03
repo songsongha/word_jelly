@@ -13,7 +13,7 @@ const Rules = ({setShowRules}) => {
             <h1 className= 'title'>Basic Rules / Game Play:</h1>
                 <br/>
             {intro}
-                <a href="https://www.ultraboardgames.com/letter-jam/game-rules.php" 
+                <a href="https://czechgames.com/files/rules/letter-jam-rules-en.pdf" 
                     target="_blank" 
                     rel="noreferrer" 
                     className='link dim black underline pointer'>

@@ -74,7 +74,7 @@ const CluePanel = ({G, playerID, events}) => {
                     }
                 }
                 display.push(
-                    <div key ={i} className={isPartOfClue ? '' : 'moon-gray strike' }>
+                    <div key ={i} className={isPartOfClue ? '' : 'moon-gray' }>
                         {rowText}
                     </div>
                 )
