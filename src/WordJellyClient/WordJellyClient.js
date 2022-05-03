@@ -63,7 +63,7 @@ const WordJellyClient = ({ numPlayers, lobbyClient, setShowRules }) => {
         numPlayers,
         board: Board,
         debug: true,
-        multiplayer: SocketIO({ server: "localhost:8000" })
+        multiplayer: SocketIO({ server: server  })
     })
     
         return(
