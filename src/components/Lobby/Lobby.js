@@ -85,7 +85,7 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 					</legend>
 					<p className='mt3 ph8'>
 					
-https://young-hamlet-81046.herokuapp.com/play/{wordLength}/{matchID} <br/>
+					https://word-jelly.herokuapp.com/play/{wordLength}/{matchID} <br/>
 					<br/>
 					</p>
 					<button 

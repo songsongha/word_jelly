@@ -10,7 +10,7 @@ const server = Server({
   games: [createGame(2),createGame(3),createGame(4),createGame(5),createGame(6)],
 
   origins: [
-    'https://young-hamlet-81046.herokuapp.com/', Origins.LOCALHOST_IN_DEVELOPMENT
+    'https://word-jelly.herokuapp.com/', Origins.LOCALHOST_IN_DEVELOPMENT
   ],
 });
 
