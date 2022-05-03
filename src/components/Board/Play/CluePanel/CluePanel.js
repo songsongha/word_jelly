@@ -91,7 +91,7 @@ return (
             <div className='w5 h5 mb3 center' style={{ backgroundImage:`url(${backgroundImage})`, backgroundSize: 'contain', backgroundPosition: 'center', backgroundRepeat:"no-repeat" }}>
                 <TokenTracker G={G}/>
             </div>
-            <div className='center'>
+            <div className='flex justify-center'>
                 <TokensTaken G={G} />
             </div>
 	        { isClueAvailable() && !isClueInProgress && 

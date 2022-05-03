@@ -31,10 +31,9 @@ const TokensTaken = ({G}) => {
             )
         })
         return tokenTable
-    },[players, tokensTaken])
+    },[numPlayers, players, tokensTaken])
 
 return (
-    <div className= 'TokensTaken ml5'>
         <table id='TokensTaken'>
             <tbody>
                 <tr>
@@ -44,7 +43,6 @@ return (
                 {tokenTable}
             </tbody>
         </table>
-    </div>
     )
 }
 export default TokensTaken

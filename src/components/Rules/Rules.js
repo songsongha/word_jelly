@@ -24,13 +24,14 @@ const Rules = ({setShowRules}) => {
                 Players will choose a word; that word will be shuffled and passed to the player "on the right". 
                 Heads up this app does not check spelling for you (just like the IRL game) and this gives you 
                 flexibility to play with lewd or 'modern' words if you want.<br/></p>
+
             <h4>Giving Clues</h4>    
-                <p>Everyone will be able to see a letter from each other player; see if you can spell a word using the letters 
-                you can see. Letters can be used more than once and the wildcard can be used to represent one letter. If the 
-                letter appears more than once in the word, you use the wildcard multiple times but you cannot use it to represent 
-                two different letters in the same word. The cluegiver is not allowed to say what letter the wildcard represents. 
-                Players discuss their potential clues to see who has the best one. All players choose the clue giver together and 
-                the person selected should click the Give Clue button. The clue can be up to 8 letters long. <br/>
+                <p>Everyone will be able to see a letter from each other player or a dummy hand if playing with less than 6 people; 
+                see if you can spell a word using the letters you can see. Letters can be used more than once and the wildcard can be
+                used to represent one letter. If the letter appears more than once in the word, you use the wildcard multiple times but 
+                you cannot use it to represent two different letters in the same word. The cluegiver is not allowed to say what letter 
+                the wildcard represents. Players discuss their potential clues to see who has the best one. All players choose the clue 
+                giver together and the person selected should click the Give Clue button. The clue can be up to 8 letters long. <br/>
                 <br/>
                 When discussing clues you can say:
             </p>
@@ -51,10 +52,16 @@ const Rules = ({setShowRules}) => {
             </ul>
             <p>
                 The flower on the right side of the screen tracks the number of clues that are available to the team. 
-                There is one red token for each player plus green tokens that can be used by any player. The token in 
+                There is one red token for each player (or three/two each for a 2-player/3-player game) plus green tokens that can be used by any player. The token(s) in 
                 the center of the flower surrounded by red tokens is only available once all the red tokens are gone 
                 (once each player has given a clue), but the green tokens on the leaves are available immediately. When
                 a player gives a clue a token is removed from the flower.<br/></p>
+                <h4>Non-Player Stands</h4>
+                <p>
+                For games with less than 6 players, there will be dummy hands in play. Each dummy hand has a stack of cards 
+                that will by be advanced every time it is involved in a clue. Once the dummy hand reaches its last card an
+                additional green clue token will be available for anyone to use. The dummy hand will continue to cycle its
+                card each time it is involed in a clue</p>
                 <h4>Receiving Clues</h4>
                 <p>
                 Clues that you received are shown on the right hand side of the screen. Your letter is represented by 

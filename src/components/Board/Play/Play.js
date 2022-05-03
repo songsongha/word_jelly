@@ -66,7 +66,7 @@ const Play= ({ctx, G, moves, playerID, events }) => {
 
 	return ( 
 		<div className='flex flex-row justify-between'>
-			<div className = 'tc pt4 ph4 w-75'>
+			<div className = 'tc pt4 ph4 w-70'>
 				<div className='mb5'> 
                     <div className='flex justify-center '>
                     {cardRow}
@@ -88,7 +88,7 @@ const Play= ({ctx, G, moves, playerID, events }) => {
                 <ClueNotification show={isClueInProgress && clueGiver && clueGiver !== playerID} G={G}/>
                 <GainToken show={gainToken} G={G} moves={moves} />
 			</div>
-			<div className = 'tc ph4 w-25'>
+			<div className = 'tc ph4 w-30'>
 				<CluePanel G={G} playerID={playerID} events={events}/>
 	        </div>
         </div> 
