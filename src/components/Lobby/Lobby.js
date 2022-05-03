@@ -1,6 +1,6 @@
 import React, { useCallback, useState, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Event } from '../../usePageTracking'
+import ReactGA from 'react-ga'
 
 const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 	const [matchID, setMatchID] = useState('')
@@ -26,7 +26,12 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 				const { matchID } = await lobbyClient.createMatch(`word-jelly${numPlayers}`, {
 					numPlayers: Number(numPlayers)
 				})
-				Event("New Game", "New Game", `${numPlayers}-Players`)
+
+				ReactGA.event({
+					category: 'Game',
+					action: 'Created Game',
+					label: `${numPlayers}-Players`
+				  })
 
 				setMatchID(matchID)
 				setLobbyState('createGame')

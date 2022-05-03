@@ -1,8 +1,6 @@
 import React from 'react'
 import './modal.css'
 import { useNavigate } from 'react-router-dom'
-import { Event } from '../../../../usePageTracking'
-
 
 const Score = ({show, ctx, G}) => {
     const {tokensAvailable, gameResults, players} = G
@@ -11,8 +9,6 @@ const Score = ({show, ctx, G}) => {
     if (!show){
         return null
     }
-
-    Event("Finished Game", "Finished Game", `${players.length}-Players`)
 
     const newGame = () => {
         navigate('/')   

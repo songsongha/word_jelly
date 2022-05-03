@@ -1,3 +1,5 @@
+import ReactGA from 'react-ga'
+
 export const restrictActions = (G, ctx) => {
     G.isClueInProgress = true
     G.clueGiver = ctx.currentPlayer
@@ -30,6 +32,12 @@ export const areAllGuessesIn = (G) => {
     if (G.gameResults.some(e => e.guess === '')) {
         return false
       }
+    // send info to analytics
+      ReactGA.event({
+        category: 'Game',
+        action: 'Finished Game',
+        label: `${G.players.length}-Players`
+    })  
     return true
 }
 
@@ -50,6 +58,7 @@ const sumOf = (tokensAvailable) => {
     const {red, leaves, restricted } = tokensAvailable
     return red + leaves + restricted 
 }
+
 
 export const isGameOver = (G) => {
     // if all clues are gone or all players have decided that they know their words

@@ -22,10 +22,3 @@ const usePageTracking = () => {
 
 export default usePageTracking;
 
-export const Event = (category, action, label) => {
-  ReactGA.event({
-    category: category,
-    action: action,
-    label: label
-  })
-}
