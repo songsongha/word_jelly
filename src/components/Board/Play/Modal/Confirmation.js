@@ -41,8 +41,6 @@ const Confirmation = ({show, onClose, playerID, G, moves, formValues, setFormVal
     }
     
     const handleSubmit = () => {
-        console.log({dummyUsed})
-        console.log({clue})
         const submission = {
             formValues: {...formValues},
             playerID,

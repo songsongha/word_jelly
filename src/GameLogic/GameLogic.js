@@ -150,10 +150,8 @@ export const createGame = (numPlayers) =>{
                         const letterPosition = Number(G.dummyHands[i].letterPosition) + 1
                         // add a leaves token if an NPC has used all their cards
                         if (letterPosition === G.dummyHands[i].word.length-1){
-                            console.log('letterPosition === G.dummyHands[i].word.length-1')
                             tokensAvailable.leaves++
                             gainToken = true
-                            console.log ({tokensAvailable})
                         }
                         const dummyObj = {
                             id: G.dummyHands[i].id,
@@ -204,7 +202,7 @@ export const createGame = (numPlayers) =>{
                         }
                     }
                     clues.push(clue)
-                    console.log({tokensAvailable})
+
                       return {...G, 
                           clues: clues, 
                           isClueInProgress: false, 

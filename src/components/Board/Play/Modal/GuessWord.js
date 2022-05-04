@@ -44,7 +44,7 @@ const GuessWord = ({show, ctx, playerID, moves}) => {
                 <main className='modal-body'>
                     <div>
                         What do you think your word is? <br/>
-                        <input type = 'text' id = 'txtGuess'
+                        <input className='mt2' type = 'text' id = 'txtGuess'
                         value={wordGuess || ''}
                         onChange={handleChange}
                         autoFocus></input>
