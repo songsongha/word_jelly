@@ -19,8 +19,9 @@ const GuessBonus = ({show, onClose, G, playerID, moves}) => {
         moves.nextCard(playerID, isBonusCorrect)
         setBonusGuess('')
         setIsBonusCorrect(false)
+        showNotification(false)
         onClose()
-    },[moves, playerID, isBonusCorrect, onClose])
+    },[moves, playerID, isBonusCorrect, showNotification, onClose])
 
     const handleCancel = () => {
         setBonusGuess('')
