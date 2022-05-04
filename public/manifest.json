@@ -6,6 +6,11 @@
       "src": "favicon.ico",
       "sizes": "259x194 64x48 32x24 24x18 16x12",
       "type": "image/x-icon"
+    },
+    {
+      "src": "logo.png",
+      "sizes": "596x506",
+      "type": "image/png"
     }
   ],
   "start_url": ".",
