@@ -1,4 +1,3 @@
-import ReactGA from 'react-ga'
 
 export const restrictActions = (G, ctx) => {
     G.isClueInProgress = true
@@ -32,12 +31,7 @@ export const areAllGuessesIn = (G) => {
     if (G.gameResults.some(e => e.guess === '')) {
         return false
       }
-    // send info to analytics
-      ReactGA.event({
-        category: 'Game',
-        action: 'Finished Game',
-        label: `${G.players.length}-Players`
-    })  
+
     return true
 }
 

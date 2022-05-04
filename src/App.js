@@ -5,16 +5,21 @@ import { Route, Routes} from 'react-router-dom'
 import { LobbyClient } from 'boardgame.io/client'
 import Rules from './components/Rules/Rules'
 import Navigation from './components/Navigation/Navigation'
-import usePageTracking from './usePageTracking'
+import ReactGA from 'react-ga'
 
 // const { protocol, hostname, port } = window.location
 // const server = `${protocol}//${hostname}:${port}`
 
 const App = () => {
-  usePageTracking()
+
   const [numPlayers, setNumPlayers] = useState(6)
   const lobbyClient =  new LobbyClient({ server: 'http://localhost:8000' })
   const [showRules, setShowRules] = useState(true)
+
+  // Google Analytics
+  ReactGA.initialize('UA-227709825-1')
+  ReactGA.pageview(window.location.pathname + window.location.search)
+
 
     return(
     <div>

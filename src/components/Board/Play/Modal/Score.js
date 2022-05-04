@@ -1,10 +1,28 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import './modal.css'
 import { useNavigate } from 'react-router-dom'
+import ReactGA from 'react-ga'
 
-const Score = ({show, ctx, G}) => {
+const Score = ({show, ctx, G, playerID}) => {
     const {tokensAvailable, gameResults, players} = G
     const navigate = useNavigate()
+
+    const sendToGoogle = useCallback(() => {
+        if (ctx.gameover && playerID === '0'){
+            ReactGA.event({
+                category: 'Game',
+                action: 'Finished Game',
+                label: `${G.players.length}-Players`,
+                nonInteraction: true
+            })
+        }
+      }, [G.players.length, ctx.gameover, playerID]);
+
+    useEffect(() => {
+        if(show){
+            sendToGoogle()
+        }
+    })
 
     if (!show){
         return null

@@ -11,7 +11,7 @@ import GainToken from './Modal/GainToken'
 
 const Play= ({ctx, G, moves, playerID, events }) => {
     const {players, words, bonusLetters, permanentLetters, gameResults, clueGiver, isClueInProgress, dummyHands, gainToken} = G
-    
+
     const cardRow = useMemo(()=>{
         // show a letter from every player other than you
         let cardRow = []
@@ -84,7 +84,7 @@ const Play= ({ctx, G, moves, playerID, events }) => {
                 </div>
 				<GiveClue show={isClueInProgress && clueGiver === playerID} G={G} playerID={playerID} ctx={ctx} moves={moves}/>
                 <GuessWord show={ctx.phase === 'guessWord'} ctx={ctx} onClose={()=> {}} playerID={playerID} moves={moves} />
-                <Score show={gameResults[playerID].guess || ctx.phase === null} ctx={ctx} onClose={()=> {}} G={G} />
+                <Score show={gameResults[playerID].guess || ctx.phase === null} ctx={ctx} onClose={()=> {}} G={G} playerID={playerID} />
                 <ClueNotification show={isClueInProgress && clueGiver && clueGiver !== playerID} G={G}/>
                 <GainToken show={gainToken} G={G} moves={moves} />
 			</div>
