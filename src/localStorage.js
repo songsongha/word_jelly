@@ -1,7 +1,7 @@
 // use sessionStorage for testing
 export const loadState = (key) => {
     try {
-        const serializedState = sessionStorage.getItem(key)
+        const serializedState = localStorage.getItem(key)
         if (serializedState === null) {
             return undefined
         }
@@ -14,7 +14,7 @@ export const loadState = (key) => {
 export const saveState = (key,state) => {
     try{
         const serializedState = JSON.stringify(state)
-        sessionStorage.setItem(key, serializedState)
+        localStorage.setItem(key, serializedState)
     } catch (e) {
         console.log({e})
     }
