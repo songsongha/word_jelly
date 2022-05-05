@@ -85,7 +85,6 @@ const GiveClue = ({show, G, playerID, moves}) => {
         moves.cancelClue(G)
         setFormValues({})
     }
-    
     if (!show){
         return null
     }
