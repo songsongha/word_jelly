@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useCallback, useMemo, useState} from 'react'
 import Confirmation from './Confirmation'
 import './modal.css'
 
@@ -7,73 +7,76 @@ const GiveClue = ({show, G, playerID, moves}) => {
     const [formValues, setFormValues] = useState({})
     const [openConfirmation, setOpenConfirmation] = useState(false)
 
-    if (!show){
-        return null
-    }
-    // drop down menu options for each player, plus wild option
-    const dropDownOptions = []
-    dropDownOptions.push(
-        <option key='blank' name='' value=''>
-        </option>
-    )
-    for (let player = 0; player < G.players.length; player++) {
-        const letter = G.words[player][G.players[player].letterPosition] || G.bonusLetters[player]
-		if (player !== Number(playerID)){
-			dropDownOptions.push( 
-                <option key={player} name={player} value={player}>
-                    {letter.toUpperCase() + ' '}
-                    (
-                    {G.players[player].name}) 
-                </option>
-			)
-		}
-	  }
-    for (let i = 0; i < G.dummyHands.length; i++) {
-        let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].random
-			dropDownOptions.push( 
-                <option key={`dummy${i}`} name={`dummy${i}`} value={dummyHands[i].id}>
-                    {letter.toUpperCase() + ' '}
-                    (
-                    {dummyHands[i].name}) 
-                </option>
-			)
-		}
-    if (G.permanentLetters){
-        G.permanentLetters.forEach((letter, index) => {
-            dropDownOptions.push(
-                <option key={`bonus${index}`} name={`bonus${index}`} value={letter}> 
-                        {letter.toUpperCase() + ' (Bonus)'}
+    const dropDownOptions = useMemo(() =>{
+        // drop down menu options for each player, plus wild option
+        const dropDownOptions = []
+        dropDownOptions.push(
+            <option key='blank' name='' value=''>
+            </option>
+        )
+        for (let player = 0; player < G.players.length; player++) {
+            const letter = G.words[player][G.players[player].letterPosition] || G.bonusLetters[player]
+            if (player !== Number(playerID)){
+                dropDownOptions.push( 
+                    <option key={player} name={player} value={player}>
+                        {letter.toUpperCase() + ' '}
+                        (
+                        {G.players[player].name}) 
                     </option>
-            )
-        })
-        
-    }
-    dropDownOptions.push(
-        <option key='wild' name='wild' value='*'>
-            *   (wild)
-        </option>
-    )  
-
-    const handleChange = (event) => {
+                )
+            }
+        }
+        for (let i = 0; i < G.dummyHands.length; i++) {
+            let letter = dummyHands[i].word[dummyHands[i].letterPosition] || dummyHands[i].random
+                dropDownOptions.push( 
+                    <option key={`dummy${i}`} name={`dummy${i}`} value={dummyHands[i].id}>
+                        {letter.toUpperCase() + ' '}
+                        (
+                        {dummyHands[i].name}) 
+                    </option>
+                )
+            }
+        if (G.permanentLetters){
+            G.permanentLetters.forEach((letter, index) => {
+                dropDownOptions.push(
+                    <option key={`bonus${index}`} name={`bonus${index}`} value={letter}> 
+                            {letter.toUpperCase() + ' (Bonus)'}
+                        </option>
+                )
+            })
+            
+        }
+        dropDownOptions.push(
+            <option key='wild' name='wild' value='*'>
+                *   (wild)
+            </option>
+        ) 
+    return dropDownOptions 
+    },[G.bonusLetters, G.dummyHands.length, G.permanentLetters, G.players, G.words, dummyHands, playerID])
+    
+    const handleChange = useCallback((event) => {
         const name = event.target.name;
         const value = event.target.value;
         setFormValues(values => ({...values, [name]: value}))
-      }
+      },[])
 
-    const clueForm = []
-    for (let i = 1; i <= 8; i++) {
-        clueForm.push(
-            <div key={`Clue${i}`}>
-                Clue {i}
-                <select 
-                    name={`clue${i}`} 
-                    value={formValues[`clue${i}`] || ''}
-                    onChange={handleChange}>
-                        {dropDownOptions}
-                </select>
-            </div>
-        )
-    }  
+    const clueForm = useMemo(()=>{
+        const clueForm = []
+        for (let i = 1; i <= 8; i++) {
+            clueForm.push(
+                <div key={`Clue${i}`}>
+                    Clue {i}
+                    <select 
+                        name={`clue${i}`} 
+                        value={formValues[`clue${i}`] || ''}
+                        onChange={handleChange}>
+                            {dropDownOptions}
+                    </select>
+                </div>
+            )
+        }
+        return clueForm
+    },[dropDownOptions, formValues, handleChange])  
     
     const handleSubmit = () => {
         setOpenConfirmation(true)
@@ -81,6 +84,10 @@ const GiveClue = ({show, G, playerID, moves}) => {
     const handleCancel = () => {
         moves.cancelClue(G)
         setFormValues({})
+    }
+    
+    if (!show){
+        return null
     }
     return (
         <div className='modal'>
