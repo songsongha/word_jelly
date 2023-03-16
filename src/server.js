@@ -8,7 +8,7 @@ const server = Server({
   games: [createGame(2),createGame(3),createGame(4),createGame(5),createGame(6)],
 
   origins: [
-    'https://word-jelly.herokuapp.com/', Origins.LOCALHOST_IN_DEVELOPMENT
+    'https://word-jelly.netlify.app/', Origins.LOCALHOST_IN_DEVELOPMENT
   ],
 });
 

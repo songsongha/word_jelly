@@ -26,13 +26,11 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 				const { matchID } = await lobbyClient.createMatch(`word-jelly${numPlayers}`, {
 					numPlayers: Number(numPlayers)
 				})
-
 				ReactGA.event({
 					category: 'Game',
 					action: 'Created Game',
 					label: `${numPlayers}-Players`
 				  })
-
 				setMatchID(matchID)
 				setLobbyState('createGame')
 			}catch (e) {
@@ -55,11 +53,16 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 				New Game
 				</legend>
 				<div className='mt3'>
-				<p className='ph8'> 
-				Word Jelly is a collaborative word game where players give each other clues to figure out 
-				their letters. Unscramble your letters to spell your word.
-				</p>
-				<label htmlFor='numPlayers'className='db fw6 lh-copy f6'>Number of Players:</label>
+					<p className='ph8'> 
+						Word Jelly is a collaborative word game where players give each other clues to figure out 
+						their letters. Unscramble your letters to spell your word. Need a quick tutorial? Checkout 
+						<a href='
+						https://www.youtube.com/watch?v=BwI-ZdQQZdc' target="_blank" rel="noreferrer" className='f5 link dim black underline pa3 pointer'>
+							this video tutorial
+						</a> 
+						for the original game.
+					</p>
+					<label htmlFor='numPlayers'className='db fw6 lh-copy f6'>Number of Players:</label>
 				<div className='pl3'>
 				<select name='numPlayers' value={numPlayers} onChange={(e => {setNumPlayers(e.target.value)})}>
 					{playerChoice}
@@ -93,7 +96,7 @@ const Lobby = ({numPlayers, lobbyClient, setNumPlayers, setShowRules}) => {
 					</legend>
 					<p className='mt3 ph8'>
 					
-					https://word-jelly.herokuapp.com/play/{wordLength}/{matchID} <br/>
+					https://word-jelly.netlify.app/play/{wordLength}/{matchID} <br/>
 					<br/>
 					</p>
 					<button 
